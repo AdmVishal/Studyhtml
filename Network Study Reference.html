@@ -379,70 +379,69 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
   .proto-tabs { display: none; }
 }
 </style>
-  <link rel="stylesheet" href="mobile.css">
 
-<style id="shn-page-mobile">
-/* StudyHub mobile patch — auto-generated */
+<style id='shm-v4'>
 @media (max-width: 768px) {
+  /* ITIL app-grid: stack nav + content vertically */
+  .app-grid, [class*="app-grid"] {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+  .left-nav, .nav-panel, [class*="left-nav"] {
+    display: none !important;
+  }
+  .main-content, .content-area, [class*="main-content"] {
+    width: 100% !important;
+    padding: 16px 14px !important;
+    box-sizing: border-box !important;
+  }
+  .process-grid, [class*="process-grid"],
+  .cmd-grid, [class*="cmd-grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
 
-  /* Hide the built-in sidebar on mobile — replaced by SHN drawer */
-  .sidebar, #sidebar, [class*="sidebar"] {
-    display:none!important; visibility:hidden!important;
+
+  /* Universal: tables */
+  table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 12px !important;
   }
-  /* Also hide any fixed aside navigation */
-  aside { display:none!important; }
-  /* Remove left margin that was reserved for sidebar */
-  .main-content, .content, main, .main, body > div:not(#shn-nav):not(#shn-overlay) {
-    margin-left:0!important; max-width:100%!important;
-    padding-left:14px!important; padding-right:14px!important;
-    width:100%!important; box-sizing:border-box!important;
+  th { white-space: nowrap; font-size: 11px !important; }
+  td { font-size: 12px !important; }
+
+  /* Universal: code */
+  pre, code, [class*="code-block"], [class*="cmd-block"] {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    font-size: 11px !important;
+    max-width: 100% !important;
+    white-space: pre !important;
   }
 
-  /* Prevent horizontal overflow on all elements */
-  *, *::before, *::after { max-width:100%; box-sizing:border-box; }
-  pre, code, .code-group, .code-block {
-    overflow-x:auto!important; -webkit-overflow-scrolling:touch!important;
-    white-space:pre!important; font-size:.7rem!important;
-  }
-  /* Flex rows that need to wrap */
-  .lifecycle, .workflow, [class*="lifecycle"], [class*="flow-row"],
-  [class*="step-row"], [class*="card-row"] {
-    flex-wrap:wrap!important; gap:8px!important;
-  }
-  /* Tab bars / pill nav */
-  [class*="tab-bar"], [class*="topic-nav"], [class*="filter"],
-  .topics, .nav-tabs {
-    overflow-x:auto!important; -webkit-overflow-scrolling:touch!important;
-    flex-wrap:nowrap!important; white-space:nowrap!important;
-    padding-bottom:4px!important;
-  }
-  /* Command/card grids */
-  [class*="cmd-grid"], [class*="command-grid"],
-  [class*="card-grid"], [class*="section-grid"] {
-    grid-template-columns:1fr!important; gap:10px!important;
-  }
-  /* Wide flex containers inside content */
-  [class*="section-content"], [class*="content-area"],
-  [class*="two-col"], [class*="split"] {
-    flex-direction:column!important; width:100%!important;
-  }
-  /* Priority/badge chips that wrap */
-  [class*="priority"], [class*="badge"], [class*="chip"],
-  [class*="tag-row"] { flex-wrap:wrap!important; }
-  /* Modal/overlay full width */
-  [class*="modal"], [class*="panel"], [class*="drawer"] {
-    max-width:100vw!important;
-  }
-  /* Stat/metric grids */
-  [class*="stat-grid"], [class*="metric"], [class*="kpi"] {
-    grid-template-columns:1fr 1fr!important;
-  }
-  /* Large padding containers */
-  [class*="hero"], [class*="banner"], [class*="header-wrap"] {
-    padding:20px 14px!important;
-  }
+  /* Universal: headings */
+  h1 { font-size: clamp(1.5rem, 7vw, 2rem) !important; line-height: 1.2 !important; }
+  h2 { font-size: clamp(1rem, 5vw, 1.35rem) !important; }
+  h3 { font-size: clamp(0.9rem, 4vw, 1.05rem) !important; }
+
+  /* Universal: search input */
+  .search-wrap { max-width: 100% !important; }
+  .search-wrap input { font-size: 14px !important; }
+
+  /* Universal: body overflow */
+  body { overflow-x: hidden !important; }
+}
+@media (min-width: 769px) {
+  #mob-topics-btn { display: none !important; }
+  #mob-sidebar-close { display: none !important; }
+  #mob-overlay { display: none !important; }
 }
 </style>
+  <!-- STUDYHUB-MOBILE-v4 -->
 </head>
 <body>
 
@@ -480,30 +479,30 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
 const sections = [
 // ════════════════════════════════ VPN ════════════════════════════════
 {id:"vpn-intro",p:"vpn",label:"VPN Introduction",content:`
-<h1 id="introduction-to-vpn">Introduction to VPN</h1>
+<h1>Introduction to VPN</h1>
 <span class="badge-proto badge-vpn">VPN</span>
-<h2 id="what-is-a-vpn">What is a VPN?</h2>
+<h2>What is a VPN?</h2>
 <p>A <strong>Virtual Private Network (VPN)</strong> creates a secure, encrypted tunnel over a public network (like the Internet) to connect private networks or users. It allows organisations with multiple branch offices to share internal resources securely over the cheap but insecure internet.</p>
 <div class="cards">
 <div class="card"><div class="card-title">Virtual</div><p>The connection is logical, not physical. No dedicated cable like a leased line is needed.</p></div>
 <div class="card"><div class="card-title">Private</div><p>Traffic is secure and encrypted. Only the communicating devices can read the data.</p></div>
 </div>
 
-<h2 id="why-vpn">Why VPN?</h2>
+<h2>Why VPN?</h2>
 <ul>
 <li>Companies have multiple branch offices that need to share internal resources</li>
 <li>Internet is cheap but insecure — data can be <strong>sniffed</strong>, <strong>modified</strong>, or <strong>impersonated</strong></li>
 <li>VPN solves all three problems through CIA security goals</li>
 </ul>
 
-<h2 id="security-goals-of-vpn-cia-triad">Security Goals of VPN — CIA Triad</h2>
+<h2>Security Goals of VPN — CIA Triad</h2>
 <div class="cards">
 <div class="card"><div class="card-title">🔒 Confidentiality (Encryption)</div><p>Data is unreadable to unauthorised users. Even if packets are captured, contents cannot be understood. Algorithms: AES, 3DES, ChaCha20.</p></div>
 <div class="card"><div class="card-title">✅ Integrity (Hashing)</div><p>Data is not modified during transmission. Hashing generates a message digest. If the packet changes, the hash won't match. Algorithms: MD5, SHA-1, SHA-256.</p></div>
 <div class="card"><div class="card-title">🪪 Authentication (Identity)</div><p>Verifies identity of communicating devices before creating the tunnel. Methods: Pre-Shared Key (PSK), Digital Certificates (PKI).</p></div>
 </div>
 
-<h2 id="without-vpn-vs-with-vpn">Without VPN vs With VPN</h2>
+<h2>Without VPN vs With VPN</h2>
 <pre><span class="cmt">Without VPN — Plain Text</span>
 Branch → Internet → HQ
 Username: admin
@@ -513,7 +512,7 @@ Password: 12345    ← visible to anyone sniffing
 Branch → [Encrypted Tunnel] → HQ
 Encrypted Data: @!rvvr8tv9e435$c3njf32&32)3$</pre>
 
-<h2 id="vpn-technologies-covered">VPN Technologies Covered</h2>
+<h2>VPN Technologies Covered</h2>
 <ul>
 <li><strong>GRE Tunnel</strong> — Generic Routing Encapsulation</li>
 <li><strong>IPsec VPN</strong> — IP Security with IKEv1/IKEv2</li>
@@ -524,9 +523,9 @@ Encrypted Data: @!rvvr8tv9e435$c3njf32&32)3$</pre>
 `},
 
 {id:"vpn-gre",p:"vpn",label:"GRE Tunnel",content:`
-<h1 id="gre-tunnel">GRE Tunnel</h1>
+<h1>GRE Tunnel</h1>
 <span class="badge-proto badge-vpn">VPN</span>
-<h2 id="what-is-gre">What is GRE?</h2>
+<h2>What is GRE?</h2>
 <p>A <strong>GRE (Generic Routing Encapsulation)</strong> tunnel encapsulates various network-layer protocols inside a virtual point-to-point link between two routers over an intermediate network like the Internet.</p>
 <div class="cards">
 <div class="card"><div class="card-title">GRE Alone</div><p>Supports routing protocols (EIGRP, OSPF, BGP, multicast) but has <strong>NO encryption</strong>.</p></div>
@@ -534,14 +533,14 @@ Encrypted Data: @!rvvr8tv9e435$c3njf32&32)3$</pre>
 <div class="card"><div class="card-title">GRE + IPsec</div><p>Best of both: secure encrypted tunnels that also support dynamic routing protocols and IPv6.</p></div>
 </div>
 
-<h2 id="how-gre-works">How GRE Works</h2>
+<h2>How GRE Works</h2>
 <ol>
 <li><strong>Encapsulation:</strong> GRE encapsulates the original IP packet inside a new IP packet with a GRE header</li>
 <li><strong>Tunneling:</strong> The encapsulated packet travels over the intermediate network</li>
 <li><strong>Decapsulation:</strong> Receiving router strips the GRE header and forwards the original packet</li>
 </ol>
 
-<h2 id="gre-tunnel-configuration">GRE Tunnel Configuration</h2>
+<h2>GRE Tunnel Configuration</h2>
 <pre><span class="cmt">! Prerequisites: ensure physical routing reachability first</span>
 <span class="cmt">! Configure tunnel on R3 (source 200.0.1.2, destination 200.0.4.2)</span>
 R3(config)#<span class="cmd">Interface Tunnel 1</span>
@@ -560,19 +559,19 @@ R3(config)#<span class="cmd">router eigrp 1</span>
 R3(config-router)#<span class="cmd">network</span> <span class="net">192.168.10.0</span>
 R3(config-router)#<span class="cmd">network</span> <span class="net">10.0.1.0</span></pre>
 
-<h2 id="ipsec-over-gre-full-configuration">IPsec over GRE — Full Configuration</h2>
-<h3 id="step-1-configure-eigrp-physical-underlay">Step 1: Configure EIGRP (Physical Underlay)</h3>
+<h2>IPsec over GRE — Full Configuration</h2>
+<h3>Step 1: Configure EIGRP (Physical Underlay)</h3>
 <pre>R1(config)#<span class="cmd">router eigrp 100</span>
 R1(config-router)#<span class="cmd">no auto-summary</span>
 R1(config-router)#<span class="cmd">network</span> <span class="net">192.168.10.0 0.0.0.255</span></pre>
 
-<h3 id="step-2-create-gre-tunnel">Step 2: Create GRE Tunnel</h3>
+<h3>Step 2: Create GRE Tunnel</h3>
 <pre>R1(config)#<span class="cmd">interface tunnel0</span>
 R1(config-if)#<span class="cmd">ip address</span> <span class="net">172.16.0.1 255.255.255.252</span>
 R1(config-if)#<span class="cmd">tunnel source</span> <span class="net">192.168.10.1</span>
 R1(config-if)#<span class="cmd">tunnel destination</span> <span class="net">192.168.12.2</span></pre>
 
-<h3 id="step-3-configure-isakmp-policy-ikev1">Step 3: Configure ISAKMP Policy (IKEv1)</h3>
+<h3>Step 3: Configure ISAKMP Policy (IKEv1)</h3>
 <pre>R1(config)#<span class="cmd">crypto isakmp policy 10</span>
 R1(config-isakmp)#<span class="cmd">encryption aes</span>
 R1(config-isakmp)#<span class="cmd">hash sha</span>
@@ -581,12 +580,12 @@ R1(config-isakmp)#<span class="cmd">group 2</span>
 R1(config-isakmp)#<span class="cmd">lifetime 86400</span>
 R1(config)#<span class="cmd">crypto isakmp key CISCO address</span> <span class="net">192.168.12.2</span></pre>
 
-<h3 id="step-4-transform-set-acl">Step 4: Transform Set & ACL</h3>
+<h3>Step 4: Transform Set & ACL</h3>
 <pre>R1(config)#<span class="cmd">crypto ipsec transform-set GRE-SET esp-aes esp-sha-hmac</span>
 R1(cfg-crypto-trans)#<span class="cmd">mode transport</span>
 R1(config)#<span class="cmd">access-list 101 permit gre host</span> <span class="net">192.168.10.1</span> <span class="cmd">host</span> <span class="net">192.168.12.2</span></pre>
 
-<h3 id="step-5-crypto-map-apply">Step 5: Crypto Map & Apply</h3>
+<h3>Step 5: Crypto Map & Apply</h3>
 <pre>R1(config)#<span class="cmd">crypto map VPN-MAP 10 ipsec-isakmp</span>
 R1(config-crypto-map)#<span class="cmd">set peer</span> <span class="net">192.168.12.2</span>
 R1(config-crypto-map)#<span class="cmd">set transform-set GRE-SET</span>
@@ -594,7 +593,7 @@ R1(config-crypto-map)#<span class="cmd">match address 101</span>
 R1(config)#<span class="cmd">interface GigabitEthernet0/0</span>
 R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 
-<h3 id="verification">Verification</h3>
+<h3>Verification</h3>
 <pre><span class="cmd">show ip interface brief</span>
 <span class="cmd">show ip route</span>
 <span class="cmd">show crypto isakmp sa</span>
@@ -605,9 +604,9 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 
 // ════════════════════════════════ BGP ════════════════════════════════
 {id:"bgp-intro",p:"bgp",label:"BGP Introduction",content:`
-<h1 id="bgp-border-gateway-protocol">BGP — Border Gateway Protocol</h1>
+<h1>BGP — Border Gateway Protocol</h1>
 <span class="badge-proto badge-bgp">BGP</span>
-<h2 id="what-is-bgp">What is BGP?</h2>
+<h2>What is BGP?</h2>
 <p><strong>BGP (Border Gateway Protocol)</strong> is the routing protocol used to exchange routing and reachability information between Autonomous Systems (ASes) on the Internet. It is the protocol that makes the Internet work at a global scale.</p>
 <div class="cards">
 <div class="card"><div class="card-title">Protocol Type</div><p>Path Vector Protocol. Defined in RFC 4271.</p></div>
@@ -616,13 +615,13 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 <div class="card"><div class="card-title">Timers</div><p>Hello: 60 sec | Hold Down: 180 sec</p></div>
 </div>
 
-<h2 id="types-of-bgp">Types of BGP</h2>
+<h2>Types of BGP</h2>
 <div class="cards">
 <div class="card"><div class="card-title">eBGP — External BGP</div><p>Between routers in <strong>different</strong> Autonomous Systems. Default TTL = 1 (must be directly connected). Automatically changes next-hop to self. AD = 20.</p></div>
 <div class="card"><div class="card-title">iBGP — Internal BGP</div><p>Between routers within the <strong>same</strong> Autonomous System. TTL = 255. Does NOT change next-hop automatically. Requires full mesh or Route Reflectors. AD = 200.</p></div>
 </div>
 
-<h2 id="igp-vs-egp-comparison">IGP vs EGP Comparison</h2>
+<h2>IGP vs EGP Comparison</h2>
 <div class="tbl"><table>
 <tr><th>Feature</th><th>IGP (OSPF, EIGRP, RIP)</th><th>EGP (BGP)</th></tr>
 <tr><td>Used Between</td><td>Within one AS</td><td>Between different ASes</td></tr>
@@ -632,7 +631,7 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 <tr><td>Discovery</td><td>Automatic (multicast)</td><td>Manual neighbour configuration</td></tr>
 </table></div>
 
-<h2 id="key-characteristics-of-bgp">Key Characteristics of BGP</h2>
+<h2>Key Characteristics of BGP</h2>
 <ul>
 <li><strong>Loop Prevention:</strong> AS_PATH attribute — if router sees its own AS in the path, it drops the route</li>
 <li><strong>Policy-Based Routing:</strong> Weight, Local Preference, AS_PATH, Origin, MED</li>
@@ -642,7 +641,7 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 <li><strong>Multiple Attributes:</strong> Rich set of attributes for fine-grained path control</li>
 </ul>
 
-<h2 id="when-to-use-bgp">When to Use BGP</h2>
+<h2>When to Use BGP</h2>
 <div class="cards">
 <div class="card"><div class="card-title">Multi-Homing</div><p>Enterprise connected to 2+ ISPs for redundancy, load balancing, and ISP failover.</p></div>
 <div class="card"><div class="card-title">ISPs</div><p>Share routes globally, apply routing policies, prevent loops.</p></div>
@@ -654,13 +653,13 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 `},
 
 {id:"bgp-as",p:"bgp",label:"Autonomous Systems & IANA",content:`
-<h1 id="autonomous-systems-iana">Autonomous Systems & IANA</h1>
+<h1>Autonomous Systems & IANA</h1>
 <span class="badge-proto badge-bgp">BGP</span>
-<h2 id="what-is-an-autonomous-system-as">What is an Autonomous System (AS)?</h2>
+<h2>What is an Autonomous System (AS)?</h2>
 <p>An <strong>Autonomous System (AS)</strong> is a collection of IP networks and routers under the control of a single organisation that presents a common routing policy to the Internet.</p>
 <p>Before ASes, the Internet was one huge unmanageable network with millions of routes. EC Rosen proposed (RFC 827) breaking it into smaller, autonomously controlled parts — hence "autonomous system."</p>
 
-<h2 id="autonomous-system-numbers-asn">Autonomous System Numbers (ASN)</h2>
+<h2>Autonomous System Numbers (ASN)</h2>
 <div class="tbl"><table>
 <tr><th>Type</th><th>Range</th><th>Purpose</th></tr>
 <tr><td>Public ASN</td><td>1–23455 and 131072–4294967295</td><td>Assigned by RIRs for Internet connectivity</td></tr>
@@ -669,7 +668,7 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 </table></div>
 <p>Real example: Airtel (AS 45609) → Tata Comm (AS 9498) → Google (AS 15169). AS_PATH would show: <code>45609 9498 15169</code></p>
 
-<h2 id="iana-rirs">IANA & RIRs</h2>
+<h2>IANA & RIRs</h2>
 <p><strong>IANA</strong> (Internet Assigned Numbers Authority) is a department of ICANN responsible for global coordination of internet resources. It allocates AS numbers through Regional Internet Registries (RIRs).</p>
 <div class="tbl"><table>
 <tr><th>RIR</th><th>Region</th><th>Example Countries</th></tr>
@@ -680,21 +679,21 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 <tr><td>AFRINIC</td><td>Africa</td><td>Nigeria, South Africa</td></tr>
 </table></div>
 
-<h2 id="types-of-isp">Types of ISP</h2>
+<h2>Types of ISP</h2>
 <div class="cards">
 <div class="card"><div class="card-title">Tier 1 ISP</div><p>Full Global Routing Table. Peer with each other for FREE (no payment). Examples: AT&T, Tata Communications. Backbone of the Internet.</p></div>
 <div class="card"><div class="card-title">Tier 2 ISP</div><p>Partial Global Routing Table. Cover a state or territory. Pay Tier 1 for transit to reach global internet.</p></div>
 <div class="card"><div class="card-title">Tier 3 ISP</div><p>Local ISPs. Do not need Global Routing Table. Provide last-mile connectivity to end users.</p></div>
 </div>
 
-<h2 id="isp-relationship-types">ISP Relationship Types</h2>
+<h2>ISP Relationship Types</h2>
 <div class="cards">
 <div class="card"><div class="card-title">Transit</div><p>Paid relationship. Customer ISP pays provider ISP to carry traffic to rest of Internet. Example: Tier 2 pays Tier 1.</p></div>
 <div class="card"><div class="card-title">Peering</div><p>Mutual agreement to exchange traffic directly. Usually settlement-free when both benefit equally. Reduces latency and cost.</p></div>
 <div class="card"><div class="card-title">Customer</div><p>Pays ISP for internet access. Gets full internet access (or whatever the service agreement provides).</p></div>
 </div>
 
-<h2 id="isp-connection-types">ISP Connection Types</h2>
+<h2>ISP Connection Types</h2>
 <div class="cards">
 <div class="card"><div class="card-title">Single-Homed</div><p>One ISP. Simple and cheap. Single point of failure. No BGP required.</p></div>
 <div class="card"><div class="card-title">Dual-Homed</div><p>Two links to the SAME ISP. Better fault tolerance but ISP-level failure still affects all.</p></div>
@@ -704,10 +703,10 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 `},
 
 {id:"bgp-neighborship",p:"bgp",label:"BGP Neighbourship Types",content:`
-<h1 id="bgp-neighborship-types">BGP Neighborship Types</h1>
+<h1>BGP Neighborship Types</h1>
 <span class="badge-proto badge-bgp">BGP</span>
 
-<h2 id="ebgp-vs-ibgp">eBGP vs iBGP</h2>
+<h2>eBGP vs iBGP</h2>
 <div class="tbl"><table>
 <tr><th>Feature</th><th>eBGP</th><th>iBGP</th></tr>
 <tr><td>Used Between</td><td>Different ASes</td><td>Same AS</td></tr>
@@ -718,7 +717,7 @@ R1(config-if)#<span class="cmd">crypto map VPN-MAP</span></pre>
 <tr><td>Loop Prevention</td><td>AS_PATH prepend</td><td>Split-horizon rule</td></tr>
 </table></div>
 
-<h2 id="ebgp-configuration">eBGP Configuration</h2>
+<h2>eBGP Configuration</h2>
 <pre><span class="cmt">! R1 in AS 100, R2 in AS 200</span>
 R1(config)#<span class="cmd">router bgp 100</span>
 R1(config-router)#<span class="cmd">neighbor</span> <span class="net">10.0.0.2</span> <span class="cmd">remote-as 200</span>
@@ -728,7 +727,7 @@ R2(config)#<span class="cmd">router bgp 200</span>
 R2(config-router)#<span class="cmd">neighbor</span> <span class="net">10.0.0.1</span> <span class="cmd">remote-as 100</span>
 R2(config-router)#<span class="cmd">network 2.2.2.2 mask 255.255.255.255</span></pre>
 
-<h2 id="ebgp-via-loopback-multi-hop">eBGP via Loopback (Multi-Hop)</h2>
+<h2>eBGP via Loopback (Multi-Hop)</h2>
 <p>By default, eBGP peers must be directly connected (TTL=1). To use loopbacks for stability and redundancy:</p>
 <pre><span class="cmt">! Static routes to reach loopbacks</span>
 R1(config)#<span class="cmd">ip route 2.2.2.2 255.255.255.255</span> <span class="net">10.0.0.2</span>
@@ -740,14 +739,14 @@ R1(config-router)#<span class="cmd">neighbor 2.2.2.2 update-source Loopback0</sp
 R1(config-router)#<span class="cmd">neighbor 2.2.2.2 ebgp-multihop 5</span></pre>
 <div class="note"><strong>Key commands for eBGP via loopback:</strong> <code>update-source</code> changes the source IP to loopback. <code>ebgp-multihop</code> increases TTL beyond 1.</div>
 
-<h2 id="ibgp-configuration">iBGP Configuration</h2>
+<h2>iBGP Configuration</h2>
 <pre><span class="cmt">! Both R1 and R2 in AS 100</span>
 R1(config)#<span class="cmd">router bgp 100</span>
 R1(config-router)#<span class="cmd">neighbor 2.2.2.2 remote-as 100</span>
 R1(config-router)#<span class="cmd">neighbor 2.2.2.2 update-source Loopback0</span></pre>
 <div class="note"><strong>iBGP does NOT require ebgp-multihop</strong> — iBGP already has TTL = 255. But you still need <code>update-source</code> when peering via loopbacks.</div>
 
-<h2 id="why-igp-is-still-needed-with-ibgp">Why IGP is Still Needed With iBGP?</h2>
+<h2>Why IGP is Still Needed With iBGP?</h2>
 <ul>
 <li><strong>BGP doesn't advertise directly connected interfaces</strong> — only what's in the <code>network</code> statement</li>
 <li><strong>BGP needs next-hop reachability</strong> — an IGP (OSPF/EIGRP) provides this</li>
@@ -755,8 +754,8 @@ R1(config-router)#<span class="cmd">neighbor 2.2.2.2 update-source Loopback0</sp
 <li><strong>iBGP full-mesh or Route Reflectors</strong> need IGP to reach all loopbacks</li>
 </ul>
 
-<h2 id="bgp-loop-prevention">BGP Loop Prevention</h2>
-<h3 id="ebgp-loop-prevention-as-path">eBGP Loop Prevention — AS_PATH</h3>
+<h2>BGP Loop Prevention</h2>
+<h3>eBGP Loop Prevention — AS_PATH</h3>
 <p>When a router receives a route whose AS_PATH contains its own ASN, it <strong>rejects</strong> the route. This prevents routing loops between ASes.</p>
 <pre><span class="cmt">Example AS_PATH propagation:</span>
 ISP1 advertises → AS_PATH: 100
@@ -764,7 +763,7 @@ ISP2 receives & re-advertises → AS_PATH: 200 100
 ISP3 receives & re-advertises → AS_PATH: 500 200 100
 <span class="cmt">If ISP1 receives AS_PATH: 500 200 100 → it sees its OWN AS (100) → DROPS route</span></pre>
 
-<h3 id="ibgp-loop-prevention-split-horizon">iBGP Loop Prevention — Split-Horizon</h3>
+<h3>iBGP Loop Prevention — Split-Horizon</h3>
 <p>A route learned from one iBGP peer <strong>must not</strong> be advertised to another iBGP peer. Solutions:</p>
 <div class="cards">
 <div class="card"><div class="card-title">Full Mesh</div><p>Every iBGP router peers directly with every other. n(n-1)/2 sessions. Not scalable.</p></div>
@@ -774,17 +773,17 @@ ISP3 receives & re-advertises → AS_PATH: 500 200 100
 `},
 
 {id:"bgp-tables",p:"bgp",label:"BGP Tables",content:`
-<h1 id="bgp-tables">BGP Tables</h1>
+<h1>BGP Tables</h1>
 <span class="badge-proto badge-bgp">BGP</span>
 
-<h2 id="three-bgp-tables">Three BGP Tables</h2>
+<h2>Three BGP Tables</h2>
 <div class="cards">
 <div class="card"><div class="card-title">BGP Neighbour Table</div><p>Tracks all BGP peers. Shows neighbour IP, AS number, BGP state, prefixes received, uptime. Command: <code>show ip bgp summary</code></p></div>
 <div class="card"><div class="card-title">BGP RIB (BGP Table)</div><p>All BGP-learned routes, even non-best ones. Shows AS_PATH, NEXT_HOP, Weight, Local Pref, Origin. Command: <code>show ip bgp</code></p></div>
 <div class="card"><div class="card-title">IP Routing Table (RIB/FIB)</div><p>Only best route from each protocol. Used for actual packet forwarding. Command: <code>show ip route bgp</code></p></div>
 </div>
 
-<h2 id="reading-the-bgp-table">Reading the BGP Table</h2>
+<h2>Reading the BGP Table</h2>
 <pre><span class="cmd">show ip bgp</span>
 
 BGP table version is 5, local router ID is 1.1.1.1
@@ -806,11 +805,11 @@ Status codes: <span class="val">*</span> valid, <span class="val">></span> best,
 <tr><td>LocPrf 100</td><td>Default Local Preference</td></tr>
 </table></div>
 
-<h2 id="detailed-route-info">Detailed Route Info</h2>
+<h2>Detailed Route Info</h2>
 <pre><span class="cmd">show ip bgp 4.4.4.4</span>
 <span class="cmt">! Shows all paths, which was selected as best, and why</span></pre>
 
-<h2 id="bgp-states">BGP States</h2>
+<h2>BGP States</h2>
 <div class="tbl"><table>
 <tr><th>State</th><th>Description</th></tr>
 <tr><td><strong>Idle</strong></td><td>BGP initialising, waiting for Start event. No messages sent.</td></tr>
@@ -821,7 +820,7 @@ Status codes: <span class="val">*</span> valid, <span class="val">></span> best,
 <tr><td><strong>Established</strong></td><td>Session UP. Exchange Update and Keepalive messages.</td></tr>
 </table></div>
 
-<h2 id="bgp-message-types">BGP Message Types</h2>
+<h2>BGP Message Types</h2>
 <div class="cards">
 <div class="card"><div class="card-title">OPEN</div><p>Initiates the BGP session. Contains: BGP version, AS number, Router ID, Hold time.</p></div>
 <div class="card"><div class="card-title">KEEPALIVE</div><p>Keeps session alive. Sent periodically. Confirms Open message receipt.</p></div>
@@ -829,7 +828,7 @@ Status codes: <span class="val">*</span> valid, <span class="val">></span> best,
 <div class="card"><div class="card-title">NOTIFICATION</div><p>Reports errors. Causes immediate session termination. Session returns to Idle.</p></div>
 </div>
 
-<h2 id="bgp-full-mesh-requirement">BGP Full Mesh Requirement</h2>
+<h2>BGP Full Mesh Requirement</h2>
 <p>In iBGP, every router must form a session with every other router because iBGP does NOT re-advertise routes between iBGP peers (split-horizon). With N routers: <code>n(n-1)/2</code> sessions needed.</p>
 <pre><span class="cmt">! Example: R1, R2, R3, R4 all in AS 200 — Full Mesh</span>
 R1(config)#<span class="cmd">router bgp 200</span>
@@ -840,17 +839,17 @@ R1(config-router)#<span class="cmd">neighbor 10.0.3.2 remote-as 200</span>  <spa
 `},
 
 {id:"bgp-next-hop",p:"bgp",label:"BGP Next-Hop Self",content:`
-<h1 id="bgp-next-hop-self">BGP Next-Hop Self</h1>
+<h1>BGP Next-Hop Self</h1>
 <span class="badge-proto badge-bgp">BGP</span>
 
-<h2 id="the-problem">The Problem</h2>
+<h2>The Problem</h2>
 <p>By default:</p>
 <ul>
 <li><strong>eBGP</strong> → Changes next-hop to itself automatically ✓</li>
 <li><strong>iBGP</strong> → Does NOT change next-hop ✗ (can cause unreachability)</li>
 </ul>
 
-<h2 id="example-scenario">Example Scenario</h2>
+<h2>Example Scenario</h2>
 <pre>AS 100: R1
 AS 200: R2, R3, R4 (R3-R4 are iBGP)
 
@@ -864,14 +863,14 @@ When R3 advertises route from R4 to R2 via iBGP:
   R2 sees next-hop = R4's loopback (4.4.4.4)
   R2 CANNOT reach 4.4.4.4 → route unusable!</pre>
 
-<h2 id="solution-next-hop-self">Solution: next-hop-self</h2>
+<h2>Solution: next-hop-self</h2>
 <pre><span class="cmt">! On R3 — tells R3 to replace the next-hop with its own IP</span>
 R3(config-router)#<span class="cmd">neighbor 2.2.2.2 next-hop-self</span>
 
 <span class="cmt">Now R2 receives: 4.4.4.4/32 via next-hop 10.0.1.2 (R3's IP)</span>
 <span class="cmt">R2 CAN reach R3 → route is usable ✓</span></pre>
 
-<h2 id="full-lab-configuration-with-next-hop-sel">Full Lab Configuration with next-hop-self</h2>
+<h2>Full Lab Configuration with next-hop-self</h2>
 <pre><span class="cmt">! R2 tells R1 about internal routes using its own IP as next-hop</span>
 R2(config)#<span class="cmd">router bgp 200</span>
 R2(config-router)#<span class="cmd">neighbor 10.0.0.1 remote-as 100</span>
@@ -882,10 +881,10 @@ R2(config-router)#<span class="cmd">network 2.2.2.2 mask 255.255.255.255</span><
 `},
 
 {id:"bgp-attributes",p:"bgp",label:"BGP Attributes & Path Selection",content:`
-<h1 id="bgp-attributes-path-selection">BGP Attributes & Path Selection</h1>
+<h1>BGP Attributes & Path Selection</h1>
 <span class="badge-proto badge-bgp">BGP</span>
 
-<h2 id="bgp-attribute-categories">BGP Attribute Categories</h2>
+<h2>BGP Attribute Categories</h2>
 <div class="tbl"><table>
 <tr><th>Category</th><th>Attributes</th><th>Behaviour</th></tr>
 <tr><td>Well-known Mandatory</td><td>AS_PATH, NEXT_HOP, ORIGIN</td><td>Must be in every update; recognised by all</td></tr>
@@ -894,7 +893,7 @@ R2(config-router)#<span class="cmd">network 2.2.2.2 mask 255.255.255.255</span><
 <tr><td>Optional Non-transitive</td><td>MED, ORIGINATOR_ID, CLUSTER_LIST</td><td>Dropped if not recognised</td></tr>
 </table></div>
 
-<h2 id="bgp-best-path-selection-in-order">BGP Best Path Selection (In Order)</h2>
+<h2>BGP Best Path Selection (In Order)</h2>
 <div class="note"><strong>Mnemonic:</strong> <em>We Love Oranges As Oranges Mean Pure Refreshment</em><br>Weight → Local Pref → Originate → AS-Path → Origin → MED → Paths (eBGP>iBGP) → IGP metric → Router ID</div>
 
 <div class="tbl"><table>
@@ -912,24 +911,24 @@ R2(config-router)#<span class="cmd">network 2.2.2.2 mask 255.255.255.255</span><
 <tr><td>11</td><td><strong>Lowest Neighbour IP</strong></td><td>Lower preferred</td><td>Final tie-breaker</td></tr>
 </table></div>
 
-<h2 id="key-attributes-detailed">Key Attributes — Detailed</h2>
-<h3 id="1-weight-cisco-only">1. Weight (Cisco-only)</h3>
+<h2>Key Attributes — Detailed</h2>
+<h3>1. Weight (Cisco-only)</h3>
 <pre>R1(config-router)#<span class="cmd">neighbor 10.0.0.2 weight 500</span>
 <span class="cmt">! Route with weight 500 preferred over default weight 0</span></pre>
 
-<h3 id="2-local-preference">2. Local Preference</h3>
+<h3>2. Local Preference</h3>
 <pre>R1(config)#<span class="cmd">route-map SET_LOCALPREF permit 10</span>
 R1(config-route-map)#<span class="cmd">set local-preference 200</span>
 R1(config-router)#<span class="cmd">neighbor 10.0.0.2 route-map SET_LOCALPREF in</span>
 <span class="cmt">! Higher = preferred. Propagated throughout AS via iBGP.</span></pre>
 
-<h3 id="3-med-multi-exit-discriminator">3. MED (Multi-Exit Discriminator)</h3>
+<h3>3. MED (Multi-Exit Discriminator)</h3>
 <pre>R1(config)#<span class="cmd">route-map SET_MED permit 10</span>
 R1(config-route-map)#<span class="cmd">set metric 50</span>
 R1(config-router)#<span class="cmd">neighbor 10.0.0.2 route-map SET_MED out</span>
 <span class="cmt">! Lower MED = preferred. Tells external AS which path to use to enter your AS.</span></pre>
 
-<h3 id="origin-types">Origin Types</h3>
+<h3>Origin Types</h3>
 <div class="tbl"><table>
 <tr><th>Code</th><th>Name</th><th>Source</th><th>Preference</th></tr>
 <tr><td><code>i</code></td><td>IGP</td><td>network command</td><td>Most preferred</td></tr>
@@ -939,20 +938,20 @@ R1(config-router)#<span class="cmd">neighbor 10.0.0.2 route-map SET_MED out</spa
 `},
 
 {id:"bgp-rr-confederation",p:"bgp",label:"Route Reflector & Confederation",content:`
-<h1 id="route-reflector-confederation">Route Reflector & Confederation</h1>
+<h1>Route Reflector & Confederation</h1>
 <span class="badge-proto badge-bgp">BGP</span>
 
-<h2 id="route-reflector-rr">Route Reflector (RR)</h2>
+<h2>Route Reflector (RR)</h2>
 <p>Without Route Reflectors, iBGP requires <strong>full mesh</strong> (every router peers with every other). This is O(n²) sessions — not scalable. A Route Reflector breaks this requirement.</p>
 
-<h3 id="route-reflector-terminology">Route Reflector Terminology</h3>
+<h3>Route Reflector Terminology</h3>
 <ul>
 <li><strong>RR (Route Reflector):</strong> The central router that reflects routes to clients</li>
 <li><strong>Client:</strong> iBGP peers configured as RR clients</li>
 <li><strong>Non-Client:</strong> Normal iBGP peers (must still be full-mesh among non-clients)</li>
 </ul>
 
-<h3 id="route-advertisement-rules">Route Advertisement Rules</h3>
+<h3>Route Advertisement Rules</h3>
 <div class="tbl"><table>
 <tr><th>RR receives route from…</th><th>Advertises to…</th></tr>
 <tr><td>Client</td><td>All other clients + all non-clients</td></tr>
@@ -960,7 +959,7 @@ R1(config-router)#<span class="cmd">neighbor 10.0.0.2 route-map SET_MED out</spa
 <tr><td>eBGP peer</td><td>All clients + all non-clients</td></tr>
 </table></div>
 
-<h3 id="route-reflector-configuration">Route Reflector Configuration</h3>
+<h3>Route Reflector Configuration</h3>
 <pre><span class="cmt">! R1 = Route Reflector; R2, R3, R4, R5 = Clients</span>
 R1(config)#<span class="cmd">router bgp 100</span>
 R1(config-router)#<span class="cmd">neighbor 10.0.0.2 remote-as 100</span>
@@ -977,17 +976,17 @@ R2(config-router)#<span class="cmd">network 2.2.2.2 mask 255.255.255.255</span>
 R1#<span class="cmd">show ip bgp neighbors 10.0.0.2 | include client</span>
 Route-reflector-client: Yes</pre>
 
-<h2 id="bgp-confederation">BGP Confederation</h2>
+<h2>BGP Confederation</h2>
 <p>BGP Confederation divides one AS into smaller <strong>sub-ASes</strong> while appearing as a single AS to the outside world. Each sub-AS is a mini-AS internally.</p>
 
-<h3 id="why-confederation">Why Confederation?</h3>
+<h3>Why Confederation?</h3>
 <div class="cards">
 <div class="card"><div class="card-title">Avoids Full Mesh</div><p>Sub-ASes use eBGP-like peering between each other — no full mesh needed.</p></div>
 <div class="card"><div class="card-title">Reduces Complexity</div><p>Each sub-AS manages its own internal routing.</p></div>
 <div class="card"><div class="card-title">Hides Internals</div><p>External ASes see only the confederation identifier, not sub-AS numbers.</p></div>
 </div>
 
-<h3 id="confederation-configuration">Confederation Configuration</h3>
+<h3>Confederation Configuration</h3>
 <pre><span class="cmt">! AS 200 divided into sub-ASes: 65001, 65002, 65003</span>
 R2(config)#<span class="cmd">router bgp 65001</span>
 R2(config-router)#<span class="cmd">bgp router-id 10.0.20.1</span>
@@ -1001,14 +1000,14 @@ R2(config-router)#<span class="cmd">neighbor 10.0.1.2 remote-as 65002</span>  <s
 `},
 
 {id:"bgp-community-peergroup",p:"bgp",label:"BGP Community & Peer Groups",content:`
-<h1 id="bgp-community-peer-groups">BGP Community & Peer Groups</h1>
+<h1>BGP Community & Peer Groups</h1>
 <span class="badge-proto badge-bgp">BGP</span>
 
-<h2 id="bgp-community">BGP Community</h2>
+<h2>BGP Community</h2>
 <p>A <strong>BGP Community</strong> is an optional transitive attribute — essentially a "tag" or "sticker" attached to a route. Routers can match community values and apply policies.</p>
 <p>Format: <code>ASN:VALUE</code> e.g., <code>65000:100</code> (32-bit)</p>
 
-<h3 id="well-known-community-values">Well-Known Community Values</h3>
+<h3>Well-Known Community Values</h3>
 <div class="tbl"><table>
 <tr><th>Community</th><th>Action</th></tr>
 <tr><td><code>no-export</code></td><td>Don't advertise outside local AS</td></tr>
@@ -1018,7 +1017,7 @@ R2(config-router)#<span class="cmd">neighbor 10.0.1.2 remote-as 65002</span>  <s
 <tr><td><code>65535:666</code></td><td>Common DDoS blackhole community</td></tr>
 </table></div>
 
-<h3 id="bgp-community-configuration">BGP Community Configuration</h3>
+<h3>BGP Community Configuration</h3>
 <pre><span class="cmt">! R1 — Tag route 10.1.1.0/24 with community 100:10</span>
 R1(config)#<span class="cmd">ip prefix-list SEND_PREFIX seq 5 permit 10.1.1.0/24</span>
 R1(config)#<span class="cmd">route-map TAG_COMM permit 10</span>
@@ -1037,7 +1036,7 @@ R3(config-route-map)#<span class="cmd">match community BLOCK_COMM</span>
 R3(config)#<span class="cmd">router bgp 200</span>
 R3(config-router)#<span class="cmd">neighbor 10.0.1.1 route-map BLOCK_ROUTE in</span></pre>
 
-<h2 id="bgp-redistribution">BGP Redistribution</h2>
+<h2>BGP Redistribution</h2>
 <p>Redistribution injects routes from one routing protocol into another. Example: redistribute OSPF internal routes into BGP for advertisement to ISPs.</p>
 <pre><span class="cmt">! Redistribute BGP into OSPF</span>
 R2(config)#<span class="cmd">router ospf 1</span>
@@ -1047,7 +1046,7 @@ R2(config-router)#<span class="cmd">redistribute bgp 200 subnets</span>
 R2(config)#<span class="cmd">router bgp 200</span>
 R2(config-router)#<span class="cmd">redistribute ospf 1</span></pre>
 
-<h2 id="bgp-peer-groups">BGP Peer Groups</h2>
+<h2>BGP Peer Groups</h2>
 <p>When many iBGP neighbours share identical configuration, a <strong>peer group</strong> applies the config once to a named group.</p>
 <pre><span class="cmt">! R1 with 5 iBGP peers — without peer groups: 5× repeated config</span>
 <span class="cmt">! With peer groups: define once, apply to all</span>
@@ -1068,10 +1067,10 @@ R1(config-router)#<span class="cmd">neighbor 10.0.40.1 peer-group INTERNAL_PEERS
 
 // ════════════════════════════════ OSPF ════════════════════════════════
 {id:"ospf-intro",p:"ospf",label:"OSPF Introduction",content:`
-<h1 id="ospf-open-shortest-path-first">OSPF — Open Shortest Path First</h1>
+<h1>OSPF — Open Shortest Path First</h1>
 <span class="badge-proto badge-ospf">OSPF</span>
 
-<h2 id="what-is-ospf">What is OSPF?</h2>
+<h2>What is OSPF?</h2>
 <p><strong>OSPF (Open Shortest Path First)</strong> is a link-state Interior Gateway Protocol (IGP) used within a single Autonomous System. It builds a complete topology map using LSAs and runs Dijkstra's SPF algorithm to find the best paths.</p>
 <div class="cards">
 <div class="card"><div class="card-title">Algorithm</div><p>Dijkstra's Shortest Path First (SPF)</p></div>
@@ -1082,7 +1081,7 @@ R1(config-router)#<span class="cmd">neighbor 10.0.40.1 peer-group INTERNAL_PEERS
 <div class="card"><div class="card-title">Routing Codes</div><p>O (intra-area), O IA (inter-area), O E1/E2 (external)</p></div>
 </div>
 
-<h2 id="router-roles">Router Roles</h2>
+<h2>Router Roles</h2>
 <div class="tbl"><table>
 <tr><th>Role</th><th>Description</th></tr>
 <tr><td><strong>DR</strong> (Designated Router)</td><td>Elected on multi-access segments. Reduces LSA flooding. All others form adjacency with DR.</td></tr>
@@ -1092,14 +1091,14 @@ R1(config-router)#<span class="cmd">neighbor 10.0.40.1 peer-group INTERNAL_PEERS
 <tr><td><strong>ASBR</strong> (AS Boundary Router)</td><td>Connects OSPF to external routing domains. Generates Type 5 LSAs.</td></tr>
 </table></div>
 
-<h2 id="router-id-election">Router ID Election</h2>
+<h2>Router ID Election</h2>
 <ol>
 <li><strong>Manually configured</strong> Router ID (highest priority)</li>
 <li>Highest <strong>Loopback</strong> interface IP</li>
 <li>Highest active <strong>Physical</strong> interface IP</li>
 </ol>
 
-<h2 id="basic-ospf-configuration">Basic OSPF Configuration</h2>
+<h2>Basic OSPF Configuration</h2>
 <pre>Router(config)#<span class="cmd">router ospf 1</span>
 Router(config-router)#<span class="cmd">router-id 1.1.1.1</span>
 Router(config-router)#<span class="cmd">network 192.168.1.0 0.0.0.255 area 0</span>
@@ -1112,7 +1111,7 @@ Router#<span class="cmd">show ip ospf database</span>          <span class="cmt"
 Router#<span class="cmd">show ip ospf interface brief</span>   <span class="cmt">! Interface costs</span>
 Router#<span class="cmd">show ip route ospf</span>             <span class="cmt">! OSPF routes in routing table</span></pre>
 
-<h2 id="wildcard-mask-reference">Wildcard Mask Reference</h2>
+<h2>Wildcard Mask Reference</h2>
 <div class="tbl"><table>
 <tr><th>CIDR</th><th>Subnet Mask</th><th>Wildcard</th></tr>
 <tr><td>/8</td><td>255.0.0.0</td><td>0.255.255.255</td></tr>
@@ -1128,10 +1127,10 @@ Router#<span class="cmd">show ip route ospf</span>             <span class="cmt"
 `},
 
 {id:"ospf-states",p:"ospf",label:"OSPF States",content:`
-<h1 id="ospf-states">OSPF States</h1>
+<h1>OSPF States</h1>
 <span class="badge-proto badge-ospf">OSPF</span>
 
-<h2 id="ospf-neighbour-state-machine">OSPF Neighbour State Machine</h2>
+<h2>OSPF Neighbour State Machine</h2>
 <p>OSPF establishes neighbour relationships through a well-defined sequence of states. Three tables are built during this process:</p>
 <ul>
 <li><strong>Neighbour Table:</strong> List of all OSPF neighbours and their state</li>
@@ -1152,10 +1151,10 @@ Router#<span class="cmd">show ip route ospf</span>             <span class="cmt"
 
 <div class="tip"><strong>Full State</strong> is the healthy state. All well-functioning OSPF neighbours should show <strong>Full</strong> in <code>show ip ospf neighbor</code>. Exception: DROthers show <strong>2-Way</strong> with each other (only Full with DR/BDR).</div>
 
-<h2 id="dr-bdr-election">DR/BDR Election</h2>
+<h2>DR/BDR Election</h2>
 <p>On broadcast networks (Ethernet), OSPF elects a DR and BDR to reduce LSA flooding. Without DR/BDR, every router would flood LSAs to every other router = n(n-1)/2 adjacencies. With DR/BDR: only n-1 adjacencies.</p>
 
-<h3 id="election-process">Election Process</h3>
+<h3>Election Process</h3>
 <ol>
 <li>Highest OSPF <strong>priority</strong> wins (default = 1, range 0–255)</li>
 <li>Priority 0 = never becomes DR or BDR</li>
@@ -1173,10 +1172,10 @@ Router#<span class="cmd">show ip ospf neighbor</span>
 `},
 
 {id:"ospf-areas",p:"ospf",label:"OSPF Areas",content:`
-<h1 id="ospf-areas-deep-dive">OSPF Areas (Deep Dive)</h1>
+<h1>OSPF Areas (Deep Dive)</h1>
 <span class="badge-proto badge-ospf">OSPF</span>
 
-<h2 id="ospf-area-types">OSPF Area Types</h2>
+<h2>OSPF Area Types</h2>
 <div class="tbl"><table>
 <tr><th>Area Type</th><th>Allows Type 3?</th><th>Allows Type 5?</th><th>Type 7?</th><th>Default Route?</th></tr>
 <tr><td>Backbone (Area 0)</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td></tr>
@@ -1187,27 +1186,27 @@ Router#<span class="cmd">show ip ospf neighbor</span>
 <tr><td>Totally NSSA</td><td>No</td><td>No</td><td>Yes</td><td>Yes (from ABR)</td></tr>
 </table></div>
 
-<h3 id="stub-area">Stub Area</h3>
+<h3>Stub Area</h3>
 <p>Blocks external routes (Type 5 LSAs). Allows inter-area routes (Type 3). Receives a default route from ABR. Use when no ASBR is present and external routing is not needed.</p>
 <pre><span class="cmt">! Must be configured on ALL routers in the area including ABR</span>
 Router(config-router)#<span class="cmd">area 1 stub</span></pre>
 
-<h3 id="totally-stubby-area-cisco">Totally Stubby Area (Cisco)</h3>
+<h3>Totally Stubby Area (Cisco)</h3>
 <p>Blocks BOTH Type 3 and Type 5. Only a default route (0.0.0.0/0) enters the area. Smallest routing table possible. Only ABR needs <code>no-summary</code>.</p>
 <pre><span class="cmt">! ABR only — adds no-summary</span>
 Router(config-router)#<span class="cmd">area 2 stub no-summary</span>
 <span class="cmt">! Internal routers — just stub</span>
 Router(config-router)#<span class="cmd">area 2 stub</span></pre>
 
-<h3 id="nssa-not-so-stubby-area">NSSA — Not-So-Stubby Area</h3>
+<h3>NSSA — Not-So-Stubby Area</h3>
 <p>Allows external routes via Type 7 LSAs (generated by ASBR inside NSSA). Blocks regular Type 5 LSAs from outside. ABR converts Type 7 to Type 5 when leaving NSSA.</p>
 <pre>Router(config-router)#<span class="cmd">area 3 nssa</span></pre>
 
-<h3 id="totally-nssa">Totally NSSA</h3>
+<h3>Totally NSSA</h3>
 <p>Blocks Type 3 and Type 5. Only allows Type 7 (internal ASBR) and a default route from ABR. Most restrictive NSSA variant.</p>
 <pre>Router(config-router)#<span class="cmd">area 2 nssa no-summary</span>  <span class="cmt">! ABR only</span></pre>
 
-<h3 id="areas-that-cannot-be-stub">Areas that CANNOT be stub</h3>
+<h3>Areas that CANNOT be stub</h3>
 <ul>
 <li>Backbone Area 0</li>
 <li>Virtually connected non-backbone areas</li>
@@ -1216,10 +1215,10 @@ Router(config-router)#<span class="cmd">area 2 stub</span></pre>
 `},
 
 {id:"ospf-lsa",p:"ospf",label:"OSPF LSA Types",content:`
-<h1 id="ospf-lsa-types">OSPF LSA Types</h1>
+<h1>OSPF LSA Types</h1>
 <span class="badge-proto badge-ospf">OSPF</span>
 
-<h2 id="link-state-advertisement-types">Link-State Advertisement Types</h2>
+<h2>Link-State Advertisement Types</h2>
 <div class="tbl"><table>
 <tr><th>Type</th><th>Name</th><th>Generated By</th><th>Flooded To</th><th>Purpose</th></tr>
 <tr><td>1</td><td>Router LSA</td><td>Every router</td><td>Within area only</td><td>Describes router's interfaces and their state/cost</td></tr>
@@ -1233,7 +1232,7 @@ Router(config-router)#<span class="cmd">area 2 stub</span></pre>
 <tr><td>9–11</td><td>Opaque LSAs</td><td>Various</td><td>Varies by type</td><td>Extensions (e.g., Traffic Engineering info, MPLS-TE)</td></tr>
 </table></div>
 
-<h2 id="key-lsa-verification-commands">Key LSA Verification Commands</h2>
+<h2>Key LSA Verification Commands</h2>
 <pre>Router#<span class="cmd">show ip ospf database</span>              <span class="cmt">! Full LSDB</span>
 Router#<span class="cmd">show ip ospf database router</span>       <span class="cmt">! Type 1 LSAs</span>
 Router#<span class="cmd">show ip ospf database network</span>      <span class="cmt">! Type 2 LSAs</span>
@@ -1245,10 +1244,10 @@ Router#<span class="cmd">show ip ospf border-routers</span>         <span class=
 `},
 
 {id:"ospf-metric",p:"ospf",label:"OSPF Metric & Path Selection",content:`
-<h1 id="ospf-metric-path-selection">OSPF Metric & Path Selection</h1>
+<h1>OSPF Metric & Path Selection</h1>
 <span class="badge-proto badge-ospf">OSPF</span>
 
-<h2 id="ospf-cost-formula">OSPF Cost Formula</h2>
+<h2>OSPF Cost Formula</h2>
 <pre><span class="cmt">OSPF Cost = Reference Bandwidth / Interface Bandwidth</span>
 Default Reference Bandwidth = 100 Mbps
 
@@ -1260,7 +1259,7 @@ Default Reference Bandwidth = 100 Mbps
 
 <div class="warn"><strong>Problem:</strong> Default reference bandwidth makes all gigabit and faster links have the same cost (1). This prevents OSPF from distinguishing between a 1 Gbps and 10 Gbps link!</div>
 
-<h2 id="fix-adjust-reference-bandwidth">Fix: Adjust Reference Bandwidth</h2>
+<h2>Fix: Adjust Reference Bandwidth</h2>
 <pre><span class="cmt">! Set reference to 10 Gbps (recommended for modern networks)</span>
 R1(config)#<span class="cmd">router ospf 1</span>
 R1(config-router)#<span class="cmd">auto-cost reference-bandwidth 10000</span>
@@ -1273,26 +1272,26 @@ R1(config-router)#<span class="cmd">auto-cost reference-bandwidth 10000</span>
 
 <span class="cmt">! Must be configured consistently on ALL routers in OSPF domain!</span></pre>
 
-<h2 id="manually-set-cost">Manually Set Cost</h2>
+<h2>Manually Set Cost</h2>
 <pre>R1(config)#<span class="cmd">interface GigabitEthernet0/0</span>
 R1(config-if)#<span class="cmd">ip ospf cost 5</span>
 <span class="cmt">! Overrides calculated cost. Useful for traffic engineering.</span></pre>
 
-<h2 id="path-selection-example">Path Selection Example</h2>
+<h2>Path Selection Example</h2>
 <div class="tbl"><table>
 <tr><th>Path</th><th>Interface Types</th><th>Total Cost (10G ref)</th><th>Selected?</th></tr>
 <tr><td>R1 → R2 → R4</td><td>GigabitEthernet (G0/x)</td><td>10 + 10 = 20</td><td>✅ Yes (lower cost)</td></tr>
 <tr><td>R1 → R3 → R5 → R4</td><td>FastEthernet (F0/x)</td><td>100 + 100 + 100 = 300</td><td>❌ No</td></tr>
 </table></div>
 
-<h2 id="verification-2">Verification</h2>
+<h2>Verification</h2>
 <pre>R1#<span class="cmd">show ip ospf interface</span>          <span class="cmt">! Shows cost per interface</span>
 R1#<span class="cmd">show ip ospf interface brief</span>   <span class="cmt">! Summary of costs</span>
 R1#<span class="cmd">show ip route ospf</span>             <span class="cmt">! OSPF routes installed</span></pre>
 `},
 
 {id:"ospf-network-types",p:"ospf",label:"OSPF Network Types",content:`
-<h1 id="ospf-network-types">OSPF Network Types</h1>
+<h1>OSPF Network Types</h1>
 <span class="badge-proto badge-ospf">OSPF</span>
 
 <div class="tbl"><table>
@@ -1303,7 +1302,7 @@ R1#<span class="cmd">show ip route ospf</span>             <span class="cmt">! O
 <tr><td>Point-to-Multipoint</td><td>No</td><td>Multicast</td><td>30/120 sec</td><td>Hub-and-spoke partial mesh</td></tr>
 </table></div>
 
-<h2 id="network-type-configuration">Network Type Configuration</h2>
+<h2>Network Type Configuration</h2>
 <pre><span class="cmt">! Broadcast (default on Ethernet)</span>
 R1(config-if)#<span class="cmd">ip ospf network broadcast</span>
 
@@ -1319,12 +1318,12 @@ R1(config-if)#<span class="cmd">ip ospf network point-to-multipoint</span></pre>
 
 <div class="note"><strong>Important:</strong> Hello and Dead timers <strong>must match</strong> on both sides of an OSPF adjacency. If they don't match, neighbour will not form.</div>
 
-<h2 id="ospf-authentication">OSPF Authentication</h2>
-<h3 id="plaintext-type-1-lab-test-only">Plaintext (Type 1) — Lab/Test only</h3>
+<h2>OSPF Authentication</h2>
+<h3>Plaintext (Type 1) — Lab/Test only</h3>
 <pre>R1(config-if)#<span class="cmd">ip ospf authentication</span>
 R1(config-if)#<span class="cmd">ip ospf authentication-key cisco123</span></pre>
 
-<h3 id="md5-type-2-production">MD5 (Type 2) — Production</h3>
+<h3>MD5 (Type 2) — Production</h3>
 <pre>R1(config-if)#<span class="cmd">ip ospf authentication message-digest</span>
 R1(config-if)#<span class="cmd">ip ospf message-digest-key 1 md5 TechwithRavish123</span>
 <span class="cmt">! Key ID and password must match on both sides</span>
@@ -1332,18 +1331,18 @@ R1(config-if)#<span class="cmd">ip ospf message-digest-key 1 md5 TechwithRavish1
 `},
 
 {id:"ospf-advanced",p:"ospf",label:"OSPF Advanced Features",content:`
-<h1 id="ospf-advanced-features">OSPF Advanced Features</h1>
+<h1>OSPF Advanced Features</h1>
 <span class="badge-proto badge-ospf">OSPF</span>
 
-<h2 id="route-summarisation">Route Summarisation</h2>
-<h3 id="inter-area-summarisation-abr-type-3-lsas">Inter-Area Summarisation (ABR — Type 3 LSAs)</h3>
+<h2>Route Summarisation</h2>
+<h3>Inter-Area Summarisation (ABR — Type 3 LSAs)</h3>
 <pre><span class="cmt">! Summarise 10.1.0.0/24 and 10.1.1.0/24 → 10.1.0.0/23</span>
 R1(config-router)#<span class="cmd">area 1 range 10.1.0.0 255.255.254.0</span></pre>
 
-<h3 id="external-summarisation-asbr-type-5-lsas">External Summarisation (ASBR — Type 5 LSAs)</h3>
+<h3>External Summarisation (ASBR — Type 5 LSAs)</h3>
 <pre>R1(config-router)#<span class="cmd">summary-address 192.168.0.0 255.255.252.0</span></pre>
 
-<h2 id="ospf-default-route">OSPF Default Route</h2>
+<h2>OSPF Default Route</h2>
 <p>By default, OSPF does not advertise a default route. Use <code>default-information originate</code> on the router that has the default route.</p>
 <pre><span class="cmt">! R2 has a static default route pointing to the Internet</span>
 R2(config)#<span class="cmd">ip route 0.0.0.0 0.0.0.0 &lt;next-hop&gt;</span>
@@ -1354,7 +1353,7 @@ R2(config-router)#<span class="cmd">default-information originate always</span>
 
 <span class="cmt">! Other routers will see: O*E2 0.0.0.0/0 [110/1] via R2</span></pre>
 
-<h2 id="ospf-virtual-links">OSPF Virtual Links</h2>
+<h2>OSPF Virtual Links</h2>
 <p>Connects a non-backbone area that cannot directly connect to Area 0. The virtual link runs through a transit area (must be a standard area — not stub).</p>
 <pre><span class="cmt">! Area 2 disconnected from Area 0 via Area 1</span>
 <span class="cmt">! R1 in Area 0, R3 in Area 1 (also connects to Area 2)</span>
@@ -1365,7 +1364,7 @@ R3(config-router)#<span class="cmd">area 1 virtual-link 1.1.1.1</span>  <span cl
 
 R1#<span class="cmd">show ip ospf virtual-links</span>  <span class="cmt">! Verify virtual link status</span></pre>
 
-<h2 id="ospf-passive-interface">OSPF Passive Interface</h2>
+<h2>OSPF Passive Interface</h2>
 <pre><span class="cmt">! Stops Hello packets on interface but still advertises the network</span>
 R1(config-router)#<span class="cmd">passive-interface FastEthernet0/1</span>
 
@@ -1373,7 +1372,7 @@ R1(config-router)#<span class="cmd">passive-interface FastEthernet0/1</span>
 R1(config-router)#<span class="cmd">passive-interface default</span>
 R1(config-router)#<span class="cmd">no passive-interface GigabitEthernet0/0</span></pre>
 
-<h2 id="ospf-route-filtering">OSPF Route Filtering</h2>
+<h2>OSPF Route Filtering</h2>
 <div class="tbl"><table>
 <tr><th>Location</th><th>Method</th><th>Purpose</th></tr>
 <tr><td>ABR (inter-area)</td><td><code>area X filter-list prefix NAME in/out</code></td><td>Filter Type 3 LSAs between areas</td></tr>
@@ -1385,7 +1384,7 @@ R1(config)#<span class="cmd">ip prefix-list BLOCK_AREA1 seq 5 deny 10.10.1.0/24<
 R1(config)#<span class="cmd">ip prefix-list BLOCK_AREA1 seq 10 permit 0.0.0.0/0 le 32</span>
 R1(config-router)#<span class="cmd">area 1 filter-list prefix BLOCK_AREA1 in</span></pre>
 
-<h2 id="ospfv3-for-ipv6">OSPFv3 for IPv6</h2>
+<h2>OSPFv3 for IPv6</h2>
 <pre>R1(config)#<span class="cmd">ipv6 unicast-routing</span>
 R1(config)#<span class="cmd">ipv6 router ospf 1</span>
 R1(config-rtr)#<span class="cmd">router-id 1.1.1.1</span>  <span class="cmt">! Must be configured manually</span>
@@ -1395,7 +1394,7 @@ R1(config-if)#<span class="cmd">ipv6 ospf 1 area 0</span>  <span class="cmt">! A
 R1#<span class="cmd">show ipv6 ospf neighbor</span>
 R1#<span class="cmd">show ipv6 route ospf</span></pre>
 
-<h2 id="ospf-troubleshooting-guide">OSPF Troubleshooting Guide</h2>
+<h2>OSPF Troubleshooting Guide</h2>
 <div class="tbl"><table>
 <tr><th>Symptom</th><th>Common Cause</th><th>Fix</th></tr>
 <tr><td>Neighbour stuck in Idle</td><td>Network/interface mismatch, firewall blocking port 89</td><td>Check ACLs, verify OSPF is enabled on interface</td></tr>
@@ -1408,7 +1407,7 @@ R1#<span class="cmd">show ipv6 route ospf</span></pre>
 <tr><td>Router ID conflict</td><td>Two routers same RID</td><td><code>router-id X.X.X.X</code> must be unique</td></tr>
 </table></div>
 
-<h2 id="ospf-bgp-redistribution">OSPF BGP Redistribution</h2>
+<h2>OSPF BGP Redistribution</h2>
 <pre><span class="cmt">! Redistribute BGP into OSPF</span>
 Router(config-router)#<span class="cmd">redistribute bgp 150 subnets</span>
 
@@ -1419,10 +1418,10 @@ Router(config-router)#<span class="cmd">redistribute ospf 1</span></pre>
 
 // ════════════════════════════════ EIGRP ════════════════════════════════
 {id:"eigrp-intro",p:"eigrp",label:"EIGRP Introduction",content:`
-<h1 id="eigrp-enhanced-igrp">EIGRP — Enhanced IGRP</h1>
+<h1>EIGRP — Enhanced IGRP</h1>
 <span class="badge-proto badge-eigrp">EIGRP</span>
 
-<h2 id="what-is-eigrp">What is EIGRP?</h2>
+<h2>What is EIGRP?</h2>
 <p><strong>EIGRP (Enhanced Interior Gateway Routing Protocol)</strong> is a Cisco-developed advanced distance-vector routing protocol that uses the <strong>DUAL algorithm</strong> for 100% loop-free, fast-converging routing.</p>
 
 <div class="cards">
@@ -1434,7 +1433,7 @@ Router(config-router)#<span class="cmd">redistribute ospf 1</span></pre>
 <div class="card"><div class="card-title">Max Hop Count</div><p>100 (default). Max paths: 4 (default).</p></div>
 </div>
 
-<h2 id="key-features">Key Features</h2>
+<h2>Key Features</h2>
 <ul>
 <li><strong>Hybrid Protocol:</strong> Combines distance-vector and link-state characteristics</li>
 <li><strong>DUAL Algorithm:</strong> Guarantees loop-free paths at all times, even during topology changes</li>
@@ -1446,13 +1445,13 @@ Router(config-router)#<span class="cmd">redistribute ospf 1</span></pre>
 <li><strong>SIA (Stuck-In-Active) Timer:</strong> 180 seconds — detects hung query states</li>
 </ul>
 
-<h2 id="routing-codes">Routing Codes</h2>
+<h2>Routing Codes</h2>
 <ul>
 <li><code>D</code> — Internal EIGRP route</li>
 <li><code>D EX</code> — External EIGRP route (redistributed)</li>
 </ul>
 
-<h2 id="eigrp-packet-types">EIGRP Packet Types</h2>
+<h2>EIGRP Packet Types</h2>
 <div class="tbl"><table>
 <tr><th>Packet Type</th><th>Purpose</th><th>Reliable?</th></tr>
 <tr><td>Hello</td><td>Neighbour discovery and keepalive</td><td>No (multicast)</td></tr>
@@ -1462,7 +1461,7 @@ Router(config-router)#<span class="cmd">redistribute ospf 1</span></pre>
 <tr><td>Acknowledgement</td><td>Acknowledge reliable packets (Update/Query/Reply)</td><td>N/A</td></tr>
 </table></div>
 
-<h2 id="eigrp-configuration-ipv4">EIGRP Configuration (IPv4)</h2>
+<h2>EIGRP Configuration (IPv4)</h2>
 <pre><span class="cmt">! Classic mode</span>
 Router(config)#<span class="cmd">router eigrp 100</span>        <span class="cmt">! AS number = 100</span>
 Router(config-router)#<span class="cmd">no auto-summary</span>  <span class="cmt">! ALWAYS disable in modern networks</span>
@@ -1474,7 +1473,7 @@ Router#<span class="cmd">show ip eigrp neighbors</span>   <span class="cmt">! Ne
 Router#<span class="cmd">show ip eigrp topology</span>    <span class="cmt">! Topology table (all paths)</span>
 Router#<span class="cmd">show ip route eigrp</span>      <span class="cmt">! Routing table (best paths only)</span></pre>
 
-<h2 id="eigrp-for-ipv6">EIGRP for IPv6</h2>
+<h2>EIGRP for IPv6</h2>
 <pre><span class="cmt">! IPv6 EIGRP uses per-interface activation (no network command)</span>
 R1(config)#<span class="cmd">ipv6 unicast-routing</span>
 R1(config)#<span class="cmd">ipv6 router eigrp 100</span>
@@ -1485,17 +1484,17 @@ R1(config-if)#<span class="cmd">ipv6 eigrp 100</span>  <span class="cmt">! Activ
 `},
 
 {id:"eigrp-dual",p:"eigrp",label:"EIGRP DUAL & Tables",content:`
-<h1 id="eigrp-dual-algorithm-tables">EIGRP DUAL Algorithm & Tables</h1>
+<h1>EIGRP DUAL Algorithm & Tables</h1>
 <span class="badge-proto badge-eigrp">EIGRP</span>
 
-<h2 id="three-eigrp-tables">Three EIGRP Tables</h2>
+<h2>Three EIGRP Tables</h2>
 <div class="cards">
 <div class="card"><div class="card-title">Neighbour Table</div><p>Directly connected EIGRP neighbours. Contains IP address, interface, hold time, uptime. Command: <code>show ip eigrp neighbors</code></p></div>
 <div class="card"><div class="card-title">Topology Table</div><p>ALL routes learned from ALL neighbours, including successors and feasible successors. Not in the routing table. Command: <code>show ip eigrp topology</code></p></div>
 <div class="card"><div class="card-title">Routing Table</div><p>Only the BEST path (Successor) from the topology table. Used for actual forwarding. Command: <code>show ip route eigrp</code></p></div>
 </div>
 
-<h2 id="dual-terminology">DUAL Terminology</h2>
+<h2>DUAL Terminology</h2>
 <div class="tbl"><table>
 <tr><th>Term</th><th>Definition</th></tr>
 <tr><td><strong>Feasible Distance (FD)</strong></td><td>Best (lowest) metric from THIS router to reach the destination</td></tr>
@@ -1517,7 +1516,7 @@ P <span class="net">10.0.3.0/24</span>, 1 successors, FD is <span class="val">15
         via <span class="net">192.168.13.2</span> (<span class="val">161280</span>/<span class="val">158720</span>), GigabitEthernet0/1
                    <span class="cmt">^-- This is a Feasible Successor if RD (158720) < Successor FD (158720)? No, equal = not FS</span></pre>
 
-<h2 id="eigrp-metric-formula">EIGRP Metric Formula</h2>
+<h2>EIGRP Metric Formula</h2>
 <pre><span class="cmt">Composite Metric = 256 × [(10^7 / Min_BW_kbps) + (Sum_Delay_us / 10)]</span>
 
 <span class="cmt">K Values (default: K1=1, K2=0, K3=1, K4=0, K5=0)</span>
@@ -1537,7 +1536,7 @@ Metric        = 256 × (100 + 520) = 256 × 620 = <span class="val">158720</span
 <tr><td>K5</td><td>MTU</td><td>0 (not used)</td></tr>
 </table></div>
 
-<h2 id="manipulating-metric-for-path-control">Manipulating Metric for Path Control</h2>
+<h2>Manipulating Metric for Path Control</h2>
 <pre><span class="cmt">! Change bandwidth to make a path less preferred</span>
 Router(config)#<span class="cmd">interface FastEthernet0/0</span>
 Router(config-if)#<span class="cmd">bandwidth 10000</span>  <span class="cmt">! Sets BW to 10 Mbps for EIGRP metric only</span>
@@ -1545,14 +1544,14 @@ Router(config-if)#<span class="cmd">bandwidth 10000</span>  <span class="cmt">! 
 `},
 
 {id:"eigrp-advanced",p:"eigrp",label:"EIGRP Advanced",content:`
-<h1 id="eigrp-advanced-features">EIGRP Advanced Features</h1>
+<h1>EIGRP Advanced Features</h1>
 <span class="badge-proto badge-eigrp">EIGRP</span>
 
-<h2 id="load-balancing">Load Balancing</h2>
-<h3 id="equal-cost-load-balancing-ecmp">Equal-Cost Load Balancing (ECMP)</h3>
+<h2>Load Balancing</h2>
+<h3>Equal-Cost Load Balancing (ECMP)</h3>
 <p>When two or more paths have <strong>identical metrics</strong>, EIGRP installs all of them. Default max = 4 paths.</p>
 
-<h3 id="unequal-cost-load-balancing-variance">Unequal-Cost Load Balancing (Variance)</h3>
+<h3>Unequal-Cost Load Balancing (Variance)</h3>
 <p>EIGRP's unique feature. Uses <code>variance</code> multiplier to include higher-cost Feasible Successors in load balancing.</p>
 <pre><span class="cmt">! Example: Best path metric = 100, secondary = 150</span>
 <span class="cmt">! Without variance: only best path used</span>
@@ -1567,7 +1566,7 @@ D  10.0.4.0/24 [90/100] via 192.168.12.2
                [90/150] via 192.168.13.3</pre>
 <div class="warn"><strong>Important:</strong> The backup path MUST be a Feasible Successor (RD &lt; Successor's FD) to be used in unequal-cost load balancing.</div>
 
-<h2 id="auto-summary-and-vlsm-issues">Auto-Summary and VLSM Issues</h2>
+<h2>Auto-Summary and VLSM Issues</h2>
 <p>By default (old IOS), EIGRP summarises routes at classful boundaries when crossing major network boundaries. This can cause routing black holes with VLSM.</p>
 <pre><span class="cmt">! Problem: R3 has 10.0.11.0/24, R4 has 10.0.12.0/24</span>
 <span class="cmt">! With auto-summary, both advertise as 10.0.0.0/8 → conflict!</span>
@@ -1575,7 +1574,7 @@ D  10.0.4.0/24 [90/100] via 192.168.12.2
 <span class="cmt">! FIX: Always disable auto-summary in modern networks</span>
 R1(config-router)#<span class="cmd">no auto-summary</span></pre>
 
-<h2 id="eigrp-passive-interface">EIGRP Passive Interface</h2>
+<h2>EIGRP Passive Interface</h2>
 <pre><span class="cmt">! Prevents EIGRP Hello packets on interface</span>
 <span class="cmt">! Network still advertised but no neighbour forms</span>
 R1(config-router)#<span class="cmd">passive-interface Loopback0</span>
@@ -1584,7 +1583,7 @@ R1(config-router)#<span class="cmd">passive-interface Loopback0</span>
 R1(config-router)#<span class="cmd">passive-interface default</span>
 R1(config-router)#<span class="cmd">no passive-interface GigabitEthernet0/0</span></pre>
 
-<h2 id="eigrp-authentication-md5">EIGRP Authentication (MD5)</h2>
+<h2>EIGRP Authentication (MD5)</h2>
 <pre><span class="cmt">! Step 1: Create key chain</span>
 R1(config)#<span class="cmd">key chain EIGRP_KEYS</span>
 R1(config-keychain)#<span class="cmd">key 1</span>
@@ -1597,7 +1596,7 @@ R1(config-if)#<span class="cmd">ip authentication key-chain eigrp 100 EIGRP_KEYS
 <span class="cmt">! Verify</span>
 R1#<span class="cmd">show ip eigrp interfaces detail</span>  <span class="cmt">! Shows "Authentication mode is MD5"</span></pre>
 
-<h2 id="eigrp-stub-routing">EIGRP Stub Routing</h2>
+<h2>EIGRP Stub Routing</h2>
 <p>In hub-and-spoke designs, spoke (stub) routers are configured as stubs to prevent unnecessary EIGRP queries traversing WAN links.</p>
 <pre><span class="cmt">! Stub types:</span>
 <span class="cmt">! connected — only advertise directly connected</span>
@@ -1611,7 +1610,7 @@ R1(config-router)#<span class="cmd">eigrp stub connected summary</span>  <span c
 <span class="cmt">! Verify</span>
 R1#<span class="cmd">show ip protocols</span>  <span class="cmt">! Shows stub type</span></pre>
 
-<h2 id="eigrp-route-filtering">EIGRP Route Filtering</h2>
+<h2>EIGRP Route Filtering</h2>
 <pre><span class="cmt">! Method 1: ACL-based distribute-list</span>
 R2(config)#<span class="cmd">access-list 10 deny 10.1.1.0 0.0.0.255</span>
 R2(config)#<span class="cmd">access-list 10 permit any</span>
@@ -1628,8 +1627,8 @@ R3(config-route-map)#<span class="cmd">match ip address prefix-list BLOCK_R1</sp
 R3(config)#<span class="cmd">route-map FILTER permit 20</span>
 R3(config-router)#<span class="cmd">distribute-list route-map FILTER out GigabitEthernet0/1</span></pre>
 
-<h2 id="eigrp-redistribution">EIGRP Redistribution</h2>
-<h3 id="eigrp-ospf">EIGRP ↔ OSPF</h3>
+<h2>EIGRP Redistribution</h2>
+<h3>EIGRP ↔ OSPF</h3>
 <pre><span class="cmt">! On border router R2 running both EIGRP and OSPF</span>
 <span class="cmt">! Redistribute OSPF into EIGRP (metric required!)</span>
 R2(config-router)#<span class="cmd">redistribute ospf 1 metric 10000 100 255 1 1500</span>
@@ -1639,7 +1638,7 @@ R2(config-router)#<span class="cmd">redistribute ospf 1 metric 10000 100 255 1 1
 R2(config)#<span class="cmd">router ospf 1</span>
 R2(config-router)#<span class="cmd">redistribute eigrp 100 subnets</span></pre>
 
-<h3 id="eigrp-bgp">EIGRP ↔ BGP</h3>
+<h3>EIGRP ↔ BGP</h3>
 <pre><span class="cmt">! Redistribute EIGRP into BGP</span>
 R2(config)#<span class="cmd">router bgp 100</span>
 R2(config-router)#<span class="cmd">redistribute eigrp 100</span>
@@ -1752,7 +1751,7 @@ searchInput.addEventListener('input', () => {
   );
 
   const protoColors = { bgp: 'var(--blue)', ospf: 'var(--green)', eigrp: 'var(--orange)', vpn: 'var(--purple)' };
-  searchPanel.innerHTML = `<h2 style="margin-bottom:16px" id="results-length-result-results-length-1-s">${results.length} result${results.length !== 1 ? 's' : ''} for "<span style="color:var(--blue)">${searchInput.value}</span>"</h2>`;
+  searchPanel.innerHTML = `<h2 style="margin-bottom:16px">${results.length} result${results.length !== 1 ? 's' : ''} for "<span style="color:var(--blue)">${searchInput.value}</span>"</h2>`;
   if (!results.length) {
     searchPanel.innerHTML += `<p>No results found. Try different keywords.</p>`;
     return;
