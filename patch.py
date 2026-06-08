@@ -1,247 +1,358 @@
 #!/usr/bin/env python3
 """
 ╔══════════════════════════════════════════════════════════════╗
-║         StudyHub — Mobile Patch Injector  (patch.py)        ║
+║        StudyHub — Mobile Patch Injector  (patch.py v2)      ║
 ║                                                              ║
-║  Injects mobile.css + sidebar JS into every .html file      ║
-║  in the current directory (or a specified path).            ║
+║  For each HTML page:                                         ║
+║    1. Ensures correct viewport meta tag                      ║
+║    2. Injects <link> to mobile.css                          ║
+║    3. If the page has NO existing mobile sidebar/menu,       ║
+║       builds a TOC drawer from the page's h1/h2 headings    ║
+║       and injects the hamburger button + JS                  ║
+║    4. If the page already has a working sidebar toggle       ║
+║       (e.g. Nutanix guide), leaves it completely alone      ║
 ║                                                              ║
 ║  Usage:                                                      ║
-║    python3 patch.py            # patch current directory     ║
-║    python3 patch.py --dry-run  # preview only, no changes   ║
-║    python3 patch.py --undo     # remove injected patches     ║
+║    python3 patch.py            # patch all pages            ║
+║    python3 patch.py --dry-run  # preview, no file changes   ║
+║    python3 patch.py --undo     # restore from .bak files    ║
 ╚══════════════════════════════════════════════════════════════╝
 """
 
-import os
-import sys
-import shutil
-import re
-from datetime import datetime
+import os, sys, re, shutil
+from html.parser import HTMLParser
 
-# ── Configuration ──────────────────────────────────────────
-CSS_FILE       = "mobile.css"
-BACKUP_SUFFIX  = ".bak"
-SKIP_FILES     = {"index.html"}          # already mobile-friendly
-INJECT_MARKER  = "<!-- MOBILE-PATCH -->" # tag to detect already-patched files
+CSS_FILE      = "mobile.css"
+BACKUP_EXT    = ".bak"
+PATCH_MARKER  = "<!-- SHN-PATCH -->"
 
-# What we inject just before </head>
-CSS_INJECT = f"""  {INJECT_MARKER}
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <link rel="stylesheet" href="{CSS_FILE}">"""
+# Files to skip entirely (already fully mobile-friendly)
+SKIP_FILES = {"index.html"}
 
-# Sidebar toggle JS — injected just before </body>
-# Only activates on pages that have a sidebar element
-JS_INJECT = """  <!-- MOBILE-PATCH-JS -->
+# If a page contains any of these strings it already has
+# its own working mobile sidebar — skip injecting the TOC drawer
+EXISTING_NAV_SIGNALS = [
+    "toggleSidebar",
+    "shn-toggle",        # our own marker from a previous patch run
+    "menu-toggle",
+]
+
+# ── Terminal colours ─────────────────────────────────────────
+def _c(t, code): return f"\033[{code}m{t}\033[0m"
+green  = lambda t: _c(t, "0;32")
+yellow = lambda t: _c(t, "0;33")
+red    = lambda t: _c(t, "0;31")
+cyan   = lambda t: _c(t, "0;36")
+bold   = lambda t: _c(t, "1;37")
+dim    = lambda t: _c(t, "0;90")
+
+# ── Extract headings from HTML ───────────────────────────────
+class HeadingExtractor(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.headings = []        # list of (tag, id, text)
+        self._current_tag = None
+        self._current_id  = None
+        self._current_text = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in ("h1", "h2", "h3"):
+            self._current_tag  = tag
+            self._current_id   = dict(attrs).get("id", "")
+            self._current_text = []
+
+    def handle_endtag(self, tag):
+        if tag == self._current_tag and tag in ("h1", "h2", "h3"):
+            text = re.sub(r'\s+', ' ', "".join(self._current_text)).strip()
+            if text and len(text) > 2:
+                self.headings.append((self._current_tag,
+                                      self._current_id, text))
+            self._current_tag = None
+
+    def handle_data(self, data):
+        if self._current_tag:
+            self._current_text.append(data)
+
+def extract_headings(html):
+    parser = HeadingExtractor()
+    parser.feed(html)
+    return parser.headings   # [(tag, id, text), ...]
+
+# ── Auto-add id attrs to headings that lack them ─────────────
+def ensure_heading_ids(html):
+    seen = {}
+    def make_id(text):
+        slug = re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-')
+        slug = slug[:40]
+        seen[slug] = seen.get(slug, 0) + 1
+        return slug if seen[slug] == 1 else f"{slug}-{seen[slug]}"
+
+    def replacer(m):
+        tag   = m.group(1)          # e.g. h2
+        attrs = m.group(2)          # everything inside the tag
+        rest  = m.group(3)          # closing >
+        if 'id=' in attrs.lower():
+            return m.group(0)       # already has id
+        # grab text from the next close tag
+        return m.group(0)           # we'll do a second pass below
+
+    # Simpler: just add id="" to any h1/h2/h3 that lacks one,
+    # derived from their text content
+    def add_id(m):
+        full    = m.group(0)
+        open_t  = m.group(1)   # e.g. <h2 class="h2">
+        tag     = m.group(2)   # e.g. h2
+        inner   = m.group(3)   # content between open and close
+        close_t = m.group(4)   # e.g. </h2>
+        if 'id=' in open_t.lower():
+            return full
+        text = re.sub(r'<[^>]+>', '', inner).strip()
+        if not text:
+            return full
+        hid = make_id(text)
+        new_open = open_t.rstrip('>') + f' id="{hid}">'
+        return new_open + inner + close_t
+
+    html = re.sub(
+        r'(<(h[123])\b[^>]*>)(.*?)(</\2>)',
+        add_id, html, flags=re.DOTALL | re.IGNORECASE
+    )
+    return html
+
+# ── Build the TOC drawer HTML ─────────────────────────────────
+def build_drawer(headings, page_title):
+    items = []
+    num   = 0
+    for tag, hid, text in headings:
+        # Only h1 and h2 in the TOC (h3 is too granular)
+        if tag not in ("h1", "h2"):
+            continue
+        # Skip very short or noisy headings
+        if len(text) < 3:
+            continue
+        num += 1
+        anchor = f"#{hid}" if hid else "#"
+        num_label = f"{num:02d}" if tag == "h2" else "★"
+        items.append(
+            f'    <a class="shn-link" href="{anchor}" onclick="shnClose()">'
+            f'<span class="shn-link-num">{num_label}</span>{text}</a>'
+        )
+    if not items:
+        return ""
+
+    items_html = "\n".join(items)
+    safe_title = page_title[:30] + ("…" if len(page_title) > 30 else "")
+
+    return f"""
+  {PATCH_MARKER}
+  <!-- SHN: Mobile Nav Drawer -->
+  <div id="shn-overlay" onclick="shnClose()"></div>
+  <button id="shn-toggle" onclick="shnOpen()" aria-label="Open navigation">&#9776;</button>
+  <nav id="shn-drawer" aria-label="Page navigation">
+    <div class="shn-header">
+      <span class="shn-title">Contents</span>
+      <button class="shn-close" onclick="shnClose()" aria-label="Close">&#10005;</button>
+    </div>
+    <a class="shn-back" href="index.html">&#8592; Study Hub Index</a>
+    <div class="shn-group">{safe_title}</div>
+{items_html}
+  </nav>
   <script>
-  (function() {
-    // Only run on mobile
-    if (window.innerWidth > 768) return;
+  (function() {{
+    var drawer  = document.getElementById('shn-drawer');
+    var overlay = document.getElementById('shn-overlay');
+    var toggle  = document.getElementById('shn-toggle');
+    if (!drawer) return;
 
-    var sidebar = document.querySelector(
-      '.sidebar, [class*="sidebar"], [id*="sidebar"], nav.sidebar'
-    );
-    if (!sidebar) return;
+    window.shnOpen = function() {{
+      drawer.classList.add('shn-open');
+      overlay.classList.add('shn-open');
+      toggle.innerHTML = '&#10005;';
+      toggle.setAttribute('aria-expanded', 'true');
+    }};
 
-    // Create overlay
-    var overlay = document.createElement('div');
-    overlay.id = 'mobile-sidebar-overlay';
-    document.body.appendChild(overlay);
+    window.shnClose = function() {{
+      drawer.classList.remove('shn-open');
+      overlay.classList.remove('shn-open');
+      toggle.innerHTML = '&#9776;';
+      toggle.setAttribute('aria-expanded', 'false');
+    }};
 
-    // Create hamburger button
-    var btn = document.createElement('button');
-    btn.id = 'mobile-menu-btn';
-    btn.setAttribute('aria-label', 'Open menu');
-    btn.innerHTML = '&#9776;';
-    document.body.appendChild(btn);
+    /* Highlight active section while scrolling */
+    var links = drawer.querySelectorAll('.shn-link[href^="#"]');
+    if (links.length > 0) {{
+      window.addEventListener('scroll', function() {{
+        var scrollY = window.scrollY + 80;
+        var active  = null;
+        links.forEach(function(l) {{
+          var id  = l.getAttribute('href').slice(1);
+          var el  = id ? document.getElementById(id) : null;
+          if (el && el.offsetTop <= scrollY) {{ active = l; }}
+        }});
+        links.forEach(function(l) {{ l.classList.remove('shn-active'); }});
+        if (active) {{ active.classList.add('shn-active'); }}
+      }}, {{ passive: true }});
+    }}
 
-    // Toggle logic
-    function openSidebar() {
-      sidebar.classList.add('open');
-      overlay.classList.add('show');
-      btn.innerHTML = '&#10005;';
-    }
-    function closeSidebar() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('show');
-      btn.innerHTML = '&#9776;';
-    }
-    btn.addEventListener('click', function() {
-      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-    });
-    overlay.addEventListener('click', closeSidebar);
-
-    // Close on nav link tap
-    sidebar.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', closeSidebar);
-    });
-  })();
+    /* Close on Escape key */
+    document.addEventListener('keydown', function(e) {{
+      if (e.key === 'Escape') shnClose();
+    }});
+  }})();
   </script>"""
 
-# ── Colours for terminal output ────────────────────────────
-def c(text, code): return f"\033[{code}m{text}\033[0m"
-def green(t):  return c(t, "0;32")
-def yellow(t): return c(t, "0;33")
-def red(t):    return c(t, "0;31")
-def cyan(t):   return c(t, "0;36")
-def bold(t):   return c(t, "1;37")
-def dim(t):    return c(t, "0;90")
-
-
-# ── Core patch function ────────────────────────────────────
+# ── Patch a single file ───────────────────────────────────────
 def patch_file(filepath, dry_run=False):
-    filename = os.path.basename(filepath)
+    fname = os.path.basename(filepath)
 
-    with open(filepath, "r", encoding="utf-8", errors="replace") as f:
-        content = f.read()
+    with open(filepath, encoding="utf-8", errors="replace") as f:
+        original = f.read()
 
     # Already patched?
-    if INJECT_MARKER in content:
-        print(f"  {dim('⟳  already patched')}  {dim(filename)}")
+    if PATCH_MARKER in original:
+        print(f"  {dim('⟳  already patched')}       {dim(fname)}")
         return "already"
 
-    modified = content
+    html = original
 
-    # ── Fix viewport meta if missing or wrong ──────────────
-    has_viewport = bool(re.search(
-        r'<meta[^>]+name=["\']viewport["\']', content, re.IGNORECASE
-    ))
-
-    if has_viewport:
-        # Update existing viewport to ensure width=device-width
-        modified = re.sub(
+    # ── Step 1: Fix / add viewport meta ────────────────────
+    vp_tag = '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">'
+    has_vp = bool(re.search(r'<meta[^>]+name=["\']viewport["\']', html, re.I))
+    if has_vp:
+        html = re.sub(
             r'<meta[^>]+name=["\']viewport["\'][^>]*>',
-            '<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">',
-            modified, flags=re.IGNORECASE
+            vp_tag, html, flags=re.I
         )
-        # Inject only the CSS link (not the meta again)
-        css_only = f"  {INJECT_MARKER}\n  <link rel=\"stylesheet\" href=\"{CSS_FILE}\">"
-        modified = re.sub(r'(</head>)', css_only + r'\n\1',
-                          modified, count=1, flags=re.IGNORECASE)
     else:
-        # Inject both meta and CSS link
-        modified = re.sub(r'(</head>)', CSS_INJECT + r'\n\1',
-                          modified, count=1, flags=re.IGNORECASE)
+        html = re.sub(r'(<head[^>]*>)',
+                      r'\1\n  ' + vp_tag,
+                      html, count=1, flags=re.I)
 
-    # ── Inject sidebar JS before </body> ───────────────────
-    modified = re.sub(r'(</body>)', JS_INJECT + r'\n\1',
-                      modified, count=1, flags=re.IGNORECASE)
+    # ── Step 2: Inject mobile.css link before </head> ───────
+    css_link = f'  <link rel="stylesheet" href="{CSS_FILE}">'
+    if CSS_FILE not in html:
+        html = re.sub(r'(</head>)',
+                      css_link + r'\n\1',
+                      html, count=1, flags=re.I)
 
-    if modified == content:
-        print(f"  {yellow('⚠  no </head> found')}  {filename}")
+    # ── Step 3: Decide whether to inject the TOC drawer ─────
+    has_existing_nav = any(sig in html for sig in EXISTING_NAV_SIGNALS)
+
+    if not has_existing_nav:
+        # Ensure headings have id attributes
+        html = ensure_heading_ids(html)
+
+        # Extract headings and page title
+        headings = extract_headings(html)
+        title_m  = re.search(r'<title[^>]*>(.*?)</title>', html, re.I|re.S)
+        page_title = title_m.group(1).strip() if title_m else fname
+
+        # Build drawer (only if we found headings)
+        drawer_html = build_drawer(headings, page_title)
+        if drawer_html:
+            # Inject right after <body> opening tag
+            html = re.sub(r'(<body[^>]*>)',
+                          r'\1' + drawer_html,
+                          html, count=1, flags=re.I)
+            nav_note = f"{cyan('+ TOC drawer')} ({len(headings)} headings)"
+        else:
+            nav_note = yellow("no headings found — skipped TOC")
+    else:
+        nav_note = dim("existing nav detected — skipped TOC")
+
+    # Sanity: did anything change?
+    if html == original:
+        print(f"  {yellow('⚠  nothing changed')}       {fname}")
         return "skip"
 
     if dry_run:
-        print(f"  {cyan('○  would patch')}        {filename}")
+        print(f"  {cyan('○  would patch')}            {fname}  [{nav_note}]")
         return "dry"
 
-    # Backup original
-    backup_path = filepath + BACKUP_SUFFIX
-    shutil.copy2(filepath, backup_path)
-
-    # Write patched version
+    # Backup & write
+    shutil.copy2(filepath, filepath + BACKUP_EXT)
     with open(filepath, "w", encoding="utf-8") as f:
-        f.write(modified)
+        f.write(html)
 
-    print(f"  {green('✔  patched')}            {filename}  {dim(f'(backup: {filename}.bak)')}")
+    print(f"  {green('✔  patched')}                {fname}  [{nav_note}]")
     return "patched"
 
-
-# ── Undo / remove patches ──────────────────────────────────
+# ── Undo a single file ─────────────────────────────────────────
 def undo_file(filepath):
-    filename = os.path.basename(filepath)
-    backup_path = filepath + BACKUP_SUFFIX
-
-    if os.path.exists(backup_path):
-        shutil.copy2(backup_path, filepath)
-        os.remove(backup_path)
-        print(f"  {green('✔  restored')}           {filename}")
+    fname   = os.path.basename(filepath)
+    backup  = filepath + BACKUP_EXT
+    if os.path.exists(backup):
+        shutil.copy2(backup, filepath)
+        os.remove(backup)
+        print(f"  {green('✔  restored')}               {fname}")
         return "restored"
-    else:
-        print(f"  {yellow('⚠  no backup found')}    {filename}")
-        return "skip"
+    print(f"  {yellow('⚠  no backup')}              {fname}")
+    return "skip"
 
-
-# ── Main ───────────────────────────────────────────────────
+# ── Main ───────────────────────────────────────────────────────
 def main():
-    args = sys.argv[1:]
+    args    = sys.argv[1:]
     dry_run = "--dry-run" in args
     undo    = "--undo"    in args
 
-    # Determine working directory
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    work_dir   = script_dir
+    work_dir = os.path.dirname(os.path.abspath(__file__))
 
-    # Print banner
     print()
     print(bold("  ╔══════════════════════════════════════════╗"))
-    print(bold("  ║   StudyHub Mobile Patch Injector        ║"))
+    print(bold("  ║   StudyHub Mobile Patch  v2             ║"))
     print(bold("  ╚══════════════════════════════════════════╝"))
     print()
-    print(f"  Dir      : {cyan(work_dir)}")
-    print(f"  CSS file : {cyan(CSS_FILE)}")
-    print(f"  Mode     : {yellow('DRY RUN (no files changed)') if dry_run else (red('UNDO patches') if undo else green('PATCH'))}")
+    print(f"  Dir  : {cyan(work_dir)}")
+    print(f"  Mode : {yellow('DRY RUN') if dry_run else (red('UNDO') if undo else green('PATCH'))}")
     print()
 
-    # Check mobile.css exists (for patching mode)
-    if not undo:
-        css_path = os.path.join(work_dir, CSS_FILE)
-        if not os.path.exists(css_path):
-            print(red(f"  ✗  {CSS_FILE} not found in {work_dir}"))
-            print(yellow(f"     Copy mobile.css into your Studyhtml folder first.\n"))
-            sys.exit(1)
+    # Check mobile.css present
+    if not undo and not os.path.exists(os.path.join(work_dir, CSS_FILE)):
+        print(red(f"  ✗  {CSS_FILE} not found. Copy it into Studyhtml/ first.\n"))
+        sys.exit(1)
 
-    # Collect HTML files
-    html_files = sorted([
+    # Gather HTML files
+    files = sorted([
         os.path.join(work_dir, f)
         for f in os.listdir(work_dir)
         if f.lower().endswith(".html") and f not in SKIP_FILES
     ])
 
-    if not html_files:
+    if not files:
         print(yellow("  ⚠  No HTML files found.\n"))
         sys.exit(0)
 
-    print(f"  Found {bold(str(len(html_files)))} HTML file(s) to process:\n")
+    print(f"  Found {bold(str(len(files)))} HTML file(s):\n")
 
-    # Process each file
-    counts = {"patched": 0, "already": 0, "restored": 0, "skip": 0, "dry": 0}
-    for fp in html_files:
-        if undo:
-            result = undo_file(fp)
-        else:
-            result = patch_file(fp, dry_run=dry_run)
+    counts = {}
+    for fp in files:
+        result = undo_file(fp) if undo else patch_file(fp, dry_run)
         counts[result] = counts.get(result, 0) + 1
 
-    # Summary
     print()
-    print(f"  {'─'*44}")
+    print(f"  {'─'*46}")
     if undo:
-        print(f"  {green('Restored')} : {counts['restored']}   "
-              f"{yellow('No backup')} : {counts['skip']}")
+        print(f"  {green('Restored')}: {counts.get('restored',0)}   "
+              f"{yellow('No backup')}: {counts.get('skip',0)}")
     elif dry_run:
-        print(f"  {cyan('Would patch')} : {counts['dry']}   "
-              f"{dim('Already OK')} : {counts['already']}")
+        print(f"  {cyan('Would patch')}: {counts.get('dry',0)}   "
+              f"{dim('Already OK')}: {counts.get('already',0)}")
     else:
-        print(f"  {green('Patched')}   : {counts['patched']}   "
-              f"{dim('Already OK')} : {counts['already']}   "
-              f"{yellow('Skipped')} : {counts['skip']}")
+        print(f"  {green('Patched')} : {counts.get('patched',0)}   "
+              f"{dim('Already OK')}: {counts.get('already',0)}   "
+              f"{yellow('Skipped')}: {counts.get('skip',0)}")
     print()
 
-    if not undo and not dry_run and counts["patched"] > 0:
-        print(f"  {green('✔  Done!')} All pages are now mobile-friendly.")
-        print(f"  {dim('Backups saved as .html.bak — run with --undo to revert.')}")
-        print()
-        git_commit = 'git commit -m "Add mobile responsiveness"'
-        print(f"  Commit to GitHub:")
+    if not undo and not dry_run and counts.get("patched", 0) > 0:
+        git_msg = 'git commit -m "Add mobile responsiveness v2"'
+        print(f"  {green('✔  Done!')} Push to GitHub:")
         print(f"    {cyan('git add .')}")
-        print(f"    {cyan(git_commit)}")
+        print(f"    {cyan(git_msg)}")
         print(f"    {cyan('git push')}")
-    elif not undo and not dry_run and counts["patched"] == 0:
-        print(f"  {green('✔  All files already patched — nothing to do.')}")
+    elif not undo and not dry_run:
+        print(f"  {green('✔  All files already up to date.')}")
 
     print()
-
 
 if __name__ == "__main__":
     main()

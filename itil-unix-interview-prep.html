@@ -767,10 +767,67 @@
     .change-types { grid-template-columns: 1fr; }
   }
 </style>
-  <!-- MOBILE-PATCH -->
   <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
+  <!-- SHN-PATCH -->
+  <!-- SHN: Mobile Nav Drawer -->
+  <div id="shn-overlay" onclick="shnClose()"></div>
+  <button id="shn-toggle" onclick="shnOpen()" aria-label="Open navigation">&#9776;</button>
+  <nav id="shn-drawer" aria-label="Page navigation">
+    <div class="shn-header">
+      <span class="shn-title">Contents</span>
+      <button class="shn-close" onclick="shnClose()" aria-label="Close">&#10005;</button>
+    </div>
+    <a class="shn-back" href="index.html">&#8592; Study Hub Index</a>
+    <div class="shn-group">ITIL Process Guide — Unix/Linu…</div>
+    <a class="shn-link" href="#itil-processesunix-linux-operations" onclick="shnClose()"><span class="shn-link-num">★</span>ITIL ProcessesUnix/Linux Operations</a>
+    <a class="shn-link" href="#l3-scenario-walkthroughs" onclick="shnClose()"><span class="shn-link-num">02</span>L3 Scenario Walkthroughs</a>
+    <a class="shn-link" href="#key-itil-concepts-to-know" onclick="shnClose()"><span class="shn-link-num">03</span>Key ITIL Concepts to Know</a>
+  </nav>
+  <script>
+  (function() {
+    var drawer  = document.getElementById('shn-drawer');
+    var overlay = document.getElementById('shn-overlay');
+    var toggle  = document.getElementById('shn-toggle');
+    if (!drawer) return;
+
+    window.shnOpen = function() {
+      drawer.classList.add('shn-open');
+      overlay.classList.add('shn-open');
+      toggle.innerHTML = '&#10005;';
+      toggle.setAttribute('aria-expanded', 'true');
+    };
+
+    window.shnClose = function() {
+      drawer.classList.remove('shn-open');
+      overlay.classList.remove('shn-open');
+      toggle.innerHTML = '&#9776;';
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    /* Highlight active section while scrolling */
+    var links = drawer.querySelectorAll('.shn-link[href^="#"]');
+    if (links.length > 0) {
+      window.addEventListener('scroll', function() {
+        var scrollY = window.scrollY + 80;
+        var active  = null;
+        links.forEach(function(l) {
+          var id  = l.getAttribute('href').slice(1);
+          var el  = id ? document.getElementById(id) : null;
+          if (el && el.offsetTop <= scrollY) { active = l; }
+        });
+        links.forEach(function(l) { l.classList.remove('shn-active'); });
+        if (active) { active.classList.add('shn-active'); }
+      }, { passive: true });
+    }
+
+    /* Close on Escape key */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') shnClose();
+    });
+  })();
+  </script>
 
 <div class="progress-bar" id="progressBar"></div>
 
@@ -778,7 +835,7 @@
 <header>
   <div class="container">
     <div class="header-tag">Interview Preparation Guide</div>
-    <h1>ITIL Processes<br><span>Unix/Linux Operations</span></h1>
+    <h1 id="itil-processesunix-linux-operations">ITIL Processes<br><span>Unix/Linux Operations</span></h1>
     <p>L2 · L3 Engineer Readiness · ITSM Framework Reference</p>
     <div class="header-stats">
       <div class="stat"><span class="stat-num">11</span><span class="stat-label">ITIL Processes</span></div>
@@ -1768,7 +1825,7 @@ iftop -i eth0</div>
     <div id="scenarios" style="scroll-margin-top:70px;">
       <div style="margin-bottom:20px; padding:16px 0;">
         <div class="header-tag">Advanced</div>
-        <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--text-bright);margin-top:10px;">L3 Scenario Walkthroughs</h2>
+        <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:var(--text-bright);margin-top:10px;" id="l3-scenario-walkthroughs">L3 Scenario Walkthroughs</h2>
         <p style="color:var(--text-dim);font-size:11px;margin-top:6px;">Expected to discuss: Incident handling · Troubleshooting · Change process · Rollback · RCA · Validation</p>
       </div>
 
@@ -1822,7 +1879,7 @@ iftop -i eth0</div>
     <div id="key-concepts" style="scroll-margin-top:70px; margin-top:32px;">
       <div style="margin-bottom:16px;">
         <div class="header-tag">Quick Reference</div>
-        <h2 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text-bright);margin-top:10px;">Key ITIL Concepts to Know</h2>
+        <h2 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:var(--text-bright);margin-top:10px;" id="key-itil-concepts-to-know">Key ITIL Concepts to Know</h2>
       </div>
       <div class="concept-grid">
         <div class="concept-card"><div class="concept-title">SLA</div><div class="concept-body">Service Level Agreement — formal agreement between IT and the business defining service targets</div></div>
@@ -1884,50 +1941,5 @@ iftop -i eth0</div>
   // Open first card by default
   document.querySelector('.card-body').classList.add('open');
 </script>
-  <!-- MOBILE-PATCH-JS -->
-  <script>
-  (function() {
-    // Only run on mobile
-    if (window.innerWidth > 768) return;
-
-    var sidebar = document.querySelector(
-      '.sidebar, [class*="sidebar"], [id*="sidebar"], nav.sidebar'
-    );
-    if (!sidebar) return;
-
-    // Create overlay
-    var overlay = document.createElement('div');
-    overlay.id = 'mobile-sidebar-overlay';
-    document.body.appendChild(overlay);
-
-    // Create hamburger button
-    var btn = document.createElement('button');
-    btn.id = 'mobile-menu-btn';
-    btn.setAttribute('aria-label', 'Open menu');
-    btn.innerHTML = '&#9776;';
-    document.body.appendChild(btn);
-
-    // Toggle logic
-    function openSidebar() {
-      sidebar.classList.add('open');
-      overlay.classList.add('show');
-      btn.innerHTML = '&#10005;';
-    }
-    function closeSidebar() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('show');
-      btn.innerHTML = '&#9776;';
-    }
-    btn.addEventListener('click', function() {
-      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-    });
-    overlay.addEventListener('click', closeSidebar);
-
-    // Close on nav link tap
-    sidebar.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', closeSidebar);
-    });
-  })();
-  </script>
 </body>
 </html>

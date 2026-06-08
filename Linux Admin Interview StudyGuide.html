@@ -378,15 +378,70 @@
     .toc-btn { padding: 12px 14px; font-size: 10px; }
   }
 </style>
-  <!-- MOBILE-PATCH -->
   <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
+  <!-- SHN-PATCH -->
+  <!-- SHN: Mobile Nav Drawer -->
+  <div id="shn-overlay" onclick="shnClose()"></div>
+  <button id="shn-toggle" onclick="shnOpen()" aria-label="Open navigation">&#9776;</button>
+  <nav id="shn-drawer" aria-label="Page navigation">
+    <div class="shn-header">
+      <span class="shn-title">Contents</span>
+      <button class="shn-close" onclick="shnClose()" aria-label="Close">&#10005;</button>
+    </div>
+    <a class="shn-back" href="index.html">&#8592; Study Hub Index</a>
+    <div class="shn-group">Linux/Unix Admin — Interview S…</div>
+    <a class="shn-link" href="#linux-unix-sysadmincommand-reference" onclick="shnClose()"><span class="shn-link-num">★</span>Linux & Unix SysadminCommand Reference</a>
+  </nav>
+  <script>
+  (function() {
+    var drawer  = document.getElementById('shn-drawer');
+    var overlay = document.getElementById('shn-overlay');
+    var toggle  = document.getElementById('shn-toggle');
+    if (!drawer) return;
+
+    window.shnOpen = function() {
+      drawer.classList.add('shn-open');
+      overlay.classList.add('shn-open');
+      toggle.innerHTML = '&#10005;';
+      toggle.setAttribute('aria-expanded', 'true');
+    };
+
+    window.shnClose = function() {
+      drawer.classList.remove('shn-open');
+      overlay.classList.remove('shn-open');
+      toggle.innerHTML = '&#9776;';
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
+    /* Highlight active section while scrolling */
+    var links = drawer.querySelectorAll('.shn-link[href^="#"]');
+    if (links.length > 0) {
+      window.addEventListener('scroll', function() {
+        var scrollY = window.scrollY + 80;
+        var active  = null;
+        links.forEach(function(l) {
+          var id  = l.getAttribute('href').slice(1);
+          var el  = id ? document.getElementById(id) : null;
+          if (el && el.offsetTop <= scrollY) { active = l; }
+        });
+        links.forEach(function(l) { l.classList.remove('shn-active'); });
+        if (active) { active.classList.add('shn-active'); }
+      }, { passive: true });
+    }
+
+    /* Close on Escape key */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') shnClose();
+    });
+  })();
+  </script>
 
 <div class="header">
   <div class="header-inner">
     <div class="badge">Interview Preparation Guide</div>
-    <h1>Linux & Unix <span>Sysadmin</span><br>Command Reference</h1>
+    <h1 id="linux-unix-sysadmincommand-reference">Linux & Unix <span>Sysadmin</span><br>Command Reference</h1>
     <p class="subtitle">// 10 Topics · Commands · Q&amp;A · Real-world Scenarios · Best Practices</p>
   </div>
 </div>
@@ -1674,50 +1729,5 @@ document.querySelectorAll('.topic-card:first-of-type').forEach(card => {
   card.classList.add('open');
 });
 </script>
-  <!-- MOBILE-PATCH-JS -->
-  <script>
-  (function() {
-    // Only run on mobile
-    if (window.innerWidth > 768) return;
-
-    var sidebar = document.querySelector(
-      '.sidebar, [class*="sidebar"], [id*="sidebar"], nav.sidebar'
-    );
-    if (!sidebar) return;
-
-    // Create overlay
-    var overlay = document.createElement('div');
-    overlay.id = 'mobile-sidebar-overlay';
-    document.body.appendChild(overlay);
-
-    // Create hamburger button
-    var btn = document.createElement('button');
-    btn.id = 'mobile-menu-btn';
-    btn.setAttribute('aria-label', 'Open menu');
-    btn.innerHTML = '&#9776;';
-    document.body.appendChild(btn);
-
-    // Toggle logic
-    function openSidebar() {
-      sidebar.classList.add('open');
-      overlay.classList.add('show');
-      btn.innerHTML = '&#10005;';
-    }
-    function closeSidebar() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('show');
-      btn.innerHTML = '&#9776;';
-    }
-    btn.addEventListener('click', function() {
-      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-    });
-    overlay.addEventListener('click', closeSidebar);
-
-    // Close on nav link tap
-    sidebar.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', closeSidebar);
-    });
-  })();
-  </script>
 </body>
 </html>
