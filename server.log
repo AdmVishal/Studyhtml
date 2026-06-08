@@ -1,0 +1,130 @@
+════════════════════════════════════════════════════════
+  StudyHub Server START
+  Date     : 2026-06-08 21:00:45
+  Port     : 8080
+  Dir      : /root/Studyhtml
+  PID file : /root/Studyhtml/.server.pid
+════════════════════════════════════════════════════════
+[2026-06-08 21:00:46] Server started  PID=65  PORT=8080  DIR=/root/Studyhtml
+192.168.1.6 - - [08/Jun/2026 21:02:02] code 404, message File not found
+192.168.1.6 - - [08/Jun/2026 21:02:02] "GET / HTTP/1.1" 200 -
+192.168.1.6 - - [08/Jun/2026 21:02:02] "GET /Linux%20Admin%20InterviewGuide.html HTTP/1.1" 404 -
+----------------------------------------
+Exception occurred during processing of request from ('192.168.1.6', 50076)
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/http/server.py", line 727, in send_head
+    f = open(path, 'rb')
+FileNotFoundError: [Errno 2] No such file or directory: '/root/Studyhtml/Linux Admin InterviewGuide.html'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.9/http/server.py", line 1305, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.9/http/server.py", line 668, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.9/socketserver.py", line 747, in __init__
+    self.handle()
+  File "/usr/lib/python3.9/http/server.py", line 433, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.9/http/server.py", line 421, in handle_one_request
+    method()
+  File "/usr/lib/python3.9/http/server.py", line 672, in do_GET
+    f = self.send_head()
+  File "/usr/lib/python3.9/http/server.py", line 729, in send_head
+    self.send_error(HTTPStatus.NOT_FOUND, "File not found")
+  File "/usr/lib/python3.9/http/server.py", line 488, in send_error
+    self.wfile.write(body)
+  File "/usr/lib/python3.9/socketserver.py", line 826, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+192.168.1.6 - - [08/Jun/2026 21:02:13] "GET /rhel%20study%20guide.html HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('192.168.1.6', 50079)
+Traceback (most recent call last):
+  File "/usr/lib/python3.9/socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.9/http/server.py", line 1305, in finish_request
+    self.RequestHandlerClass(request, client_address, self,
+  File "/usr/lib/python3.9/http/server.py", line 668, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.9/socketserver.py", line 747, in __init__
+    self.handle()
+  File "/usr/lib/python3.9/http/server.py", line 433, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.9/http/server.py", line 401, in handle_one_request
+    self.raw_requestline = self.rfile.readline(65537)
+  File "/usr/lib/python3.9/socket.py", line 704, in readinto
+    return self._sock.recv_into(b)
+ConnectionResetError: [Errno 104] Connection reset by peer
+----------------------------------------
+[2026-06-08 21:07:18] Server stopped  PID=65
+────────────────────────────────────────────────────────
+  Server STOPPED  at 2026-06-08 21:07:18
+────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════
+  StudyHub Server START
+  Date     : 2026-06-08 21:07:29
+  Port     : 8080
+  Dir      : /root/Studyhtml
+  PID file : /root/Studyhtml/.server.pid
+════════════════════════════════════════════════════════
+[2026-06-08 21:07:30] Server started  PID=128  PORT=8080  DIR=/root/Studyhtml
+192.168.1.6 - - [08/Jun/2026 21:07:38] "GET / HTTP/1.1" 200 -
+192.168.1.5 - - [08/Jun/2026 21:10:14] "GET / HTTP/1.1" 200 -
+192.168.1.5 - - [08/Jun/2026 21:10:18] code 404, message File not found
+192.168.1.5 - - [08/Jun/2026 21:10:18] "GET /favicon.ico HTTP/1.1" 404 -
+192.168.1.5 - - [08/Jun/2026 21:10:30] "GET /itil-unix-interview-prep.html HTTP/1.1" 200 -
+[2026-06-08 21:18:23] Server stopped  PID=128
+────────────────────────────────────────────────────────
+  Server STOPPED  at 2026-06-08 21:18:23
+────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════
+  StudyHub Server START
+  Date     : 2026-06-08 21:18:34
+  Port     : 8080
+  Dir      : /root/Studyhtml
+  PID file : /root/Studyhtml/.server.pid
+════════════════════════════════════════════════════════
+[2026-06-08 21:18:35] Server started  PID=165  PORT=8080  DIR=/root/Studyhtml
+192.168.1.5 - - [08/Jun/2026 21:19:06] "GET / HTTP/1.1" 304 -
+192.168.1.5 - - [08/Jun/2026 21:19:09] code 404, message File not found
+192.168.1.5 - - [08/Jun/2026 21:19:09] "GET /favicon.ico HTTP/1.1" 404 -
+[2026-06-08 21:20:01] Server stopped  PID=165
+────────────────────────────────────────────────────────
+  Server STOPPED  at 2026-06-08 21:20:01
+────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════
+  StudyHub Server START
+  Date     : 2026-06-08 21:20:11
+  Port     : 8080
+  Dir      : /root/Studyhtml
+  PID file : /root/Studyhtml/.server.pid
+════════════════════════════════════════════════════════
+[2026-06-08 21:20:12] Server started  PID=185  PORT=8080  DIR=/root/Studyhtml
+192.168.1.5 - - [08/Jun/2026 21:20:23] "GET / HTTP/1.1" 304 -
+192.168.1.5 - - [08/Jun/2026 21:20:38] "GET /OS%20Admin%20L3%20Interview%20Prep.html HTTP/1.1" 200 -
+192.168.1.5 - - [08/Jun/2026 21:21:18] code 404, message File not found
+192.168.1.5 - - [08/Jun/2026 21:21:18] "GET /index HTTP/1.1" 404 -
+192.168.1.5 - - [08/Jun/2026 21:21:36] "GET /Nutanix%20Foundations%20Guide.html HTTP/1.1" 200 -
+[2026-06-08 21:24:31] Server stopped  PID=185
+────────────────────────────────────────────────────────
+  Server STOPPED  at 2026-06-08 21:24:31
+────────────────────────────────────────────────────────
+════════════════════════════════════════════════════════
+  StudyHub Server START
+  Date     : 2026-06-08 21:24:37
+  Port     : 8080
+  Dir      : /root/Studyhtml
+  PID file : /root/Studyhtml/.server.pid
+════════════════════════════════════════════════════════
+[2026-06-08 21:24:38] Server started  PID=221  PORT=8080  DIR=/root/Studyhtml
+192.168.1.5 - - [08/Jun/2026 21:24:42] "GET /Network%20Study%20Reference.html HTTP/1.1" 200 -
+192.168.1.5 - - [08/Jun/2026 21:25:18] "GET /rhel%20study%20guide.html HTTP/1.1" 200 -
+[2026-06-08 21:25:49] Server stopped  PID=221
+────────────────────────────────────────────────────────
+  Server STOPPED  at 2026-06-08 21:25:49
+────────────────────────────────────────────────────────
