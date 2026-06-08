@@ -167,91 +167,199 @@
   .port-num { font-weight: 700; color: var(--accent2); }
 </style>
   <link rel="stylesheet" href="mobile.css">
+
+<style id="shn-page-mobile">
+/* StudyHub mobile patch — auto-generated */
+@media (max-width: 768px) {
+
+  /* Hide the built-in sidebar on mobile — replaced by SHN drawer */
+  .sidebar, #sidebar, [class*="sidebar"] {
+    display:none!important; visibility:hidden!important;
+  }
+  /* Also hide any fixed aside navigation */
+  aside { display:none!important; }
+  /* Remove left margin that was reserved for sidebar */
+  .main-content, .content, main, .main, body > div:not(#shn-nav):not(#shn-overlay) {
+    margin-left:0!important; max-width:100%!important;
+    padding-left:14px!important; padding-right:14px!important;
+    width:100%!important; box-sizing:border-box!important;
+  }
+
+  /* Prevent horizontal overflow on all elements */
+  *, *::before, *::after { max-width:100%; box-sizing:border-box; }
+  pre, code, .code-group, .code-block {
+    overflow-x:auto!important; -webkit-overflow-scrolling:touch!important;
+    white-space:pre!important; font-size:.7rem!important;
+  }
+  /* Flex rows that need to wrap */
+  .lifecycle, .workflow, [class*="lifecycle"], [class*="flow-row"],
+  [class*="step-row"], [class*="card-row"] {
+    flex-wrap:wrap!important; gap:8px!important;
+  }
+  /* Tab bars / pill nav */
+  [class*="tab-bar"], [class*="topic-nav"], [class*="filter"],
+  .topics, .nav-tabs {
+    overflow-x:auto!important; -webkit-overflow-scrolling:touch!important;
+    flex-wrap:nowrap!important; white-space:nowrap!important;
+    padding-bottom:4px!important;
+  }
+  /* Command/card grids */
+  [class*="cmd-grid"], [class*="command-grid"],
+  [class*="card-grid"], [class*="section-grid"] {
+    grid-template-columns:1fr!important; gap:10px!important;
+  }
+  /* Wide flex containers inside content */
+  [class*="section-content"], [class*="content-area"],
+  [class*="two-col"], [class*="split"] {
+    flex-direction:column!important; width:100%!important;
+  }
+  /* Priority/badge chips that wrap */
+  [class*="priority"], [class*="badge"], [class*="chip"],
+  [class*="tag-row"] { flex-wrap:wrap!important; }
+  /* Modal/overlay full width */
+  [class*="modal"], [class*="panel"], [class*="drawer"] {
+    max-width:100vw!important;
+  }
+  /* Stat/metric grids */
+  [class*="stat-grid"], [class*="metric"], [class*="kpi"] {
+    grid-template-columns:1fr 1fr!important;
+  }
+  /* Large padding containers */
+  [class*="hero"], [class*="banner"], [class*="header-wrap"] {
+    padding:20px 14px!important;
+  }
+}
+</style>
 </head>
 <body>
-  <!-- SHN-PATCH -->
-  <!-- SHN: Mobile Nav Drawer -->
-  <div id="shn-overlay" onclick="shnClose()"></div>
-  <button id="shn-toggle" onclick="shnOpen()" aria-label="Open navigation">&#9776;</button>
-  <nav id="shn-drawer" aria-label="Page navigation">
-    <div class="shn-header">
-      <span class="shn-title">Contents</span>
-      <button class="shn-close" onclick="shnClose()" aria-label="Close">&#10005;</button>
-    </div>
-    <a class="shn-back" href="index.html">&#8592; Study Hub Index</a>
-    <div class="shn-group">RHEL Linux Study Guide – RHEL …</div>
-    <a class="shn-link" href="#red-hat-linux-study-guide-rhel-6-7-rhel-" onclick="shnClose()"><span class="shn-link-num">★</span>Red Hat Linux Study Guide RHEL 6/7 RHEL 8 RHEL 9</a>
-    <a class="shn-link" href="#user-amp-group-administration" onclick="shnClose()"><span class="shn-link-num">02</span>👤 User & Group Administration</a>
-    <a class="shn-link" href="#managing-partitions-amp-file-systems" onclick="shnClose()"><span class="shn-link-num">03</span>💾 Managing Partitions & File Systems</a>
-    <a class="shn-link" href="#lvm-amp-raid" onclick="shnClose()"><span class="shn-link-num">04</span>🗂️ LVM & RAID</a>
-    <a class="shn-link" href="#permissions-acl-amp-special-bits" onclick="shnClose()"><span class="shn-link-num">05</span>🔒 Permissions, ACL & Special Bits</a>
-    <a class="shn-link" href="#network-configuration-amp-troubleshootin" onclick="shnClose()"><span class="shn-link-num">06</span>🌐 Network Configuration & Troubleshooting</a>
-    <a class="shn-link" href="#managing-selinux" onclick="shnClose()"><span class="shn-link-num">07</span>🛡️ Managing SELinux</a>
-    <a class="shn-link" href="#booting-procedure-amp-kernel" onclick="shnClose()"><span class="shn-link-num">08</span>🚀 Booting Procedure & Kernel</a>
-    <a class="shn-link" href="#job-automation-cron-amp-at" onclick="shnClose()"><span class="shn-link-num">09</span>⏰ Job Automation (Cron & At)</a>
-    <a class="shn-link" href="#ssh-amp-remote-administration" onclick="shnClose()"><span class="shn-link-num">10</span>🔐 SSH & Remote Administration</a>
-    <a class="shn-link" href="#memory-management-amp-swap" onclick="shnClose()"><span class="shn-link-num">11</span>🧠 Memory Management & Swap</a>
-    <a class="shn-link" href="#software-management" onclick="shnClose()"><span class="shn-link-num">12</span>📦 Software Management</a>
-    <a class="shn-link" href="#backup-amp-restore" onclick="shnClose()"><span class="shn-link-num">13</span>💿 Backup & Restore</a>
-    <a class="shn-link" href="#managing-services-amp-daemons" onclick="shnClose()"><span class="shn-link-num">14</span>⚙️ Managing Services & Daemons</a>
-    <a class="shn-link" href="#process-management" onclick="shnClose()"><span class="shn-link-num">15</span>📊 Process Management</a>
-    <a class="shn-link" href="#ftp-server-vsftpd" onclick="shnClose()"><span class="shn-link-num">16</span>📁 FTP Server (vsftpd)</a>
-    <a class="shn-link" href="#nfs-amp-autofs" onclick="shnClose()"><span class="shn-link-num">17</span>🗄️ NFS & Autofs</a>
-    <a class="shn-link" href="#samba-server" onclick="shnClose()"><span class="shn-link-num">18</span>🪟 Samba Server</a>
-    <a class="shn-link" href="#ntp-amp-chrony-time-synchronization" onclick="shnClose()"><span class="shn-link-num">19</span>🕐 NTP & Chrony Time Synchronization</a>
-    <a class="shn-link" href="#dns-server-bind" onclick="shnClose()"><span class="shn-link-num">20</span>🌍 DNS Server (BIND)</a>
-    <a class="shn-link" href="#dhcp-server" onclick="shnClose()"><span class="shn-link-num">21</span>📡 DHCP Server</a>
-    <a class="shn-link" href="#web-server-apache-httpd" onclick="shnClose()"><span class="shn-link-num">22</span>🌐 Web Server (Apache httpd)</a>
-    <a class="shn-link" href="#mail-server-postfix" onclick="shnClose()"><span class="shn-link-num">23</span>📧 Mail Server (Postfix)</a>
-    <a class="shn-link" href="#iscsi-remote-storage" onclick="shnClose()"><span class="shn-link-num">24</span>💿 iSCSI (Remote Storage)</a>
-    <a class="shn-link" href="#mysql-mariadb" onclick="shnClose()"><span class="shn-link-num">25</span>🗃️ MySQL / MariaDB</a>
-    <a class="shn-link" href="#log-management" onclick="shnClose()"><span class="shn-link-num">26</span>📋 Log Management</a>
-    <a class="shn-link" href="#firewall-amp-iptables" onclick="shnClose()"><span class="shn-link-num">27</span>🔥 Firewall & IPtables</a>
-    <a class="shn-link" href="#port-numbers-reference" onclick="shnClose()"><span class="shn-link-num">28</span>🔌 Port Numbers Reference</a>
-  </nav>
-  <script>
-  (function() {
-    var drawer  = document.getElementById('shn-drawer');
-    var overlay = document.getElementById('shn-overlay');
-    var toggle  = document.getElementById('shn-toggle');
-    if (!drawer) return;
 
-    window.shnOpen = function() {
-      drawer.classList.add('shn-open');
-      overlay.classList.add('shn-open');
-      toggle.innerHTML = '&#10005;';
-      toggle.setAttribute('aria-expanded', 'true');
-    };
+<style id="shn-styles">
+/* SHN drawer */
+#shn-btn{display:none}
+@media(max-width:768px){
+  #shn-btn{
+    display:flex!important;position:fixed;top:10px;left:10px;
+    z-index:19999;width:46px;height:46px;border-radius:12px;
+    background:#1B4F8A;color:#fff;border:none;font-size:1.3rem;
+    align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 4px 20px rgba(0,0,0,.5);
+    -webkit-tap-highlight-color:transparent;
+  }
+  #shn-overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.6);z-index:19998;
+  }
+  #shn-overlay.on{display:block}
+  #shn-nav{
+    position:fixed;top:0;left:0;bottom:0;
+    width:min(280px,82vw);background:#0B1E3D;
+    z-index:19999;overflow-y:auto;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    padding-bottom:40px;
+    box-shadow:4px 0 30px rgba(0,0,0,.6);
+  }
+  #shn-nav.on{transform:translateX(0)}
+  #shn-nav::-webkit-scrollbar{width:3px}
+  #shn-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1)}
+  .shn-hdr{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px;border-bottom:1px solid rgba(255,255,255,.08);
+    position:sticky;top:0;background:#0B1E3D;z-index:1;
+  }
+  .shn-hdr span{
+    font:700 .72rem/1 system-ui,sans-serif;
+    color:#A8C8F0;text-transform:uppercase;letter-spacing:.1em;
+  }
+  .shn-hdr button{
+    background:rgba(255,255,255,.08);border:none;border-radius:6px;
+    color:#7B9AC8;width:28px;height:28px;cursor:pointer;font-size:.9rem;
+  }
+  .shn-back{
+    display:flex;align-items:center;gap:6px;
+    padding:11px 14px;color:#F0A500;text-decoration:none;
+    font:600 .76rem/1 system-ui,sans-serif;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    background:rgba(240,165,0,.05);
+  }
+  .shn-grp{
+    padding:10px 14px 3px;
+    font:700 .58rem/1 system-ui,sans-serif;
+    color:#2E4A72;text-transform:uppercase;letter-spacing:.13em;
+  }
+  .shn-lnk{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 14px;color:#7BA8D4;text-decoration:none;
+    font:.78rem/1.35 system-ui,sans-serif;
+    border-left:3px solid transparent;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .shn-lnk:active,.shn-lnk.act{
+    color:#fff;background:rgba(255,255,255,.05);
+    border-left-color:#F0A500;
+  }
+  .shn-num{
+    font:700 .6rem/1 monospace;
+    background:rgba(255,255,255,.07);border-radius:4px;
+    padding:1px 5px;color:#4A9FD5;
+    flex-shrink:0;min-width:22px;text-align:center;
+  }
+}
+</style>
+<!-- SHN-v3 -->
+<div id="shn-overlay" onclick="shnClose()"></div>
+<button id="shn-btn" onclick="shnOpen()" aria-label="Open navigation">&#9776;</button>
+<nav id="shn-nav">
+  <div class="shn-hdr"><span>Contents</span><button onclick="shnClose()">&#10005;</button></div>
+  <a class="shn-back" href="index.html">&#8592; Study Hub</a>
+  <div class="shn-grp">RHEL Linux Study Guide – RHEL 6 …</div>
+    <a class="shn-lnk" href="#red-hat-linux-study-guide-rhel-6-7-rhel-" onclick="shnClose()"><span class="shn-num">★</span>Red Hat Linux Study Guide RHEL 6/7 RHEL 8 RHEL 9</a>
+    <a class="shn-lnk" href="#user-amp-group-administration" onclick="shnClose()"><span class="shn-num">02</span>👤 User & Group Administration</a>
+    <a class="shn-lnk" href="#managing-partitions-amp-file-systems" onclick="shnClose()"><span class="shn-num">03</span>💾 Managing Partitions & File Systems</a>
+    <a class="shn-lnk" href="#lvm-amp-raid" onclick="shnClose()"><span class="shn-num">04</span>🗂️ LVM & RAID</a>
+    <a class="shn-lnk" href="#permissions-acl-amp-special-bits" onclick="shnClose()"><span class="shn-num">05</span>🔒 Permissions, ACL & Special Bits</a>
+    <a class="shn-lnk" href="#network-configuration-amp-troubleshootin" onclick="shnClose()"><span class="shn-num">06</span>🌐 Network Configuration & Troubleshooting</a>
+    <a class="shn-lnk" href="#managing-selinux" onclick="shnClose()"><span class="shn-num">07</span>🛡️ Managing SELinux</a>
+    <a class="shn-lnk" href="#booting-procedure-amp-kernel" onclick="shnClose()"><span class="shn-num">08</span>🚀 Booting Procedure & Kernel</a>
+    <a class="shn-lnk" href="#job-automation-cron-amp-at" onclick="shnClose()"><span class="shn-num">09</span>⏰ Job Automation (Cron & At)</a>
+    <a class="shn-lnk" href="#ssh-amp-remote-administration" onclick="shnClose()"><span class="shn-num">10</span>🔐 SSH & Remote Administration</a>
+    <a class="shn-lnk" href="#memory-management-amp-swap" onclick="shnClose()"><span class="shn-num">11</span>🧠 Memory Management & Swap</a>
+    <a class="shn-lnk" href="#software-management" onclick="shnClose()"><span class="shn-num">12</span>📦 Software Management</a>
+    <a class="shn-lnk" href="#backup-amp-restore" onclick="shnClose()"><span class="shn-num">13</span>💿 Backup & Restore</a>
+    <a class="shn-lnk" href="#managing-services-amp-daemons" onclick="shnClose()"><span class="shn-num">14</span>⚙️ Managing Services & Daemons</a>
+    <a class="shn-lnk" href="#process-management" onclick="shnClose()"><span class="shn-num">15</span>📊 Process Management</a>
+    <a class="shn-lnk" href="#ftp-server-vsftpd" onclick="shnClose()"><span class="shn-num">16</span>📁 FTP Server (vsftpd)</a>
+    <a class="shn-lnk" href="#nfs-amp-autofs" onclick="shnClose()"><span class="shn-num">17</span>🗄️ NFS & Autofs</a>
+    <a class="shn-lnk" href="#samba-server" onclick="shnClose()"><span class="shn-num">18</span>🪟 Samba Server</a>
+    <a class="shn-lnk" href="#ntp-amp-chrony-time-synchronization" onclick="shnClose()"><span class="shn-num">19</span>🕐 NTP & Chrony Time Synchronization</a>
+    <a class="shn-lnk" href="#dns-server-bind" onclick="shnClose()"><span class="shn-num">20</span>🌍 DNS Server (BIND)</a>
+    <a class="shn-lnk" href="#dhcp-server" onclick="shnClose()"><span class="shn-num">21</span>📡 DHCP Server</a>
+    <a class="shn-lnk" href="#web-server-apache-httpd" onclick="shnClose()"><span class="shn-num">22</span>🌐 Web Server (Apache httpd)</a>
+    <a class="shn-lnk" href="#mail-server-postfix" onclick="shnClose()"><span class="shn-num">23</span>📧 Mail Server (Postfix)</a>
+    <a class="shn-lnk" href="#iscsi-remote-storage" onclick="shnClose()"><span class="shn-num">24</span>💿 iSCSI (Remote Storage)</a>
+    <a class="shn-lnk" href="#mysql-mariadb" onclick="shnClose()"><span class="shn-num">25</span>🗃️ MySQL / MariaDB</a>
+    <a class="shn-lnk" href="#log-management" onclick="shnClose()"><span class="shn-num">26</span>📋 Log Management</a>
+    <a class="shn-lnk" href="#firewall-amp-iptables" onclick="shnClose()"><span class="shn-num">27</span>🔥 Firewall & IPtables</a>
+    <a class="shn-lnk" href="#port-numbers-reference" onclick="shnClose()"><span class="shn-num">28</span>🔌 Port Numbers Reference</a>
+</nav>
+<script>
+(function(){
+var nav=document.getElementById('shn-nav'),
+    ov=document.getElementById('shn-overlay'),
+    btn=document.getElementById('shn-btn');
+window.shnOpen=function(){nav.classList.add('on');ov.classList.add('on');btn.innerHTML='&#10005;';};
+window.shnClose=function(){nav.classList.remove('on');ov.classList.remove('on');btn.innerHTML='&#9776;';};
+var lnks=nav.querySelectorAll('.shn-lnk[href^="#"]');
+window.addEventListener('scroll',function(){
+  var y=window.scrollY+90,act=null;
+  lnks.forEach(function(l){var el=document.getElementById(l.getAttribute('href').slice(1));if(el&&el.offsetTop<=y)act=l;});
+  lnks.forEach(function(l){l.classList.remove('act');});
+  if(act)act.classList.add('act');
+},{passive:true});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')shnClose();});
+})();
+</script>
 
-    window.shnClose = function() {
-      drawer.classList.remove('shn-open');
-      overlay.classList.remove('shn-open');
-      toggle.innerHTML = '&#9776;';
-      toggle.setAttribute('aria-expanded', 'false');
-    };
-
-    /* Highlight active section while scrolling */
-    var links = drawer.querySelectorAll('.shn-link[href^="#"]');
-    if (links.length > 0) {
-      window.addEventListener('scroll', function() {
-        var scrollY = window.scrollY + 80;
-        var active  = null;
-        links.forEach(function(l) {
-          var id  = l.getAttribute('href').slice(1);
-          var el  = id ? document.getElementById(id) : null;
-          if (el && el.offsetTop <= scrollY) { active = l; }
-        });
-        links.forEach(function(l) { l.classList.remove('shn-active'); });
-        if (active) { active.classList.add('shn-active'); }
-      }, { passive: true });
-    }
-
-    /* Close on Escape key */
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') shnClose();
-    });
-  })();
-  </script>
 
 <div class="header">
   <div class="header-icon">🐧</div>

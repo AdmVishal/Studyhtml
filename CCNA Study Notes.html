@@ -363,64 +363,172 @@
   .host-part { color: var(--accent2); font-weight: 700; }
 </style>
   <link rel="stylesheet" href="mobile.css">
+
+<style id="shn-page-mobile">
+/* StudyHub mobile patch — auto-generated */
+@media (max-width: 768px) {
+
+  /* Hide the built-in sidebar on mobile — replaced by SHN drawer */
+  .sidebar, #sidebar, [class*="sidebar"] {
+    display:none!important; visibility:hidden!important;
+  }
+  /* Also hide any fixed aside navigation */
+  aside { display:none!important; }
+  /* Remove left margin that was reserved for sidebar */
+  .main-content, .content, main, .main, body > div:not(#shn-nav):not(#shn-overlay) {
+    margin-left:0!important; max-width:100%!important;
+    padding-left:14px!important; padding-right:14px!important;
+    width:100%!important; box-sizing:border-box!important;
+  }
+
+  /* Prevent horizontal overflow on all elements */
+  *, *::before, *::after { max-width:100%; box-sizing:border-box; }
+  pre, code, .code-group, .code-block {
+    overflow-x:auto!important; -webkit-overflow-scrolling:touch!important;
+    white-space:pre!important; font-size:.7rem!important;
+  }
+  /* Flex rows that need to wrap */
+  .lifecycle, .workflow, [class*="lifecycle"], [class*="flow-row"],
+  [class*="step-row"], [class*="card-row"] {
+    flex-wrap:wrap!important; gap:8px!important;
+  }
+  /* Tab bars / pill nav */
+  [class*="tab-bar"], [class*="topic-nav"], [class*="filter"],
+  .topics, .nav-tabs {
+    overflow-x:auto!important; -webkit-overflow-scrolling:touch!important;
+    flex-wrap:nowrap!important; white-space:nowrap!important;
+    padding-bottom:4px!important;
+  }
+  /* Command/card grids */
+  [class*="cmd-grid"], [class*="command-grid"],
+  [class*="card-grid"], [class*="section-grid"] {
+    grid-template-columns:1fr!important; gap:10px!important;
+  }
+  /* Wide flex containers inside content */
+  [class*="section-content"], [class*="content-area"],
+  [class*="two-col"], [class*="split"] {
+    flex-direction:column!important; width:100%!important;
+  }
+  /* Priority/badge chips that wrap */
+  [class*="priority"], [class*="badge"], [class*="chip"],
+  [class*="tag-row"] { flex-wrap:wrap!important; }
+  /* Modal/overlay full width */
+  [class*="modal"], [class*="panel"], [class*="drawer"] {
+    max-width:100vw!important;
+  }
+  /* Stat/metric grids */
+  [class*="stat-grid"], [class*="metric"], [class*="kpi"] {
+    grid-template-columns:1fr 1fr!important;
+  }
+  /* Large padding containers */
+  [class*="hero"], [class*="banner"], [class*="header-wrap"] {
+    padding:20px 14px!important;
+  }
+}
+</style>
 </head>
 <body>
-  <!-- SHN-PATCH -->
-  <!-- SHN: Mobile Nav Drawer -->
-  <div id="shn-overlay" onclick="shnClose()"></div>
-  <button id="shn-toggle" onclick="shnOpen()" aria-label="Open navigation">&#9776;</button>
-  <nav id="shn-drawer" aria-label="Page navigation">
-    <div class="shn-header">
-      <span class="shn-title">Contents</span>
-      <button class="shn-close" onclick="shnClose()" aria-label="Close">&#10005;</button>
-    </div>
-    <a class="shn-back" href="index.html">&#8592; Study Hub Index</a>
-    <div class="shn-group">CCNA Study Notes</div>
-    <a class="shn-link" href="#study-notes" onclick="shnClose()"><span class="shn-link-num">★</span>Study Notes</a>
-  </nav>
-  <script>
-  (function() {
-    var drawer  = document.getElementById('shn-drawer');
-    var overlay = document.getElementById('shn-overlay');
-    var toggle  = document.getElementById('shn-toggle');
-    if (!drawer) return;
 
-    window.shnOpen = function() {
-      drawer.classList.add('shn-open');
-      overlay.classList.add('shn-open');
-      toggle.innerHTML = '&#10005;';
-      toggle.setAttribute('aria-expanded', 'true');
-    };
+<style id="shn-styles">
+/* SHN drawer */
+#shn-btn{display:none}
+@media(max-width:768px){
+  #shn-btn{
+    display:flex!important;position:fixed;top:10px;left:10px;
+    z-index:19999;width:46px;height:46px;border-radius:12px;
+    background:#1B4F8A;color:#fff;border:none;font-size:1.3rem;
+    align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 4px 20px rgba(0,0,0,.5);
+    -webkit-tap-highlight-color:transparent;
+  }
+  #shn-overlay{
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.6);z-index:19998;
+  }
+  #shn-overlay.on{display:block}
+  #shn-nav{
+    position:fixed;top:0;left:0;bottom:0;
+    width:min(280px,82vw);background:#0B1E3D;
+    z-index:19999;overflow-y:auto;
+    transform:translateX(-100%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1);
+    padding-bottom:40px;
+    box-shadow:4px 0 30px rgba(0,0,0,.6);
+  }
+  #shn-nav.on{transform:translateX(0)}
+  #shn-nav::-webkit-scrollbar{width:3px}
+  #shn-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1)}
+  .shn-hdr{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px;border-bottom:1px solid rgba(255,255,255,.08);
+    position:sticky;top:0;background:#0B1E3D;z-index:1;
+  }
+  .shn-hdr span{
+    font:700 .72rem/1 system-ui,sans-serif;
+    color:#A8C8F0;text-transform:uppercase;letter-spacing:.1em;
+  }
+  .shn-hdr button{
+    background:rgba(255,255,255,.08);border:none;border-radius:6px;
+    color:#7B9AC8;width:28px;height:28px;cursor:pointer;font-size:.9rem;
+  }
+  .shn-back{
+    display:flex;align-items:center;gap:6px;
+    padding:11px 14px;color:#F0A500;text-decoration:none;
+    font:600 .76rem/1 system-ui,sans-serif;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    background:rgba(240,165,0,.05);
+  }
+  .shn-grp{
+    padding:10px 14px 3px;
+    font:700 .58rem/1 system-ui,sans-serif;
+    color:#2E4A72;text-transform:uppercase;letter-spacing:.13em;
+  }
+  .shn-lnk{
+    display:flex;align-items:center;gap:8px;
+    padding:9px 14px;color:#7BA8D4;text-decoration:none;
+    font:.78rem/1.35 system-ui,sans-serif;
+    border-left:3px solid transparent;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .shn-lnk:active,.shn-lnk.act{
+    color:#fff;background:rgba(255,255,255,.05);
+    border-left-color:#F0A500;
+  }
+  .shn-num{
+    font:700 .6rem/1 monospace;
+    background:rgba(255,255,255,.07);border-radius:4px;
+    padding:1px 5px;color:#4A9FD5;
+    flex-shrink:0;min-width:22px;text-align:center;
+  }
+}
+</style>
+<!-- SHN-v3 -->
+<div id="shn-overlay" onclick="shnClose()"></div>
+<button id="shn-btn" onclick="shnOpen()" aria-label="Open navigation">&#9776;</button>
+<nav id="shn-nav">
+  <div class="shn-hdr"><span>Contents</span><button onclick="shnClose()">&#10005;</button></div>
+  <a class="shn-back" href="index.html">&#8592; Study Hub</a>
+  <div class="shn-grp">CCNA Study Notes</div>
+    <a class="shn-lnk" href="#study-notes" onclick="shnClose()"><span class="shn-num">★</span>Study Notes</a>
+</nav>
+<script>
+(function(){
+var nav=document.getElementById('shn-nav'),
+    ov=document.getElementById('shn-overlay'),
+    btn=document.getElementById('shn-btn');
+window.shnOpen=function(){nav.classList.add('on');ov.classList.add('on');btn.innerHTML='&#10005;';};
+window.shnClose=function(){nav.classList.remove('on');ov.classList.remove('on');btn.innerHTML='&#9776;';};
+var lnks=nav.querySelectorAll('.shn-lnk[href^="#"]');
+window.addEventListener('scroll',function(){
+  var y=window.scrollY+90,act=null;
+  lnks.forEach(function(l){var el=document.getElementById(l.getAttribute('href').slice(1));if(el&&el.offsetTop<=y)act=l;});
+  lnks.forEach(function(l){l.classList.remove('act');});
+  if(act)act.classList.add('act');
+},{passive:true});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')shnClose();});
+})();
+</script>
 
-    window.shnClose = function() {
-      drawer.classList.remove('shn-open');
-      overlay.classList.remove('shn-open');
-      toggle.innerHTML = '&#9776;';
-      toggle.setAttribute('aria-expanded', 'false');
-    };
-
-    /* Highlight active section while scrolling */
-    var links = drawer.querySelectorAll('.shn-link[href^="#"]');
-    if (links.length > 0) {
-      window.addEventListener('scroll', function() {
-        var scrollY = window.scrollY + 80;
-        var active  = null;
-        links.forEach(function(l) {
-          var id  = l.getAttribute('href').slice(1);
-          var el  = id ? document.getElementById(id) : null;
-          if (el && el.offsetTop <= scrollY) { active = l; }
-        });
-        links.forEach(function(l) { l.classList.remove('shn-active'); });
-        if (active) { active.classList.add('shn-active'); }
-      }, { passive: true });
-    }
-
-    /* Close on Escape key */
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') shnClose();
-    });
-  })();
-  </script>
 
 <header>
   <div class="header-top">
