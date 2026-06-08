@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Linux/Unix Admin — Interview Study Guide</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap');
@@ -378,8 +378,6 @@
     .toc-btn { padding: 12px 14px; font-size: 10px; }
   }
 </style>
-  <!-- MOBILE-PATCH -->
-  <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
 
@@ -1674,50 +1672,5 @@ document.querySelectorAll('.topic-card:first-of-type').forEach(card => {
   card.classList.add('open');
 });
 </script>
-  <!-- MOBILE-PATCH-JS -->
-  <script>
-  (function() {
-    // Only run on mobile
-    if (window.innerWidth > 768) return;
-
-    var sidebar = document.querySelector(
-      '.sidebar, [class*="sidebar"], [id*="sidebar"], nav.sidebar'
-    );
-    if (!sidebar) return;
-
-    // Create overlay
-    var overlay = document.createElement('div');
-    overlay.id = 'mobile-sidebar-overlay';
-    document.body.appendChild(overlay);
-
-    // Create hamburger button
-    var btn = document.createElement('button');
-    btn.id = 'mobile-menu-btn';
-    btn.setAttribute('aria-label', 'Open menu');
-    btn.innerHTML = '&#9776;';
-    document.body.appendChild(btn);
-
-    // Toggle logic
-    function openSidebar() {
-      sidebar.classList.add('open');
-      overlay.classList.add('show');
-      btn.innerHTML = '&#10005;';
-    }
-    function closeSidebar() {
-      sidebar.classList.remove('open');
-      overlay.classList.remove('show');
-      btn.innerHTML = '&#9776;';
-    }
-    btn.addEventListener('click', function() {
-      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
-    });
-    overlay.addEventListener('click', closeSidebar);
-
-    // Close on nav link tap
-    sidebar.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', closeSidebar);
-    });
-  })();
-  </script>
 </body>
 </html>
