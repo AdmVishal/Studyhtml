@@ -9,15 +9,107 @@
 <title>Linux/Unix Admin — Interview Study Guide</title>
 
   
+  
+  
+  
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="studyhub.css">
 </head>
 <body>
-<!-- CENTRAL-CSS-v1 -->
+<!-- SHUB-v4 -->
 <div id="shub-topbar">
   <a class="shub-logo" href="index.html">Study<span>Hub</span></a>
+  <span class="shub-title">Linux Admin Interview Guide</span>
+  <div class="shub-spacer"></div>
+  <a class="shub-home" href="index.html">
+    <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/></svg>
+    <span>All Guides</span>
+  </a>
+</div>
+<div id="shub-prog"></div>
+<button id="shub-btt" title="Back to top">&#8593;</button>
+<div id="shub-drawer-ov"></div>
+<nav id="shub-drawer">
+  <div id="shub-drawer-head">
+    <span>Contents</span>
+    <button id="shub-drawer-close">&#10005;</button>
+  </div>
+  <a id="shub-drawer-back" href="index.html">&#8592; Study Hub</a>
+  <div id="shub-drawer-list"></div>
+</nav>
+<button id="shub-topics-fab">&#9776; Topics</button>
+<script id="shub-chrome-js">
+(function(){
+  var prog=document.getElementById('shub-prog'),btt=document.getElementById('shub-btt');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,st=h.scrollTop||document.body.scrollTop;
+    var sh=(h.scrollHeight||document.body.scrollHeight)-h.clientHeight;
+    if(prog)prog.style.width=(sh>0?Math.min(st/sh*100,100):0)+'%';
+    if(btt)btt.classList.toggle('vis',st>280);
+  },{passive:true});
+  if(btt)btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  if(window.innerWidth>767)return;
+  var ov=document.getElementById('shub-drawer-ov'),dr=document.getElementById('shub-drawer');
+  var dc=document.getElementById('shub-drawer-close'),fab=document.getElementById('shub-topics-fab');
+  var list=document.getElementById('shub-drawer-list');
+  if(!dr||!fab)return;
+  function open(){dr.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden';fab.innerHTML='&#10005; Close';}
+  function close(){dr.classList.remove('on');ov.classList.remove('on');document.body.style.overflow='';fab.innerHTML='&#9776; Topics';}
+  fab.addEventListener('click',function(){dr.classList.contains('on')?close():open();});
+  dc.addEventListener('click',close);
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var built=false;
+  function build(){
+    if(built)return;
+    var sels=['.sidebar .nav-btn','.sidebar .nav-item','.sidebar .sidebar-item','.sidebar .topic-btn','#sidebar button','.nav-panel button'];
+    var items=[];
+    for(var s=0;s<sels.length;s++){items=Array.from(document.querySelectorAll(sels[s]));if(items.length)break;}
+    if(!items.length)return;
+    built=true;list.innerHTML='';
+    var sidebar=document.querySelector('.sidebar,#sidebar,.nav-panel');
+    if(sidebar){
+      Array.from(sidebar.children).forEach(function(child){
+        var cls=child.className||'';
+        if(cls.includes('section')||cls.includes('group-label')||cls.includes('sidebar-section')){
+          var t=child.textContent.trim();
+          if(t.length>1){var s=document.createElement('div');s.className='shub-dl-sec';s.textContent=t;list.appendChild(s);}
+          return;
+        }
+        if(child.tagName==='BUTTON'||cls.includes('nav-btn')||cls.includes('nav-item')||cls.includes('sidebar-item')||cls.includes('topic-btn')){mkItem(child);return;}
+        child.querySelectorAll('button,[class*="nav-btn"],[class*="nav-item"]').forEach(function(n){mkItem(n);});
+      });
+    }else{items.forEach(function(o){mkItem(o);});}
+    sync();
+  }
+  function mkItem(orig){
+    var btn=document.createElement('button');btn.className='shub-dl-item';
+    var numEl=orig.querySelector('.num,.sidebar-count,[class*="num"]');
+    var numTxt=numEl?numEl.textContent.trim():'';
+    var label=orig.textContent.replace(numTxt,'').trim();
+    if(!label||label.length<2)return;
+    if(numTxt){var ns=document.createElement('span');ns.className='shub-dl-num';ns.textContent=numTxt;btn.appendChild(ns);}
+    btn.appendChild(document.createTextNode(label));
+    btn.addEventListener('click',function(){orig.click();setTimeout(close,180);});
+    list.appendChild(btn);
+  }
+  function sync(){
+    var active=document.querySelector('.sidebar .nav-btn.active,.sidebar .nav-item.active,.sidebar .sidebar-item.active,#sidebar button.active');
+    var at=active?active.textContent.trim():'';
+    list.querySelectorAll('.shub-dl-item').forEach(function(it){it.classList.toggle('cur',at.length>0&&at.includes(it.textContent.trim()));});
+  }
+  var sb=document.querySelector('.sidebar,#sidebar');
+  if(sb)new MutationObserver(function(){sync();}).observe(sb,{attributes:true,subtree:true,attributeFilter:['class']});
+  function init(){build();if(!built){var n=0,t=setInterval(function(){build();if(built||++n>40)clearInterval(t);},100);}}
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',function(){setTimeout(init,200);}):setTimeout(init,200);
+})();
+</script>
+
+
+
   <span class="shub-title">Linux Admin Interview Guide</span>
   <div class="shub-spacer"></div>
   <a class="shub-home" href="index.html">
@@ -27,25 +119,6 @@
     <span>All Guides</span>
   </a>
 </div>
-<div id="shub-prog"></div>
-<button id="shub-btt" title="Back to top">↑</button>
-<script id="shub-chrome">
-(function(){
-  var prog = document.getElementById('shub-prog');
-  var btt  = document.getElementById('shub-btt');
-  window.addEventListener('scroll', function() {
-    var h  = document.documentElement;
-    var st = h.scrollTop || document.body.scrollTop;
-    var sh = (h.scrollHeight || document.body.scrollHeight) - h.clientHeight;
-    if (prog) prog.style.width = (sh > 0 ? Math.min(st / sh * 100, 100) : 0) + '%';
-    if (btt)  { btt.classList.toggle('vis', st > 280); }
-  }, { passive: true });
-  if (btt) btt.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-})();
-</script>
-
 
   <span style="font-family:'DM Sans',sans-serif;font-size:.72rem;color:#6B8AB0;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;">Linux Admin Interview Guide</span>
   <div style="flex:1;"></div>
@@ -1357,63 +1430,10 @@ document.querySelectorAll('.topic-card:first-of-type').forEach(card => {
 });
 </script>
 
-<div id="shub-c-ov"></div>
-<nav id="shub-c-dr">
-  <div id="shub-c-head">
-    <span id="shub-c-title">Navigate</span>
-    <button id="shub-c-close">&#10005;</button>
   </div>
   <a id="shub-c-back" href="index.html">&#8592; Study Hub</a>
-  <div id="shub-c-list"></div>
+  
 </nav>
-<button id="shub-c-btn">&#9776; Navigate</button>
 
-<script id="shub-c-js">
-(function(){
-  if(window.innerWidth > 768) return;
-  var ov=document.getElementById('shub-c-ov'),
-      dr=document.getElementById('shub-c-dr'),
-      dc=document.getElementById('shub-c-close'),
-      btn=document.getElementById('shub-c-btn'),
-      lst=document.getElementById('shub-c-list');
-  if(!dr||!btn) return;
-
-  function open(){dr.classList.add('on');ov.classList.add('on');
-    document.body.style.overflow='hidden';btn.innerHTML='&#10005; Close';}
-  function close(){dr.classList.remove('on');ov.classList.remove('on');
-    document.body.style.overflow='';btn.innerHTML='&#9776; Navigate';}
-  btn.addEventListener('click',function(){dr.classList.contains('on')?close():open();});
-  dc.addEventListener('click',close);
-  ov.addEventListener('click',close);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
-
-  /* Build nav from page's h2 headings (ITIL-style continuous scroll) */
-  var headings = document.querySelectorAll('h2[id], section[id] > h2, .process-section h2');
-  if(!headings.length) headings = document.querySelectorAll('h2');
-  var n=0;
-  headings.forEach(function(h){
-    var id = h.id || (h.closest('[id]') ? h.closest('[id]').id : '');
-    if(!id){ id='shub-h-'+(++n); h.id=id; }
-    var a=document.createElement('a');
-    a.className='shub-c-it';
-    a.href='#'+id;
-    a.textContent=h.textContent.trim().slice(0,60);
-    a.addEventListener('click',function(){setTimeout(close,200);});
-    lst.appendChild(a);
-  });
-
-  /* Also add left-nav links if they exist */
-  var navLinks = document.querySelectorAll('.left-nav a, .side-nav a, #left-nav a, [class*="left-nav"] a');
-  if(navLinks.length && !headings.length){
-    navLinks.forEach(function(a){
-      var item=document.createElement('a');
-      item.className='shub-c-it';
-      item.href=a.href; item.textContent=a.textContent.trim();
-      item.addEventListener('click',function(){setTimeout(close,200);});
-      lst.appendChild(item);
-    });
-  }
-})();
-</script>
 </body>
 </html>
