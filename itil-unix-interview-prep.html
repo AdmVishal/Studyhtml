@@ -1891,6 +1891,12 @@ iftop -i eth0</div>
   
 </nav>
 
+  </div>
+  <a id="itil-back" href="index.html">&#8592; Study Hub</a>
+  <div id="itil-list"></div>
+</nav>
+
+
 
 <style id="itil-mob-css">
 @media (max-width: 768px) {
@@ -1959,16 +1965,19 @@ iftop -i eth0</div>
 
   /* ── Code blocks ──────────────────────────────────────── */
   pre {
-    overflow-x: auto !important; font-size: .72rem !important;
+    overflow-x: auto !important;
+    font-size: 12px !important;
     -webkit-overflow-scrolling: touch !important;
-    padding: 10px 12px !important;
+    padding: 12px 14px !important;
+    line-height: 1.6 !important;
+    border-radius: 6px !important;
   }
-  code { font-size: .68rem !important; }
+  code { font-size: 12px !important; }
 
   /* ── Tables ───────────────────────────────────────────── */
   table {
     display: block !important; overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important; font-size: .78rem !important;
+    -webkit-overflow-scrolling: touch !important; font-size: 12px !important;
   }
   th { white-space: nowrap !important; }
 
@@ -1978,7 +1987,61 @@ iftop -i eth0</div>
   }
 
   /* ── Body ─────────────────────────────────────────────── */
-  body { overflow-x: hidden !important; }
+  body {
+    overflow-x: hidden !important;
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+  }
+
+  /* ── Typography boost for readability on mobile ─────────── */
+  /* Base paragraph / list text */
+  p, li, td, th, .answer, .qa-answer,
+  [class*="answer"], [class*="desc"] {
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+  }
+
+  /* Headings */
+  h1 { font-size: clamp(20px, 6vw, 28px) !important; line-height: 1.2 !important; }
+  h2 { font-size: 20px !important; line-height: 1.3 !important; margin-top: 28px !important; }
+  h3 { font-size: 16px !important; line-height: 1.35 !important; margin-top: 18px !important; }
+  h4 { font-size: 14px !important; }
+
+  /* Q&A cards */
+  .qa-item, [class*="qa-"], [class*="question"],
+  .card, [class*="-card"], [class*="process-card"] {
+    padding: 14px !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* Q prefix badge and question text */
+  .q-badge, [class*="q-badge"] { font-size: 12px !important; }
+  .question-text, [class*="question-text"],
+  .qa-q, [class*="qa-q"] { font-size: 14px !important; font-weight: 600 !important; }
+
+  /* Process section headers */
+  .section-title, [class*="section-title"],
+  .process-title, [class*="process-title"] {
+    font-size: 17px !important;
+  }
+
+  /* Command descriptions / labels */
+  .cmd-label, .cmd-desc, [class*="cmd-"] p,
+  .cmd-block + p, .cmd-block p {
+    font-size: 13px !important;
+  }
+
+  /* Nav-item tabs at top */
+  .nav-item {
+    font-size: 11px !important;
+    padding: 12px 10px !important;
+    letter-spacing: .06em !important;
+  }
+
+  /* Stat numbers in header */
+  .stat-num { font-size: 20px !important; }
+  .stat-label { font-size: 10px !important; }
+  .header-tag { font-size: 9px !important; }
 
   /* ════ NAVIGATE BUTTON ══════════════════════════════════ */
   #itil-nav-btn {
@@ -2055,8 +2118,8 @@ iftop -i eth0</div>
   #itil-list::-webkit-scrollbar { width: 3px !important; }
   #itil-list::-webkit-scrollbar-thumb { background: var(--border, #1e2d45) !important; }
   .itil-sec {
-    padding: 10px 16px 3px !important; font-size: 8px !important;
-    font-weight: 700 !important; letter-spacing: .2em !important;
+    padding: 10px 16px 3px !important; font-size: 10px !important;
+    font-weight: 700 !important; letter-spacing: .14em !important;
     text-transform: uppercase !important; color: var(--text-dim, #5a7a9a) !important;
     font-family: 'JetBrains Mono', monospace !important;
   }
