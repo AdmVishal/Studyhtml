@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta charset="UTF-8">
+  
+<meta charset="UTF-8">
 
 <title>OS Admin L3 — Interview Preparation Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,17 +28,13 @@
 <button id="shub-btt" title="Back to top">&#8593;</button>
 <div id="shub-drawer-ov"></div>
 <nav id="shub-drawer">
-  <div id="shub-drawer-head">
-    <span>Contents</span>
-    <button id="shub-drawer-close">&#10005;</button>
-  </div>
+  <div id="shub-drawer-head"><span>Contents</span><button id="shub-drawer-close">&#10005;</button></div>
   <a id="shub-drawer-back" href="index.html">&#8592; Study Hub</a>
   <div id="shub-drawer-list"></div>
 </nav>
 <button id="shub-topics-fab">&#9776; Topics</button>
 <script id="shub-chrome-js">
 (function(){
-  /* Progress + back-to-top */
   var prog=document.getElementById('shub-prog'),btt=document.getElementById('shub-btt');
   window.addEventListener('scroll',function(){
     var h=document.documentElement,st=h.scrollTop||document.body.scrollTop,sh=(h.scrollHeight||document.body.scrollHeight)-h.clientHeight;
@@ -44,8 +42,6 @@
     if(btt)btt.classList.toggle('vis',st>280);
   },{passive:true});
   if(btt)btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-
-  /* Mobile drawer */
   if(window.innerWidth>767)return;
   var ov=document.getElementById('shub-drawer-ov'),dr=document.getElementById('shub-drawer');
   var dc=document.getElementById('shub-drawer-close'),fab=document.getElementById('shub-topics-fab');
@@ -59,9 +55,8 @@
   var built=false;
   function build(){
     if(built)return;
-    var sels=['.sidebar .nav-btn','.sidebar .nav-item','.sidebar .sidebar-item',
-              '.sidebar .topic-btn','#sidebar .nav-btn','#sidebar button:not(#shub-drawer-close)',
-              '.nav-panel button'];
+    var sels=['.sidebar .topic-btn','.sidebar .nav-btn','.sidebar .nav-item',
+              '.sidebar .sidebar-item','#sidebar .topic-btn','#sidebar button:not(#shub-drawer-close)'];
     var items=[];
     for(var s=0;s<sels.length;s++){items=Array.from(document.querySelectorAll(sels[s]));if(items.length)break;}
     if(!items.length)return;
@@ -70,12 +65,12 @@
     if(sb){
       Array.from(sb.children).forEach(function(ch){
         var cl=ch.className||'';
-        if(cl.includes('section')||cl.includes('group-label')||cl.includes('sidebar-section')){
+        if(cl.includes('section')||cl.includes('group-label')||cl.includes('section-label')){
           var tx=ch.textContent.trim();
           if(tx.length>1){var s=document.createElement('div');s.className='shub-dl-sec';s.textContent=tx;lst.appendChild(s);}
         }else if(ch.tagName==='BUTTON'||cl.includes('nav-btn')||cl.includes('nav-item')||cl.includes('topic-btn')){
           mkIt(ch);
-        }else{ch.querySelectorAll('button,[class*="nav-btn"],[class*="nav-item"]').forEach(function(n){mkIt(n);});}
+        }else{ch.querySelectorAll('button,[class*="nav-btn"],[class*="topic-btn"]').forEach(function(n){mkIt(n);});}
       });
     }else{items.forEach(function(o){mkIt(o);});}
     sync();
@@ -90,14 +85,16 @@
     lst.appendChild(b);
   }
   function sync(){
-    var ac=document.querySelector('.sidebar .nav-btn.active,.sidebar .nav-item.active,#sidebar .active');
+    var ac=document.querySelector('.sidebar .active,#sidebar .active');
     var at=ac?ac.textContent.trim():'';
-    lst.querySelectorAll('.shub-dl-item').forEach(function(it){it.classList.toggle('cur',at.length>0&&it.textContent.trim()&&at.includes(it.textContent.trim()));});
+    lst.querySelectorAll('.shub-dl-item').forEach(function(it){
+      it.classList.toggle('cur',at.length>0&&at.includes(it.textContent.trim()));
+    });
   }
   var sb2=document.querySelector('.sidebar,#sidebar');
   if(sb2)new MutationObserver(sync).observe(sb2,{attributes:true,subtree:true,attributeFilter:['class']});
-  function init(){build();if(!built){var n=0,t=setInterval(function(){build();if(built||++n>40)clearInterval(t);},100);}}
-  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',function(){setTimeout(init,200);}):setTimeout(init,200);
+  function init(){build();if(!built){var n=0,t=setInterval(function(){build();if(built||++n>50)clearInterval(t);},100);}}
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',function(){setTimeout(init,250);}) :setTimeout(init,250);
 })();
 </script>
 
