@@ -377,68 +377,8 @@ body {
 .no-results { text-align: center; padding: 3rem; color: var(--text3); font-size: 0.9rem; }
 </style>
 
-<style id='shm-v4'>
-@media (max-width: 768px) {
-  /* ITIL app-grid: stack nav + content vertically */
-  .app-grid, [class*="app-grid"] {
-    display: block !important;
-    grid-template-columns: 1fr !important;
-  }
-  .left-nav, .nav-panel, [class*="left-nav"] {
-    display: none !important;
-  }
-  .main-content, .content-area, [class*="main-content"] {
-    width: 100% !important;
-    padding: 16px 14px !important;
-    box-sizing: border-box !important;
-  }
-  .process-grid, [class*="process-grid"],
-  .cmd-grid, [class*="cmd-grid"] {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-  }
 
-
-  /* Universal: tables */
-  table {
-    display: block !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    font-size: 12px !important;
-  }
-  th { white-space: nowrap; font-size: 11px !important; }
-  td { font-size: 12px !important; }
-
-  /* Universal: code */
-  pre, code, [class*="code-block"], [class*="cmd-block"] {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    font-size: 11px !important;
-    max-width: 100% !important;
-    white-space: pre !important;
-  }
-
-  /* Universal: headings */
-  h1 { font-size: clamp(1.5rem, 7vw, 2rem) !important; line-height: 1.2 !important; }
-  h2 { font-size: clamp(1rem, 5vw, 1.35rem) !important; }
-  h3 { font-size: clamp(0.9rem, 4vw, 1.05rem) !important; }
-
-  /* Universal: search input */
-  .search-wrap { max-width: 100% !important; }
-  .search-wrap input { font-size: 14px !important; }
-
-  /* Universal: body overflow */
-  body { overflow-x: hidden !important; }
-}
-@media (min-width: 769px) {
-  #mob-topics-btn { display: none !important; }
-  #mob-sidebar-close { display: none !important; }
-  #mob-overlay { display: none !important; }
-}
-</style>
-  <!-- STUDYHUB-MOBILE-v4 -->
+  
 </head>
 <body>
 
@@ -2580,6 +2520,192 @@ function filterCards(input, section) {
 document.querySelectorAll('[id^="cards-"] .q-card:first-child').forEach(card => {
   card.classList.add('open');
 });
+</script>
+
+<!-- STUDYHUB-MASTER-v1 -->
+<style id="shub-c-css">
+@media (max-width: 768px) {
+  /* Any fixed left nav: hidden on mobile */
+  .left-nav, .side-nav, .app-sidebar, #sidebar,
+  [class*="left-nav"], [class*="side-nav"] {
+    display: none !important;
+  }
+  /* Main content full width */
+  .app-container, .main-container, .content-wrap,
+  [class*="app-container"], [class*="main-container"] {
+    display: block !important; margin-left: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+  .main-content, .content-area, .app-content,
+  [class*="main-content"], [class*="content-area"] {
+    width: 100% !important; max-width: 100vw !important;
+    padding: 16px 14px 80px !important;
+    box-sizing: border-box !important; margin-left: 0 !important;
+  }
+  body { overflow-x: hidden !important; }
+
+  /* Nav pills in header or tab bars: scroll */
+  .nav-pills, .topic-pills, .filter-bar, .process-nav,
+  [class*="nav-pills"], [class*="filter-bar"] {
+    display: flex !important; overflow-x: auto !important;
+    flex-wrap: nowrap !important; gap: 6px !important;
+    scrollbar-width: none !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding-bottom: 4px !important;
+  }
+
+  /* Tables */
+  table { display: block !important; overflow-x: auto !important;
+    font-size: 12px !important; -webkit-overflow-scrolling: touch !important; }
+  th { white-space: nowrap !important; }
+
+  /* Code */
+  pre, code { overflow-x: auto !important; font-size: 11px !important;
+    -webkit-overflow-scrolling: touch !important; }
+
+  /* Lifecycle / flow arrows wrap */
+  .lifecycle, [class*="lifecycle"], .workflow, [class*="workflow"] {
+    flex-wrap: wrap !important; gap: 6px !important;
+  }
+
+  /* Process/command grids: single column */
+  .process-grid, .cmd-grid, [class*="process-grid"], [class*="cmd-grid"],
+  .grid-2, .two-col, [class*="two-col"] {
+    grid-template-columns: 1fr !important; gap: 12px !important;
+  }
+
+  /* Cards */
+  .cards, .card-grid, [class*="card-grid"] {
+    grid-template-columns: 1fr !important; }
+
+  h1 { font-size: clamp(1.4rem, 7vw, 1.9rem) !important; }
+  h2 { font-size: clamp(1rem, 5vw, 1.3rem) !important; }
+  h3 { font-size: clamp(0.9rem, 4vw, 1.05rem) !important; }
+
+  /* Sticky mini-nav button for ITIL */
+  #shub-c-btn {
+    position: fixed; bottom: 16px; right: 16px; z-index: 8000;
+    background: #B87FFF; color: #0d0d0d; border: none;
+    border-radius: 50px; padding: 12px 18px; font-size: 13px;
+    font-weight: 700; cursor: pointer; display: flex; align-items: center;
+    gap: 6px; box-shadow: 0 4px 20px rgba(184,127,255,.4);
+    -webkit-tap-highlight-color: transparent;
+  }
+  #shub-c-ov {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.75); z-index: 8100;
+  }
+  #shub-c-ov.on { display: block; }
+  #shub-c-dr {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    width: min(280px, 85vw);
+    background: #0d0d18; border-right: 1px solid #2A2A4A;
+    z-index: 8200; display: flex; flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform .26s cubic-bezier(.4,0,.2,1);
+    overflow: hidden;
+  }
+  #shub-c-dr.on { transform: translateX(0); }
+  #shub-c-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 15px; border-bottom: 1px solid #2A2A4A;
+    background: rgba(255,255,255,.03); flex-shrink: 0;
+  }
+  #shub-c-title {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; color: #8B8BAA; font-family: system-ui;
+  }
+  #shub-c-close {
+    background: rgba(255,255,255,.07); border: 1px solid #2A2A4A;
+    border-radius: 7px; color: #8B8BAA; width: 30px; height: 30px;
+    font-size: 15px; cursor: pointer; display: flex; align-items: center;
+    justify-content: center; -webkit-tap-highlight-color: transparent;
+  }
+  #shub-c-back {
+    display: flex; align-items: center; gap: 8px; padding: 11px 15px;
+    color: #e3b341; text-decoration: none; font-size: 12.5px; font-weight: 600;
+    border-bottom: 1px solid #2A2A4A; background: rgba(227,179,65,.05);
+    flex-shrink: 0; -webkit-tap-highlight-color: transparent;
+  }
+  #shub-c-list {
+    overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch;
+    padding: 4px 0 40px;
+  }
+  #shub-c-list::-webkit-scrollbar { width: 3px; }
+  #shub-c-list::-webkit-scrollbar-thumb { background: #2A2A4A; }
+  .shub-c-it {
+    display: block; width: 100%; padding: 10px 15px; border: none;
+    border-left: 3px solid transparent; background: transparent;
+    text-align: left; color: #8B8BAA; font-family: system-ui;
+    font-size: 13px; cursor: pointer; line-height: 1.35;
+    box-sizing: border-box; -webkit-tap-highlight-color: transparent;
+    text-decoration: none;
+  }
+  .shub-c-it:active { background: rgba(255,255,255,.04); }
+  .shub-c-it:hover { color: #fff; border-left-color: #B87FFF; }
+
+  @media (min-width: 769px) {
+    #shub-c-btn, #shub-c-ov, #shub-c-dr { display: none !important; }
+  }
+}
+</style>
+<div id="shub-c-ov"></div>
+<nav id="shub-c-dr">
+  <div id="shub-c-head">
+    <span id="shub-c-title">Navigate</span>
+    <button id="shub-c-close">&#10005;</button>
+  </div>
+  <a id="shub-c-back" href="index.html">&#8592; Study Hub</a>
+  <div id="shub-c-list"></div>
+</nav>
+<button id="shub-c-btn">&#9776; Navigate</button>
+
+<script id="shub-c-js">
+(function(){
+  if(window.innerWidth > 768) return;
+  var ov=document.getElementById('shub-c-ov'),
+      dr=document.getElementById('shub-c-dr'),
+      dc=document.getElementById('shub-c-close'),
+      btn=document.getElementById('shub-c-btn'),
+      lst=document.getElementById('shub-c-list');
+  if(!dr||!btn) return;
+
+  function open(){dr.classList.add('on');ov.classList.add('on');
+    document.body.style.overflow='hidden';btn.innerHTML='&#10005; Close';}
+  function close(){dr.classList.remove('on');ov.classList.remove('on');
+    document.body.style.overflow='';btn.innerHTML='&#9776; Navigate';}
+  btn.addEventListener('click',function(){dr.classList.contains('on')?close():open();});
+  dc.addEventListener('click',close);
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+
+  /* Build nav from page's h2 headings (ITIL-style continuous scroll) */
+  var headings = document.querySelectorAll('h2[id], section[id] > h2, .process-section h2');
+  if(!headings.length) headings = document.querySelectorAll('h2');
+  var n=0;
+  headings.forEach(function(h){
+    var id = h.id || (h.closest('[id]') ? h.closest('[id]').id : '');
+    if(!id){ id='shub-h-'+(++n); h.id=id; }
+    var a=document.createElement('a');
+    a.className='shub-c-it';
+    a.href='#'+id;
+    a.textContent=h.textContent.trim().slice(0,60);
+    a.addEventListener('click',function(){setTimeout(close,200);});
+    lst.appendChild(a);
+  });
+
+  /* Also add left-nav links if they exist */
+  var navLinks = document.querySelectorAll('.left-nav a, .side-nav a, #left-nav a, [class*="left-nav"] a');
+  if(navLinks.length && !headings.length){
+    navLinks.forEach(function(a){
+      var item=document.createElement('a');
+      item.className='shub-c-it';
+      item.href=a.href; item.textContent=a.textContent.trim();
+      item.addEventListener('click',function(){setTimeout(close,200);});
+      lst.appendChild(item);
+    });
+  }
+})();
 </script>
 </body>
 </html>

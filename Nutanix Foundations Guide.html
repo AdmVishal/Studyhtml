@@ -607,82 +607,8 @@ p.body-text {
 }
 </style>
 
-<style id='shm-v4'>
-@media (max-width: 768px) {
-  /* Nutanix guide: sidebar already toggleable — just fix layout */
-  .main {
-    margin-left: 0 !important;
-    max-width: 100vw !important;
-    padding: 1rem 14px 3rem !important;
-  }
-  .progress-bar { left: 0 !important; }
-  .topbar-search { display: none !important; }
-  .cover { padding: 20px 14px !important; }
-  .cover h1 { font-size: clamp(1.8rem, 8vw, 2.8rem) !important; }
-  .cheatsheet-grid { grid-template-columns: 1fr !important; }
-  .card-grid { grid-template-columns: 1fr !important; }
 
-
-  /* ITIL app-grid: stack nav + content vertically */
-  .app-grid, [class*="app-grid"] {
-    display: block !important;
-    grid-template-columns: 1fr !important;
-  }
-  .left-nav, .nav-panel, [class*="left-nav"] {
-    display: none !important;
-  }
-  .main-content, .content-area, [class*="main-content"] {
-    width: 100% !important;
-    padding: 16px 14px !important;
-    box-sizing: border-box !important;
-  }
-  .process-grid, [class*="process-grid"],
-  .cmd-grid, [class*="cmd-grid"] {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-  }
-
-
-  /* Universal: tables */
-  table {
-    display: block !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    font-size: 12px !important;
-  }
-  th { white-space: nowrap; font-size: 11px !important; }
-  td { font-size: 12px !important; }
-
-  /* Universal: code */
-  pre, code, [class*="code-block"], [class*="cmd-block"] {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    font-size: 11px !important;
-    max-width: 100% !important;
-    white-space: pre !important;
-  }
-
-  /* Universal: headings */
-  h1 { font-size: clamp(1.5rem, 7vw, 2rem) !important; line-height: 1.2 !important; }
-  h2 { font-size: clamp(1rem, 5vw, 1.35rem) !important; }
-  h3 { font-size: clamp(0.9rem, 4vw, 1.05rem) !important; }
-
-  /* Universal: search input */
-  .search-wrap { max-width: 100% !important; }
-  .search-wrap input { font-size: 14px !important; }
-
-  /* Universal: body overflow */
-  body { overflow-x: hidden !important; }
-}
-@media (min-width: 769px) {
-  #mob-topics-btn { display: none !important; }
-  #mob-sidebar-close { display: none !important; }
-  #mob-overlay { display: none !important; }
-}
-</style>
-  <!-- STUDYHUB-MOBILE-v4 -->
+  
 </head>
 <body>
 
@@ -2093,5 +2019,50 @@ navLinks.forEach(link => {
   });
 });
 </script>
+
+<!-- STUDYHUB-MASTER-v1 -->
+<style id="shub-d-css">
+@media (max-width: 768px) {
+  /* Nutanix has its own toggle — just fix overflow issues */
+  .main {
+    margin-left: 0 !important; max-width: 100vw !important;
+    padding: 1rem 14px 3rem !important;
+  }
+  .progress-bar { left: 0 !important; }
+  .topbar-search { display: none !important; }
+  .cover { padding: 20px 14px !important; }
+  .cover h1 { font-size: clamp(1.8rem,8vw,2.8rem) !important; }
+  .cheatsheet-grid { grid-template-columns: 1fr !important; }
+  .card-grid { grid-template-columns: 1fr !important; }
+  .card-featured { flex-direction: column !important; }
+  /* Def-table: stack term above definition */
+  .def-table tr { display: flex !important; flex-direction: column !important; }
+  .def-table td { display: block !important; width: 100% !important;
+    box-sizing: border-box !important; }
+  .term-cell {
+    width: 100% !important; border-right: none !important;
+    border-bottom: 1px solid rgba(100,150,220,.2) !important;
+    font-size: .79rem !important; padding: 7px 10px 4px !important;
+  }
+  .def-cell {
+    width: 100% !important; border-top: none !important;
+    font-size: .79rem !important; padding: 4px 10px 10px !important;
+  }
+  /* Data tables: scroll */
+  .data-table { display: block !important; overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important; }
+  table { max-width: 100% !important; }
+  pre, .code-group, .code-block {
+    overflow-x: auto !important; font-size: .7rem !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .code-line { font-size: .68rem !important; }
+  .section-divider { flex-wrap: wrap !important; padding: 10px 12px !important; }
+  .section-divider h2 { font-size: .82rem !important; }
+  .quickjump { flex-wrap: wrap !important; gap: 6px !important; }
+  .step-text { font-size: .86rem !important; }
+  li { font-size: .87rem !important; }
+}
+</style>
 </body>
 </html>

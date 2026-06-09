@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CCNA Study Notes</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -362,6 +362,185 @@
   .subnet-part { color: var(--accent3); font-weight: 700; }
   .host-part { color: var(--accent2); font-weight: 700; }
 </style>
+
+<style id='shm-v4'>
+@media (max-width: 768px) {
+  /* ── Split-panel layout: stack vertically on mobile ── */
+  .main {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Hide sidebar — accessed via ≡ Topics button (added by JS) */
+  .sidebar {
+    display: none !important;
+    position: fixed !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important;
+    z-index: 9000 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 56px 0 40px !important;
+    background: var(--surface, #111827) !important;
+  }
+
+  /* Sidebar open state */
+  body.sidebar-open .sidebar {
+    display: block !important;
+  }
+
+  /* Content fills full width */
+  .content {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 20px 14px 40px !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+    height: auto !important;
+    overflow-y: visible !important;
+  }
+
+  /* Tab/category nav: horizontal scroll */
+  .cat-nav {
+    display: flex !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    flex-wrap: nowrap !important;
+    gap: 2px !important;
+    scrollbar-width: none !important;
+    padding-bottom: 2px !important;
+  }
+  .cat-nav::-webkit-scrollbar { display: none !important; }
+  .cat-btn {
+    flex-shrink: 0 !important;
+    font-size: 11px !important;
+    padding: 7px 10px !important;
+  }
+
+  /* Header: prevent overflow */
+  header {
+    padding: 16px 14px 0 !important;
+    position: sticky !important;
+    top: 0 !important;
+  }
+  .header-top {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+  .subtitle { display: none !important; }
+
+  /* ≡ Topics floating button (injected by JS) */
+  #mob-topics-btn {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 18px !important; right: 16px !important;
+    z-index: 9500 !important;
+    background: var(--accent, #00c9ff) !important;
+    color: #000 !important;
+    border: none !important;
+    border-radius: 50px !important;
+    padding: 11px 18px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    font-family: var(--font, system-ui) !important;
+    align-items: center !important;
+    gap: 7px !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,.5) !important;
+    letter-spacing: .02em !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+
+  /* Close button (inside open sidebar) */
+  #mob-sidebar-close {
+    display: none;
+    position: fixed !important;
+    top: 10px !important; right: 12px !important;
+    z-index: 9600 !important;
+    background: rgba(255,255,255,.12) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    width: 40px !important; height: 40px !important;
+    font-size: 18px !important;
+    cursor: pointer !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  body.sidebar-open #mob-sidebar-close { display: flex !important; }
+
+  /* Overlay when sidebar open */
+  #mob-overlay {
+    display: none;
+    position: fixed !important;
+    inset: 0 !important;
+    background: rgba(0,0,0,.65) !important;
+    z-index: 8999 !important;
+  }
+  body.sidebar-open #mob-overlay { display: block !important; }
+
+
+  /* ITIL app-grid: stack nav + content vertically */
+  .app-grid, [class*="app-grid"] {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+  }
+  .left-nav, .nav-panel, [class*="left-nav"] {
+    display: none !important;
+  }
+  .main-content, .content-area, [class*="main-content"] {
+    width: 100% !important;
+    padding: 16px 14px !important;
+    box-sizing: border-box !important;
+  }
+  .process-grid, [class*="process-grid"],
+  .cmd-grid, [class*="cmd-grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+
+  /* Universal: tables */
+  table {
+    display: block !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 12px !important;
+  }
+  th { white-space: nowrap; font-size: 11px !important; }
+  td { font-size: 12px !important; }
+
+  /* Universal: code */
+  pre, code, [class*="code-block"], [class*="cmd-block"] {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    font-size: 11px !important;
+    max-width: 100% !important;
+    white-space: pre !important;
+  }
+
+  /* Universal: headings */
+  h1 { font-size: clamp(1.5rem, 7vw, 2rem) !important; line-height: 1.2 !important; }
+  h2 { font-size: clamp(1rem, 5vw, 1.35rem) !important; }
+  h3 { font-size: clamp(0.9rem, 4vw, 1.05rem) !important; }
+
+  /* Universal: search input */
+  .search-wrap { max-width: 100% !important; }
+  .search-wrap input { font-size: 14px !important; }
+
+  /* Universal: body overflow */
+  body { overflow-x: hidden !important; }
+}
+@media (min-width: 769px) {
+  #mob-topics-btn { display: none !important; }
+  #mob-sidebar-close { display: none !important; }
+  #mob-overlay { display: none !important; }
+}
+</style>
+  <!-- STUDYHUB-MOBILE-v4 -->
 </head>
 <body>
 
@@ -2785,6 +2964,59 @@ searchClear.addEventListener('click', () => {
 buildPanels();
 buildSidebar('all');
 showTopic(topics[0].id);
+</script>
+
+<script id='shm-js'>
+(function(){
+  if(window.innerWidth > 768) return;
+  var sb = document.querySelector('.sidebar');
+  if(!sb) return;
+
+  // Overlay
+  var ov = document.createElement('div');
+  ov.id = 'mob-overlay';
+  document.body.appendChild(ov);
+
+  // Close button inside sidebar
+  var cb = document.createElement('button');
+  cb.id = 'mob-sidebar-close';
+  cb.innerHTML = '&#10005;';
+  cb.setAttribute('aria-label','Close topics');
+  document.body.appendChild(cb);
+
+  // Topics button (bottom-right)
+  var btn = document.createElement('button');
+  btn.id = 'mob-topics-btn';
+  btn.innerHTML = '&#9776; Topics';
+  btn.setAttribute('aria-label','Show topics');
+  document.body.appendChild(btn);
+
+  function open(){
+    document.body.classList.add('sidebar-open');
+    document.body.style.overflow = 'hidden';
+    btn.innerHTML = '&#10005; Close';
+  }
+  function close(){
+    document.body.classList.remove('sidebar-open');
+    document.body.style.overflow = '';
+    btn.innerHTML = '&#9776; Topics';
+  }
+
+  btn.addEventListener('click', function(){
+    document.body.classList.contains('sidebar-open') ? close() : open();
+  });
+  cb.addEventListener('click', close);
+  ov.addEventListener('click', close);
+
+  // Close when topic button is clicked (content loads)
+  sb.querySelectorAll('.topic-btn, button, a').forEach(function(el){
+    el.addEventListener('click', function(){ setTimeout(close, 200); });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape') close();
+  });
+})();
 </script>
 </body>
 </html>
