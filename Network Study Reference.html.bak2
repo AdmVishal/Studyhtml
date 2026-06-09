@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Advanced Networking Study Reference — BGP, OSPF, EIGRP & VPN</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
 :root {
   --bg: #0d1117;
@@ -383,6 +385,351 @@ hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
   
 </head>
 <body>
+<!-- SHUB-THEME-v1 -->
+<style id="shub-theme">
+/* ════════════════════════════════════════════════════════════════
+   StudyHub Unified Theme — based on Nutanix Foundations Guide
+   Injected by apply_studyhub_theme.py
+════════════════════════════════════════════════════════════════ */
+
+/* ── Design Tokens ──────────────────────────────────────────── */
+:root {
+  --navy:      #0B1E3D;
+  --blue:      #1B4F8A;
+  --mid:       #2E6CC7;
+  --sky:       #4A9FD5;
+  --teal:      #00929F;
+  --teal-l:    #E0F6F8;
+  --accent:    #F0A500;
+  --red:       #C0392B;
+  --red-l:     #FDECEA;
+  --green:     #1A7340;
+  --green-l:   #E8F5EE;
+  --bg:        #F0F4FA;
+  --surface:   #FFFFFF;
+  --border:    #CBD9EE;
+  --text:      #1A2840;
+  --muted:     #5A6E8A;
+  --code-bg:   #0F1E35;
+  --font-head: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ── Reset & Base ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: var(--font-body) !important;
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+
+/* ── Unified Topbar ──────────────────────────────────────────── */
+#shub-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  height: 60px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  gap: 1rem;
+  border-bottom: 2px solid var(--blue);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+
+.shub-logo {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.shub-logo-dot { color: var(--accent); }
+
+.shub-topbar-title {
+  font-size: 0.75rem;
+  color: #7B9AC8;
+  font-weight: 300;
+  margin-left: 0.25rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 220px;
+}
+
+.shub-topbar-spacer { flex: 1; }
+
+.shub-home-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #8AAED6;
+  font-size: 0.75rem;
+  text-decoration: none;
+  font-family: var(--font-body);
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+.shub-home-link:hover { background: rgba(255,255,255,0.13); color: #fff; }
+
+/* ── Progress Bar ────────────────────────────────────────────── */
+#shub-progress {
+  position: fixed;
+  top: 60px; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--sky));
+  width: 0%;
+  z-index: 1001;
+  transition: width 0.1s linear;
+}
+
+/* ── Back to Top ─────────────────────────────────────────────── */
+#shub-btt {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 44px; height: 44px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 900;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(27,79,138,0.4);
+  transition: background 0.15s, transform 0.15s;
+}
+#shub-btt:hover { background: var(--mid); transform: translateY(-2px); }
+#shub-btt.visible { display: flex; }
+
+/* ── Push content below fixed topbar ───────────────────────── */
+/* Each page layout gets nudged to account for the 60px topbar */
+body > *:not(#shub-topbar):not(#shub-progress):not(#shub-btt):not(script):not(style) {
+  /* Individual page layouts override this via their own selectors */
+}
+
+/* ── HEADINGS — unified style ───────────────────────────────── */
+h1:not(.shub-logo):not([class*="cover"]):not([class*="logo"]) {
+  font-family: var(--font-head) !important;
+  color: var(--navy) !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+}
+h2 {
+  font-family: var(--font-head) !important;
+  color: var(--blue) !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+}
+h3 {
+  font-family: var(--font-head) !important;
+  color: var(--teal) !important;
+  font-weight: 700 !important;
+}
+h4 {
+  font-family: var(--font-body) !important;
+  color: var(--muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.07em !important;
+  font-size: 0.75rem !important;
+  font-weight: 500 !important;
+}
+
+/* ── Paragraph text ──────────────────────────────────────────── */
+p { color: #2D3F5C; line-height: 1.75; margin-bottom: 0.8rem; }
+li { color: #2D3F5C; line-height: 1.65; font-size: 0.9rem; }
+li::marker { color: var(--sky); }
+
+/* ── Links ───────────────────────────────────────────────────── */
+a { color: var(--mid); }
+a:hover { color: var(--sky); }
+
+/* ── Code ────────────────────────────────────────────────────── */
+pre, .code-block, [class*="code-block"], [class*="cmd-block"] {
+  background: var(--code-bg) !important;
+  border-radius: 8px !important;
+  padding: 1rem !important;
+  overflow-x: auto !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.78rem !important;
+  color: #79C0FF !important;
+  line-height: 1.6 !important;
+  margin: 0.75rem 0 1.25rem !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2) !important;
+}
+code, kbd {
+  font-family: var(--font-mono) !important;
+  font-size: 0.82em !important;
+}
+:not(pre) > code {
+  background: #E8EFF8 !important;
+  color: var(--blue) !important;
+  padding: 0.1em 0.4em !important;
+  border-radius: 4px !important;
+  font-size: 0.82em !important;
+}
+
+/* ── Tables ──────────────────────────────────────────────────── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 8px rgba(27,79,138,0.08);
+  font-size: 0.85rem;
+  margin: 0.75rem 0 1.5rem;
+}
+thead tr { background: var(--blue); }
+thead th {
+  padding: 0.7rem 0.9rem;
+  color: #fff !important;
+  font-family: var(--font-head) !important;
+  font-weight: 600;
+  text-align: left;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+tbody tr:nth-child(odd)  { background: var(--surface); }
+tbody tr:nth-child(even) { background: #F5F8FD; }
+tbody td {
+  padding: 0.6rem 0.9rem;
+  color: #2D3F5C;
+  vertical-align: top;
+  line-height: 1.5;
+  border-top: 1px solid var(--border);
+}
+tbody td:first-child {
+  font-family: var(--font-head);
+  font-weight: 600;
+  color: var(--blue);
+}
+
+/* ── Cards / panels ──────────────────────────────────────────── */
+.card, [class*="-card"]:not([class*="guide-card"]),
+.process-card, .topic-card, .qa-item, .step-card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px !important;
+  padding: 1.2rem 1.4rem !important;
+  box-shadow: 0 2px 12px rgba(27,79,138,0.07) !important;
+  margin-bottom: 1rem !important;
+}
+
+/* ── Callout / note blocks ───────────────────────────────────── */
+.callout, .note, [class*="callout"], .tip, .warning {
+  border-radius: 10px !important;
+  padding: 1rem 1.2rem !important;
+  margin: 1rem 0 1.5rem !important;
+  font-size: 0.88rem !important;
+  line-height: 1.6 !important;
+}
+.callout.info, .note, .tip {
+  background: var(--teal-l) !important;
+  border-left: 4px solid var(--teal) !important;
+  color: #1A4848 !important;
+}
+.callout.warning, .warning {
+  background: var(--red-l) !important;
+  border-left: 4px solid var(--red) !important;
+  color: #5A1010 !important;
+}
+.callout.success {
+  background: var(--green-l) !important;
+  border-left: 4px solid var(--green) !important;
+  color: #0D3820 !important;
+}
+
+/* ── Section header banners ──────────────────────────────────── */
+.section-divider, [class*="section-header"],
+[class*="topic-header"], [class*="process-header"] {
+  background: linear-gradient(90deg, var(--blue), var(--mid)) !important;
+  border-radius: 10px !important;
+  padding: 1rem 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+  color: #fff !important;
+}
+.section-divider h2, [class*="section-header"] h2 {
+  color: #fff !important;
+  font-size: 1.05rem !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+/* ── Badges / tags / pills ───────────────────────────────────── */
+.badge, .tag, [class*="-badge"], [class*="-tag"]:not([class*="guide-tag"]) {
+  font-family: var(--font-mono) !important;
+  font-size: 0.72rem !important;
+  padding: 0.2rem 0.6rem !important;
+  border-radius: 5px !important;
+}
+
+/* ── Scrollbars ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ── Selection ───────────────────────────────────────────────── */
+::selection { background: var(--blue); color: #fff; }
+
+/* ── Mobile: topbar compact ──────────────────────────────────── */
+@media (max-width: 768px) {
+  #shub-topbar { padding: 0 12px; gap: 8px; height: 54px; }
+  #shub-progress { top: 54px; }
+  .shub-topbar-title { display: none; }
+  .shub-home-link span { display: none; }
+  .shub-home-link { padding: 0.4rem 0.6rem; }
+  #shub-btt { bottom: 90px; right: 14px; width: 38px; height: 38px; font-size: 1rem; }
+}
+</style>
+<div id="shub-topbar">
+  <a class="shub-logo" href="index.html">
+    Study<span class="shub-logo-dot">Hub</span>
+  </a>
+  <span class="shub-topbar-title">Network Study Reference</span>
+  <div class="shub-topbar-spacer"></div>
+  <a class="shub-home-link" href="index.html">
+    <svg width="12" height="12" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/>
+    </svg>
+    <span>All Guides</span>
+  </a>
+</div>
+<div id="shub-progress"></div>
+<button id="shub-btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+<script id="shub-theme-js">
+(function(){
+  /* Progress bar */
+  var bar = document.getElementById('shub-progress');
+  window.addEventListener('scroll', function(){
+    var h = document.documentElement;
+    var pct = (h.scrollTop || document.body.scrollTop) /
+              ((h.scrollHeight || document.body.scrollHeight) - h.clientHeight) * 100;
+    if(bar) bar.style.width = Math.min(pct,100) + '%';
+    var btt = document.getElementById('shub-btt');
+    if(btt) btt.classList.toggle('visible', (h.scrollTop||document.body.scrollTop) > 300);
+  }, {passive:true});
+})();
+</script>
+
 
 <header>
   <div class="brand">
