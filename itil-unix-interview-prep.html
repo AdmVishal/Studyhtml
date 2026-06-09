@@ -1886,152 +1886,225 @@ iftop -i eth0</div>
   document.querySelector('.card-body').classList.add('open');
 </script>
 
-<!-- STUDYHUB-MASTER-v1 -->
-<style id="shub-c-css">
-@media (max-width: 768px) {
-  /* Any fixed left nav: hidden on mobile */
-  .left-nav, .side-nav, .app-sidebar, #sidebar,
-  [class*="left-nav"], [class*="side-nav"] {
-    display: none !important;
-  }
-  /* Main content full width */
-  .app-container, .main-container, .content-wrap,
-  [class*="app-container"], [class*="main-container"] {
-    display: block !important; margin-left: 0 !important;
-    grid-template-columns: 1fr !important;
-  }
-  .main-content, .content-area, .app-content,
-  [class*="main-content"], [class*="content-area"] {
-    width: 100% !important; max-width: 100vw !important;
-    padding: 16px 14px 80px !important;
-    box-sizing: border-box !important; margin-left: 0 !important;
-  }
-  body { overflow-x: hidden !important; }
+  </div>
+  
+  
+</nav>
 
-  /* Nav pills in header or tab bars: scroll */
-  .nav-pills, .topic-pills, .filter-bar, .process-nav,
-  [class*="nav-pills"], [class*="filter-bar"] {
-    display: flex !important; overflow-x: auto !important;
-    flex-wrap: nowrap !important; gap: 6px !important;
+
+<style id="itil-mob-css">
+@media (max-width: 768px) {
+  /* ── Grid → single column ─────────────────────────────── */
+  .main-grid {
+    display: block !important;
+    grid-template-columns: 1fr !important;
+    min-height: auto !important;
+  }
+
+  /* ── Sidebar: hidden, replaced by slide-in drawer ──────── */
+  .sidebar {
+    display: none !important;
+    position: static !important;
+    height: auto !important;
+  }
+
+  /* ── Content area: full width ─────────────────────────── */
+  .content-area {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 20px 14px 110px !important;
+    box-sizing: border-box !important;
+    overflow-x: hidden !important;
+  }
+
+  /* ── Sticky nav-bar at top: allow horizontal scroll ────── */
+  .nav-bar {
+    position: sticky !important;
+    top: 0 !important; z-index: 500 !important;
+  }
+  .nav-scroll {
+    display: flex !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    gap: 0 !important;
     scrollbar-width: none !important;
     -webkit-overflow-scrolling: touch !important;
-    padding-bottom: 4px !important;
+    padding: 0 10px !important;
+  }
+  .nav-scroll::-webkit-scrollbar { display: none !important; }
+  .nav-item {
+    flex-shrink: 0 !important;
+    font-size: 9px !important;
+    padding: 12px 10px !important;
+    letter-spacing: .08em !important;
   }
 
-  /* Tables */
-  table { display: block !important; overflow-x: auto !important;
-    font-size: 12px !important; -webkit-overflow-scrolling: touch !important; }
-  th { white-space: nowrap !important; }
+  /* ── Header compact ───────────────────────────────────── */
+  header { padding: 28px 14px 22px !important; }
+  header h1 { font-size: clamp(22px,7vw,36px) !important; }
+  .header-stats { gap: 18px !important; padding: 0 14px !important; }
 
-  /* Code */
-  pre, code { overflow-x: auto !important; font-size: 11px !important;
-    -webkit-overflow-scrolling: touch !important; }
+  /* ── Process sections: single column ─────────────────── */
+  .process-grid, .cmd-grid, .two-col,
+  [class*="grid-"], [class*="two-col"] {
+    grid-template-columns: 1fr !important;
+    display: block !important;
+  }
 
-  /* Lifecycle / flow arrows wrap */
-  .lifecycle, [class*="lifecycle"], .workflow, [class*="workflow"] {
+  /* ── Lifecycle arrows: wrap ───────────────────────────── */
+  .lifecycle, [class*="lifecycle"],
+  .flow-row, [class*="flow-row"] {
     flex-wrap: wrap !important; gap: 6px !important;
   }
 
-  /* Process/command grids: single column */
-  .process-grid, .cmd-grid, [class*="process-grid"], [class*="cmd-grid"],
-  .grid-2, .two-col, [class*="two-col"] {
-    grid-template-columns: 1fr !important; gap: 12px !important;
+  /* ── Code blocks ──────────────────────────────────────── */
+  pre {
+    overflow-x: auto !important; font-size: .72rem !important;
+    -webkit-overflow-scrolling: touch !important;
+    padding: 10px 12px !important;
+  }
+  code { font-size: .68rem !important; }
+
+  /* ── Tables ───────────────────────────────────────────── */
+  table {
+    display: block !important; overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important; font-size: .78rem !important;
+  }
+  th { white-space: nowrap !important; }
+
+  /* ── Cards ────────────────────────────────────────────── */
+  .card, [class*="process-card"], [class*="cmd-card"] {
+    padding: 12px 14px !important; margin-bottom: 10px !important;
   }
 
-  /* Cards */
-  .cards, .card-grid, [class*="card-grid"] {
-    grid-template-columns: 1fr !important; }
+  /* ── Body ─────────────────────────────────────────────── */
+  body { overflow-x: hidden !important; }
 
-  h1 { font-size: clamp(1.4rem, 7vw, 1.9rem) !important; }
-  h2 { font-size: clamp(1rem, 5vw, 1.3rem) !important; }
-  h3 { font-size: clamp(0.9rem, 4vw, 1.05rem) !important; }
+  /* ════ NAVIGATE BUTTON ══════════════════════════════════ */
+  #itil-nav-btn {
+    position: fixed !important; bottom: 18px !important; right: 14px !important;
+    z-index: 8000 !important;
+    background: var(--accent, #00d4ff) !important;
+    color: #0a0e14 !important; border: none !important;
+    border-radius: 50px !important; padding: 12px 20px !important;
+    font-size: 13px !important; font-weight: 700 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    cursor: pointer !important; display: flex !important;
+    align-items: center !important; gap: 7px !important;
+    box-shadow: 0 4px 24px rgba(0,212,255,.4) !important;
+    -webkit-tap-highlight-color: transparent !important;
+    letter-spacing: .04em !important;
+  }
+  #itil-nav-btn:active { transform: scale(.96) !important; }
 
-  /* Sticky mini-nav button for ITIL */
-  #shub-c-btn {
-    position: fixed; bottom: 16px; right: 16px; z-index: 8000;
-    background: #B87FFF; color: #0d0d0d; border: none;
-    border-radius: 50px; padding: 12px 18px; font-size: 13px;
-    font-weight: 700; cursor: pointer; display: flex; align-items: center;
-    gap: 6px; box-shadow: 0 4px 20px rgba(184,127,255,.4);
-    -webkit-tap-highlight-color: transparent;
+  /* ════ DRAWER ══════════════════════════════════════════ */
+  #itil-ov {
+    display: none; position: fixed !important; inset: 0 !important;
+    background: rgba(0,0,0,.82) !important; z-index: 8100 !important;
   }
-  #shub-c-ov {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,.75); z-index: 8100;
-  }
-  #shub-c-ov.on { display: block; }
-  #shub-c-dr {
-    position: fixed; top: 0; left: 0; bottom: 0;
-    width: min(280px, 85vw);
-    background: #0d0d18; border-right: 1px solid #2A2A4A;
-    z-index: 8200; display: flex; flex-direction: column;
-    transform: translateX(-100%);
-    transition: transform .26s cubic-bezier(.4,0,.2,1);
-    overflow: hidden;
-  }
-  #shub-c-dr.on { transform: translateX(0); }
-  #shub-c-head {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 13px 15px; border-bottom: 1px solid #2A2A4A;
-    background: rgba(255,255,255,.03); flex-shrink: 0;
-  }
-  #shub-c-title {
-    font-size: 11px; font-weight: 700; letter-spacing: .1em;
-    text-transform: uppercase; color: #8B8BAA; font-family: system-ui;
-  }
-  #shub-c-close {
-    background: rgba(255,255,255,.07); border: 1px solid #2A2A4A;
-    border-radius: 7px; color: #8B8BAA; width: 30px; height: 30px;
-    font-size: 15px; cursor: pointer; display: flex; align-items: center;
-    justify-content: center; -webkit-tap-highlight-color: transparent;
-  }
-  #shub-c-back {
-    display: flex; align-items: center; gap: 8px; padding: 11px 15px;
-    color: #e3b341; text-decoration: none; font-size: 12.5px; font-weight: 600;
-    border-bottom: 1px solid #2A2A4A; background: rgba(227,179,65,.05);
-    flex-shrink: 0; -webkit-tap-highlight-color: transparent;
-  }
-  #shub-c-list {
-    overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch;
-    padding: 4px 0 40px;
-  }
-  #shub-c-list::-webkit-scrollbar { width: 3px; }
-  #shub-c-list::-webkit-scrollbar-thumb { background: #2A2A4A; }
-  .shub-c-it {
-    display: block; width: 100%; padding: 10px 15px; border: none;
-    border-left: 3px solid transparent; background: transparent;
-    text-align: left; color: #8B8BAA; font-family: system-ui;
-    font-size: 13px; cursor: pointer; line-height: 1.35;
-    box-sizing: border-box; -webkit-tap-highlight-color: transparent;
-    text-decoration: none;
-  }
-  .shub-c-it:active { background: rgba(255,255,255,.04); }
-  .shub-c-it:hover { color: #fff; border-left-color: #B87FFF; }
+  #itil-ov.on { display: block !important; }
 
-  @media (min-width: 769px) {
-    #shub-c-btn, #shub-c-ov, #shub-c-dr { display: none !important; }
+  #itil-dr {
+    position: fixed !important; top: 0 !important; left: 0 !important;
+    bottom: 0 !important; width: min(290px, 86vw) !important;
+    background: var(--surface, #0f1520) !important;
+    border-right: 1px solid var(--accent, #00d4ff) !important;
+    z-index: 8200 !important; display: flex !important;
+    flex-direction: column !important;
+    transform: translateX(-100%) !important;
+    transition: transform .26s cubic-bezier(.4,0,.2,1) !important;
+  }
+  #itil-dr.on { transform: translateX(0) !important; }
+
+  #itil-dhead {
+    display: flex !important; align-items: center !important;
+    justify-content: space-between !important;
+    padding: 14px 16px !important;
+    border-bottom: 1px solid var(--border, #1e2d45) !important;
+    background: var(--panel, #141c2a) !important; flex-shrink: 0 !important;
+  }
+  #itil-dtitle {
+    font-size: 10px !important; font-weight: 700 !important;
+    letter-spacing: .15em !important; text-transform: uppercase !important;
+    color: var(--accent, #00d4ff) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  #itil-dclose {
+    background: rgba(0,212,255,.08) !important;
+    border: 1px solid var(--border, #1e2d45) !important;
+    border-radius: 6px !important; color: var(--accent, #00d4ff) !important;
+    width: 30px !important; height: 30px !important; font-size: 14px !important;
+    cursor: pointer !important; display: flex !important;
+    align-items: center !important; justify-content: center !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  #itil-back {
+    display: flex !important; align-items: center !important; gap: 8px !important;
+    padding: 11px 16px !important; color: var(--accent4, #ffd700) !important;
+    text-decoration: none !important; font-size: 11px !important;
+    font-weight: 700 !important; letter-spacing: .06em !important;
+    border-bottom: 1px solid var(--border, #1e2d45) !important;
+    background: rgba(255,215,0,.04) !important; flex-shrink: 0 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  #itil-list {
+    overflow-y: auto !important; flex: 1 !important;
+    -webkit-overflow-scrolling: touch !important; padding: 4px 0 60px !important;
+  }
+  #itil-list::-webkit-scrollbar { width: 3px !important; }
+  #itil-list::-webkit-scrollbar-thumb { background: var(--border, #1e2d45) !important; }
+  .itil-sec {
+    padding: 10px 16px 3px !important; font-size: 8px !important;
+    font-weight: 700 !important; letter-spacing: .2em !important;
+    text-transform: uppercase !important; color: var(--text-dim, #5a7a9a) !important;
+    font-family: 'JetBrains Mono', monospace !important;
+  }
+  .itil-lnk {
+    display: flex !important; align-items: center !important; gap: 8px !important;
+    padding: 10px 16px !important; color: var(--text-dim, #5a7a9a) !important;
+    text-decoration: none !important; font-size: 11.5px !important;
+    border-left: 2px solid transparent !important;
+    transition: all .14s !important; box-sizing: border-box !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    -webkit-tap-highlight-color: transparent !important;
+    cursor: pointer !important;
+  }
+  .itil-lnk:active { background: rgba(0,212,255,.05) !important; }
+  .itil-lnk.itil-cur {
+    color: var(--accent, #00d4ff) !important;
+    border-left-color: var(--accent, #00d4ff) !important;
+    background: rgba(0,212,255,.04) !important;
+  }
+  .itil-dot {
+    width: 6px !important; height: 6px !important; border-radius: 50% !important;
+    flex-shrink: 0 !important; background: currentColor !important; opacity: .5 !important;
   }
 }
+@media (min-width: 769px) {
+  #itil-nav-btn, #itil-ov, #itil-dr { display: none !important; }
+}
 </style>
-<div id="shub-c-ov"></div>
-<nav id="shub-c-dr">
-  <div id="shub-c-head">
-    <span id="shub-c-title">Navigate</span>
-    <button id="shub-c-close">&#10005;</button>
-  </div>
-  <a id="shub-c-back" href="index.html">&#8592; Study Hub</a>
-  <div id="shub-c-list"></div>
-</nav>
-<button id="shub-c-btn">&#9776; Navigate</button>
 
-<script id="shub-c-js">
+<!-- ITIL-MOB -->
+<div id="itil-ov"></div>
+<nav id="itil-dr">
+  <div id="itil-dhead">
+    <span id="itil-dtitle">Navigate</span>
+    <button id="itil-dclose">&#10005;</button>
+  </div>
+  <a id="itil-back" href="index.html">&#8592; Study Hub</a>
+  <div id="itil-list"></div>
+</nav>
+<button id="itil-nav-btn">&#9776; Navigate</button>
+<script id="itil-mob-js">
 (function(){
   if(window.innerWidth > 768) return;
-  var ov=document.getElementById('shub-c-ov'),
-      dr=document.getElementById('shub-c-dr'),
-      dc=document.getElementById('shub-c-close'),
-      btn=document.getElementById('shub-c-btn'),
-      lst=document.getElementById('shub-c-list');
+  var ov=document.getElementById('itil-ov'),
+      dr=document.getElementById('itil-dr'),
+      dc=document.getElementById('itil-dclose'),
+      btn=document.getElementById('itil-nav-btn'),
+      ls=document.getElementById('itil-list');
   if(!dr||!btn) return;
 
   function open(){dr.classList.add('on');ov.classList.add('on');
@@ -2043,32 +2116,79 @@ iftop -i eth0</div>
   ov.addEventListener('click',close);
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
 
-  /* Build nav from page's h2 headings (ITIL-style continuous scroll) */
-  var headings = document.querySelectorAll('h2[id], section[id] > h2, .process-section h2');
-  if(!headings.length) headings = document.querySelectorAll('h2');
-  var n=0;
-  headings.forEach(function(h){
-    var id = h.id || (h.closest('[id]') ? h.closest('[id]').id : '');
-    if(!id){ id='shub-h-'+(++n); h.id=id; }
-    var a=document.createElement('a');
-    a.className='shub-c-it';
-    a.href='#'+id;
-    a.textContent=h.textContent.trim().slice(0,60);
-    a.addEventListener('click',function(){setTimeout(close,200);});
-    lst.appendChild(a);
-  });
-
-  /* Also add left-nav links if they exist */
-  var navLinks = document.querySelectorAll('.left-nav a, .side-nav a, #left-nav a, [class*="left-nav"] a');
-  if(navLinks.length && !headings.length){
-    navLinks.forEach(function(a){
-      var item=document.createElement('a');
-      item.className='shub-c-it';
-      item.href=a.href; item.textContent=a.textContent.trim();
-      item.addEventListener('click',function(){setTimeout(close,200);});
-      lst.appendChild(item);
-    });
+  /* Build drawer from .sidebar-title (section heads) and .sidebar-link (anchors) */
+  var sidebar=document.querySelector('.sidebar');
+  if(!sidebar){
+    /* Sidebar may be hidden by our CSS — read the original DOM before our CSS hides it */
+    /* Use querySelectorAll from document directly */
+    sidebar=document.body;
   }
+  var sidebarEl=document.querySelector('.sidebar');
+  var built=false;
+
+  function build(){
+    if(built) return;
+    /* Try to find sidebar links */
+    var links=document.querySelectorAll('.sidebar-link');
+    var titles=document.querySelectorAll('.sidebar-title');
+    if(!links.length) return;
+    built=true; ls.innerHTML='';
+
+    /* Interleave section titles and links */
+    /* Walk sidebar children to preserve order */
+    var sEl=document.querySelector('.sidebar');
+    if(sEl){
+      var ch=Array.from(sEl.querySelectorAll('.sidebar-title, .sidebar-link'));
+      ch.forEach(function(el){
+        if(el.classList.contains('sidebar-title')){
+          var sec=document.createElement('div');
+          sec.className='itil-sec';
+          sec.textContent=el.textContent.trim();
+          ls.appendChild(sec);
+        } else {
+          /* sidebar-link is an <a> with href="#id" */
+          var a=document.createElement('a');
+          a.className='itil-lnk';
+          a.href=el.getAttribute('href')||'#';
+          /* Dot colour indicator */
+          var dotEl=el.querySelector('.dot');
+          var dot=document.createElement('span');
+          dot.className='itil-dot';
+          if(dotEl) dot.style.background=window.getComputedStyle(dotEl).background;
+          a.appendChild(dot);
+          a.appendChild(document.createTextNode(el.textContent.trim()));
+          a.addEventListener('click',function(){setTimeout(close,200);});
+          ls.appendChild(a);
+        }
+      });
+    }
+
+    /* Highlight on scroll */
+    var anchors=Array.from(ls.querySelectorAll('.itil-lnk[href^="#"]'));
+    window.addEventListener('scroll',function(){
+      var y=window.scrollY+100,cur=null;
+      anchors.forEach(function(a){
+        var id=a.getAttribute('href').slice(1);
+        var el=id?document.getElementById(id):null;
+        if(el&&el.offsetTop<=y) cur=a;
+      });
+      anchors.forEach(function(a){a.classList.remove('itil-cur');});
+      if(cur) cur.classList.add('itil-cur');
+    },{passive:true});
+  }
+
+  function init(){
+    build();
+    if(!built){
+      var n=0,t=setInterval(function(){
+        build();
+        if(built||++n>30) clearInterval(t);
+      },100);
+    }
+  }
+  document.readyState==='loading'
+    ?document.addEventListener('DOMContentLoaded',function(){setTimeout(init,150);})
+    :setTimeout(init,150);
 })();
 </script>
 </body>
