@@ -1,547 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  
   
   
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CCNA Study Notes</title>
 
-<style>
-  :root {
-    --bg: #0a0e1a;
-    --surface: #111827;
-    --surface2: #1a2236;
-    --border: #1e2d45;
-    --accent: #00c9ff;
-    --accent2: #7b61ff;
-    --accent3: #00e5a0;
-    --warn: #ff9f40;
-    --danger: #ff4f6d;
-    --text: #e2e8f0;
-    --text-dim: #7a8ba8;
-    --text-muted: #3d5068;
-    --font: 'Sora', sans-serif;
-    --mono: 'JetBrains Mono', monospace;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 14px;
-    line-height: 1.7;
-    min-height: 100vh;
-  }
-
-  /* ── HEADER ── */
-  header {
-    background: linear-gradient(135deg, #0a0e1a 0%, #0f1d35 50%, #0a0e1a 100%);
-    border-bottom: 1px solid var(--border);
-    padding: 24px 32px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(12px);
-  }
-
-  .header-top {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
-  .logo {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #fff;
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 700;
-    padding: 6px 12px;
-    border-radius: 6px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  h1 {
-    font-size: 22px;
-    font-weight: 800;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    letter-spacing: -0.02em;
-  }
-
-  .subtitle { color: var(--text-dim); font-size: 12px; margin-left: auto; }
-
-  /* ── SEARCH ── */
-  .search-wrap {
-    margin-bottom: 16px;
-    position: relative;
-    max-width: 400px;
-  }
-  .search-wrap input {
-    width: 100%;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 16px 8px 38px;
-    color: var(--text);
-    font-family: var(--font);
-    font-size: 13px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-wrap input:focus { border-color: var(--accent); }
-  .search-wrap svg {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text-muted);
-    pointer-events: none;
-  }
-  #search-clear {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    font-size: 16px;
-    display: none;
-    line-height: 1;
-  }
-
-  /* ── CATEGORY NAV ── */
-  .cat-nav {
-    display: flex;
-    gap: 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 1px;
-  }
-  .cat-nav::-webkit-scrollbar { display: none; }
-
-  .cat-btn {
-    flex-shrink: 0;
-    background: none;
-    border: none;
-    border-bottom: 3px solid transparent;
-    padding: 8px 14px;
-    color: var(--text-dim);
-    font-family: var(--font);
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    letter-spacing: 0.03em;
-    text-transform: uppercase;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .cat-btn:hover { color: var(--text); }
-  .cat-btn.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
-
-  /* ── MAIN LAYOUT ── */
-  .main {
-    display: flex;
-    gap: 0;
-    height: calc(100vh - 130px);
-  }
-
-  /* ── SIDEBAR ── */
-  .sidebar {
-    width: 240px;
-    flex-shrink: 0;
-    background: var(--surface);
-    border-right: 1px solid var(--border);
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .topic-btn {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background: none;
-    border: none;
-    border-left: 3px solid transparent;
-    padding: 11px 16px;
-    color: var(--text-dim);
-    font-family: var(--font);
-    font-size: 12.5px;
-    cursor: pointer;
-    transition: all 0.15s;
-    line-height: 1.4;
-  }
-  .topic-btn:hover { background: var(--surface2); color: var(--text); }
-  .topic-btn.active {
-    background: var(--surface2);
-    color: var(--accent);
-    border-left-color: var(--accent);
-  }
-
-  .section-label {
-    padding: 14px 16px 6px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-  }
-
-  /* ── CONTENT ── */
-  .content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 32px 40px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-  }
-
-  .topic-panel { display: none; animation: fadeIn 0.25s ease; }
-  .topic-panel.active { display: block; }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .topic-panel h2 {
-    font-size: 26px;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-  .topic-panel .topic-tag {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 3px 10px;
-    border-radius: 20px;
-    margin-bottom: 24px;
-  }
-
-  .topic-panel h3 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--accent);
-    margin: 28px 0 12px;
-    padding-bottom: 6px;
-    border-bottom: 1px solid var(--border);
-    letter-spacing: -0.01em;
-  }
-  .topic-panel h4 {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent2);
-    margin: 18px 0 8px;
-  }
-  .topic-panel p {
-    color: var(--text);
-    margin-bottom: 10px;
-    font-size: 13.5px;
-    line-height: 1.75;
-  }
-
-  /* Cards */
-  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin: 16px 0; }
-  .card {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 18px;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: var(--accent); }
-  .card-title { font-size: 13px; font-weight: 700; color: var(--accent3); margin-bottom: 6px; }
-  .card p { font-size: 12.5px; color: var(--text-dim); margin: 0; line-height: 1.6; }
-
-  /* Code */
-  pre, code {
-    font-family: var(--mono);
-    font-size: 12px;
-    background: #060b15;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    color: #a8d8ff;
-  }
-  pre { padding: 14px 18px; overflow-x: auto; margin: 10px 0 16px; line-height: 1.7; }
-  code { padding: 2px 7px; font-size: 11.5px; }
-
-  /* Table */
-  .tbl-wrap { overflow-x: auto; margin: 12px 0 20px; }
-  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
-  th { background: var(--surface2); color: var(--accent); font-weight: 700; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 10px 14px; border: 1px solid var(--border); text-align: left; }
-  td { padding: 9px 14px; border: 1px solid var(--border); color: var(--text-dim); vertical-align: top; }
-  tr:hover td { background: var(--surface2); color: var(--text); }
-
-  /* List */
-  ul, ol { padding-left: 20px; margin: 8px 0 14px; }
-  li { color: var(--text-dim); font-size: 13px; margin-bottom: 5px; line-height: 1.65; }
-  li strong { color: var(--text); }
-
-  /* Note / highlight boxes */
-  .note {
-    border-left: 3px solid var(--accent3);
-    background: rgba(0,229,160,0.05);
-    padding: 12px 16px;
-    border-radius: 0 8px 8px 0;
-    margin: 14px 0;
-    font-size: 13px;
-  }
-  .warn {
-    border-left: 3px solid var(--warn);
-    background: rgba(255,159,64,0.06);
-    padding: 12px 16px;
-    border-radius: 0 8px 8px 0;
-    margin: 14px 0;
-    font-size: 13px;
-  }
-  .danger-box {
-    border-left: 3px solid var(--danger);
-    background: rgba(255,79,109,0.06);
-    padding: 12px 16px;
-    border-radius: 0 8px 8px 0;
-    margin: 14px 0;
-    font-size: 13px;
-  }
-
-  /* Badge */
-  .badge {
-    display: inline-block;
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-weight: 700;
-    margin: 2px 3px;
-  }
-  .badge-blue { background: rgba(0,201,255,0.15); color: var(--accent); }
-  .badge-purple { background: rgba(123,97,255,0.15); color: var(--accent2); }
-  .badge-green { background: rgba(0,229,160,0.15); color: var(--accent3); }
-  .badge-orange { background: rgba(255,159,64,0.15); color: var(--warn); }
-
-  /* Search highlight */
-  mark { background: rgba(0,201,255,0.25); color: var(--accent); border-radius: 2px; padding: 0 2px; }
-
-  /* Search results overlay */
-  #search-results {
-    display: none;
-    padding: 20px 40px;
-  }
-  .search-result-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin-bottom: 10px;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-  .search-result-item:hover { border-color: var(--accent); }
-  .sri-topic { font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-  .sri-text { font-size: 13px; color: var(--text-dim); }
-
-  /* Divider */
-  hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
-
-  /* IP calc highlight colors */
-  .ip-octet { color: var(--warn); font-weight: 700; }
-  .subnet-part { color: var(--accent3); font-weight: 700; }
-  .host-part { color: var(--accent2); font-weight: 700; }
-</style>
-
-
   
+  
+  
+  
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="studyhub.css">
 </head>
 <body>
-<!-- SHUB-THEME-v2 -->
-<style id="shub-theme-v2">
-/* ════════════════════════════════════════════════════════════════
-   StudyHub Unified Theme v2 — typography + chrome unification
-   Colour scheme of each page is PRESERVED (not overridden)
-════════════════════════════════════════════════════════════════ */
-
-/* ── Shared tokens (non-colour) ──────────────────────────────── */
-:root {
-  --shub-navy:   #0B1E3D;
-  --shub-blue:   #1B4F8A;
-  --shub-mid:    #2E6CC7;
-  --shub-sky:    #4A9FD5;
-  --shub-accent: #F0A500;
-  --font-head:   'Syne', sans-serif;
-  --font-body:   'DM Sans', sans-serif;
-  --font-mono:   'JetBrains Mono', monospace;
-}
-
-/* ── Topbar ──────────────────────────────────────────────────── */
-#shub-topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 9999;
-  height: 58px;
-  background: var(--shub-navy);
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  gap: 12px;
-  border-bottom: 2px solid var(--shub-blue);
-  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
-}
-.shub-logo {
-  font-family: var(--font-head);
-  font-weight: 800;
-  font-size: 1.05rem;
-  color: #fff;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.shub-logo-dot { color: var(--shub-accent); }
-.shub-page-title {
-  font-family: var(--font-body);
-  font-size: 0.73rem;
-  color: #6B8AB0;
-  font-weight: 300;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 260px;
-}
-.shub-spacer { flex: 1; }
-.shub-home {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 7px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.13);
-  color: #8AAED6;
-  font-size: 0.74rem;
-  font-family: var(--font-body);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background 0.15s, color 0.15s;
-}
-.shub-home:hover { background: rgba(255,255,255,0.14); color: #fff; }
-
-/* ── Progress bar ────────────────────────────────────────────── */
-#shub-prog {
-  position: fixed;
-  top: 58px; left: 0;
-  height: 3px;
-  width: 0%;
-  background: linear-gradient(90deg, var(--shub-accent), var(--shub-sky));
-  z-index: 9998;
-  transition: width 0.08s linear;
-  pointer-events: none;
-}
-
-/* ── Back-to-top ─────────────────────────────────────────────── */
-#shub-btt {
-  position: fixed;
-  bottom: 24px; right: 20px;
-  width: 42px; height: 42px;
-  background: var(--shub-blue);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  font-size: 1.1rem;
-  cursor: pointer;
-  z-index: 9997;
-  opacity: 0;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 16px rgba(27,79,138,0.45);
-  transition: opacity 0.2s, transform 0.2s, background 0.15s;
-}
-#shub-btt.vis { opacity: 1; pointer-events: auto; }
-#shub-btt:hover { background: var(--shub-mid); transform: translateY(-2px); }
-
-/* ── Push all pages' content below our topbar ───────────────── */
-/* We target the page's own top-level containers */
-body > header:not(#shub-topbar),
-body > .header:not(#shub-topbar),
-body > .topbar:not(#shub-topbar),
-body > .toc,
-body > .nav-bar,
-body > .app-header {
-  margin-top: 58px !important;
-}
-/* For pages where the sticky/fixed header is not <body>'s child */
-.header, .toc, .nav-bar {
-  top: 58px !important;
-}
-/* Nutanix-style topbar (.topbar class used by Nutanix page itself) */
-.topbar:not(#shub-topbar) {
-  top: 58px !important;
-}
-/* Main content areas */
-.main, .main-content, .content-area, .app-content {
-  margin-top: 58px !important;
-}
-
-/* ── Font unification ────────────────────────────────────────── */
-/* Apply DM Sans to body — safe on all bg colours */
-body { font-family: var(--font-body) !important; }
-
-/* Headings — use Syne everywhere */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-head) !important;
-}
-
-/* Monospace — unify to JetBrains Mono */
-code, pre, kbd, samp,
-.cmd-block, [class*="code-block"],
-[class*="cmd-block"], [class*="mono"] {
-  font-family: var(--font-mono) !important;
-}
-
-/* ── Scrollbar style ─────────────────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
-
-/* ── Selection ───────────────────────────────────────────────── */
-::selection { background: var(--shub-blue); color: #fff; }
-
-/* ── Mobile ──────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  #shub-topbar { padding: 0 12px; gap: 8px; height: 50px; }
-  #shub-prog   { top: 50px; }
-  .shub-page-title { display: none; }
-  .shub-home span  { display: none; }
-  .shub-home  { padding: 6px 8px; }
-  #shub-btt   { bottom: 80px; right: 12px; width: 36px; height: 36px; font-size: 1rem; }
-
-  body > .header, body > header { margin-top: 50px !important; }
-  .header, .toc, .nav-bar { top: 50px !important; }
-  .topbar:not(#shub-topbar) { top: 50px !important; }
-  .main, .main-content, .content-area { margin-top: 50px !important; }
-}
-@media (min-width: 769px) { }
-</style>
+<!-- SHUB-v4 -->
 <div id="shub-topbar">
-  <a class="shub-logo" href="index.html">Study<span class="shub-logo-dot">Hub</span></a>
+  <a class="shub-logo" href="index.html">Study<span>Hub</span></a>
+  <span class="shub-title">CCNA Study Notes</span>
+  <div class="shub-spacer"></div>
+  <a class="shub-home" href="index.html">
+    <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/></svg>
+    <span>All Guides</span>
+  </a>
+</div>
+<div id="shub-prog"></div>
+<button id="shub-btt" title="Back to top">&#8593;</button>
+<div id="shub-drawer-ov"></div>
+<nav id="shub-drawer">
+  <div id="shub-drawer-head">
+    <span>Contents</span>
+    <button id="shub-drawer-close">&#10005;</button>
+  </div>
+  <a id="shub-drawer-back" href="index.html">&#8592; Study Hub</a>
+  <div id="shub-drawer-list"></div>
+</nav>
+<button id="shub-topics-fab">&#9776; Topics</button>
+<script id="shub-chrome-js">
+(function(){
+  var prog=document.getElementById('shub-prog'),btt=document.getElementById('shub-btt');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,st=h.scrollTop||document.body.scrollTop;
+    var sh=(h.scrollHeight||document.body.scrollHeight)-h.clientHeight;
+    if(prog)prog.style.width=(sh>0?Math.min(st/sh*100,100):0)+'%';
+    if(btt)btt.classList.toggle('vis',st>280);
+  },{passive:true});
+  if(btt)btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  if(window.innerWidth>767)return;
+  var ov=document.getElementById('shub-drawer-ov'),dr=document.getElementById('shub-drawer');
+  var dc=document.getElementById('shub-drawer-close'),fab=document.getElementById('shub-topics-fab');
+  var list=document.getElementById('shub-drawer-list');
+  if(!dr||!fab)return;
+  function open(){dr.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden';fab.innerHTML='&#10005; Close';}
+  function close(){dr.classList.remove('on');ov.classList.remove('on');document.body.style.overflow='';fab.innerHTML='&#9776; Topics';}
+  fab.addEventListener('click',function(){dr.classList.contains('on')?close():open();});
+  dc.addEventListener('click',close);
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
+  var built=false;
+  function build(){
+    if(built)return;
+    var sels=['.sidebar .nav-btn','.sidebar .nav-item','.sidebar .sidebar-item','.sidebar .topic-btn','#sidebar button','.nav-panel button'];
+    var items=[];
+    for(var s=0;s<sels.length;s++){items=Array.from(document.querySelectorAll(sels[s]));if(items.length)break;}
+    if(!items.length)return;
+    built=true;list.innerHTML='';
+    var sidebar=document.querySelector('.sidebar,#sidebar,.nav-panel');
+    if(sidebar){
+      Array.from(sidebar.children).forEach(function(child){
+        var cls=child.className||'';
+        if(cls.includes('section')||cls.includes('group-label')||cls.includes('sidebar-section')){
+          var t=child.textContent.trim();
+          if(t.length>1){var s=document.createElement('div');s.className='shub-dl-sec';s.textContent=t;list.appendChild(s);}
+          return;
+        }
+        if(child.tagName==='BUTTON'||cls.includes('nav-btn')||cls.includes('nav-item')||cls.includes('sidebar-item')||cls.includes('topic-btn')){mkItem(child);return;}
+        child.querySelectorAll('button,[class*="nav-btn"],[class*="nav-item"]').forEach(function(n){mkItem(n);});
+      });
+    }else{items.forEach(function(o){mkItem(o);});}
+    sync();
+  }
+  function mkItem(orig){
+    var btn=document.createElement('button');btn.className='shub-dl-item';
+    var numEl=orig.querySelector('.num,.sidebar-count,[class*="num"]');
+    var numTxt=numEl?numEl.textContent.trim():'';
+    var label=orig.textContent.replace(numTxt,'').trim();
+    if(!label||label.length<2)return;
+    if(numTxt){var ns=document.createElement('span');ns.className='shub-dl-num';ns.textContent=numTxt;btn.appendChild(ns);}
+    btn.appendChild(document.createTextNode(label));
+    btn.addEventListener('click',function(){orig.click();setTimeout(close,180);});
+    list.appendChild(btn);
+  }
+  function sync(){
+    var active=document.querySelector('.sidebar .nav-btn.active,.sidebar .nav-item.active,.sidebar .sidebar-item.active,#sidebar button.active');
+    var at=active?active.textContent.trim():'';
+    list.querySelectorAll('.shub-dl-item').forEach(function(it){it.classList.toggle('cur',at.length>0&&at.includes(it.textContent.trim()));});
+  }
+  var sb=document.querySelector('.sidebar,#sidebar');
+  if(sb)new MutationObserver(function(){sync();}).observe(sb,{attributes:true,subtree:true,attributeFilter:['class']});
+  function init(){build();if(!built){var n=0,t=setInterval(function(){build();if(built||++n>40)clearInterval(t);},100);}}
+  document.readyState==='loading'?document.addEventListener('DOMContentLoaded',function(){setTimeout(init,200);}):setTimeout(init,200);
+})();
+</script>
+
+
+
+  <span class="shub-title">CCNA Study Notes</span>
+  <div class="shub-spacer"></div>
+  <a class="shub-home" href="index.html">
+    <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
+      <path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/>
+    </svg>
+    <span>All Guides</span>
+  </a>
+</div>
+
+  <span style="font-family:'DM Sans',sans-serif;font-size:.72rem;color:#6B8AB0;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px;">CCNA Study Notes</span>
+  <div style="flex:1;"></div>
+  <a href="index.html" style="display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:7px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);color:#8AAED6;font-size:.74rem;font-family:'DM Sans',sans-serif;text-decoration:none;">
+    <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/></svg>
+    All Guides
+  </a>
+</div>
+
   <span class="shub-page-title">CCNA Study Notes</span>
   <div class="shub-spacer"></div>
   <a class="shub-home" href="index.html">
@@ -551,133 +137,6 @@ code, pre, kbd, samp,
     <span>All Guides</span>
   </a>
 </div>
-<div id="shub-prog"></div>
-<button id="shub-btt" title="Back to top">↑</button>
-<script id="shub-chrome-js">
-(function(){
-  var prog=document.getElementById('shub-prog');
-  var btt=document.getElementById('shub-btt');
-  window.addEventListener('scroll',function(){
-    var h=document.documentElement,b=document.body;
-    var st=h.scrollTop||b.scrollTop;
-    var sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
-    if(prog) prog.style.width=(sh>0?Math.min(st/sh*100,100):0)+'%';
-    if(btt) btt.classList.toggle('vis',st>280);
-  },{passive:true});
-  if(btt) btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-})();
-</script>
-
-<style id="shub-dark-extras">
-/* Dark page refinements — improves readability, keeps dark theme */
-body {
-  font-size: 15px !important;
-  line-height: 1.75 !important;
-}
-
-/* Headings: brighter so they stand out on dark bg */
-h1 { font-weight: 800 !important; line-height: 1.2 !important; }
-h2 { font-weight: 700 !important; line-height: 1.25 !important; }
-h3 { font-weight: 600 !important; }
-
-/* Paragraph / answer text: ensure it's readable, not faded */
-p, .qa-a p, .body-text, .answer, [class*="answer"] {
-  color: #c9d5e8 !important;
-  line-height: 1.78 !important;
-  font-size: 14.5px !important;
-}
-
-/* List items */
-li { color: #b8c8dd !important; font-size: 14.5px !important; line-height: 1.65 !important; }
-
-/* Q text — question titles should be clearly readable */
-.q-text, .qa-q .q-text, [class*="q-text"],
-.topic-title, [class*="topic-title"],
-.question, [class*="question-text"] {
-  color: #e2ecf8 !important;
-  font-size: 15px !important;
-  font-weight: 600 !important;
-}
-
-/* Section / topic headers */
-.section-title, [class*="section-title"] { color: #fff !important; font-weight: 700 !important; }
-.section-desc,  [class*="section-desc"]  { color: #8fa8c8 !important; }
-
-/* Cards: boost border visibility */
-.topic-card, .qa-item, .card, [class*="-card"] {
-  border-color: rgba(255,255,255,0.1) !important;
-}
-.topic-card:hover, .qa-item:hover {
-  border-color: rgba(255,255,255,0.22) !important;
-}
-
-/* Code blocks — ensure visible on dark bg */
-pre, .cmd-block, .code-block, [class*="code-block"], [class*="cmd-block"] {
-  background: #080c14 !important;
-  border-color: rgba(255,255,255,0.08) !important;
-  font-size: 13px !important;
-  line-height: 1.65 !important;
-  padding: 14px 16px !important;
-  border-radius: 8px !important;
-}
-
-/* Inline code — readable on dark bg */
-:not(pre) > code {
-  background: rgba(255,255,255,0.08) !important;
-  color: #7dd3b8 !important;
-  padding: 0.1em 0.4em !important;
-  border-radius: 4px !important;
-  font-size: 0.85em !important;
-}
-
-/* Tables on dark pages */
-thead th {
-  font-family: var(--font-head) !important;
-  font-weight: 600 !important;
-  font-size: 0.8rem !important;
-  letter-spacing: 0.03em !important;
-  color: #e2ecf8 !important;
-}
-tbody td {
-  color: #b8c8dd !important;
-  font-size: 0.88rem !important;
-  vertical-align: top !important;
-  line-height: 1.55 !important;
-}
-tbody td:first-child {
-  font-family: var(--font-head) !important;
-  font-weight: 600 !important;
-}
-
-/* Muted/dim text: slightly less faded */
-.muted, [class*="muted"], [class*="-dim"],
-.subtitle, .section-desc { color: #7a90b0 !important; }
-
-/* Nav tab bar text — readable */
-.toc-btn, .nav-item, [class*="toc-btn"],
-[class*="tab-btn"], [class*="nav-btn"] {
-  font-family: var(--font-mono) !important;
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.04em !important;
-}
-
-/* Info/warn boxes */
-.info-box, [class*="info-box"] {
-  color: #a8c8e8 !important;
-  font-size: 14px !important;
-}
-.warn-box, [class*="warn-box"] {
-  color: #d4b880 !important;
-  font-size: 14px !important;
-}
-
-/* Step list items */
-.step-list li, [class*="step-list"] li { color: #b8c8dd !important; font-size: 14.5px !important; }
-
-/* Footer text */
-.footer, footer { color: #5a6e8a !important; font-size: 11px !important; }
-</style>
 
 <header>
   <div class="header-top">
@@ -3101,174 +2560,13 @@ buildSidebar('all');
 showTopic(topics[0].id);
 </script>
 
-
-
-<!-- STUDYHUB-MASTER-v1 -->
-<style id="shub-a-css">
-@media (max-width: 768px) {
-  /* Layout: stack vertically */
-  .main { display: block !important; height: auto !important; overflow: visible !important; }
-  /* Sidebar hidden — replaced by drawer */
-  .sidebar { display: none !important; }
-  /* Content full width */
-  .content {
-    width: 100% !important; max-width: 100vw !important;
-    padding: 16px 14px 110px !important; overflow-x: hidden !important;
-    box-sizing: border-box !important; height: auto !important;
-    overflow-y: visible !important;
-  }
-  /* Tab bar: horizontal scroll */
-  .cat-nav, .section-nav {
-    display: flex !important; overflow-x: auto !important;
-    flex-wrap: nowrap !important; gap: 2px !important;
-    scrollbar-width: none !important; padding-bottom: 2px !important;
-    -webkit-overflow-scrolling: touch !important;
-  }
-  .cat-nav::-webkit-scrollbar { display: none !important; }
-  .cat-btn, .section-btn {
-    flex-shrink: 0 !important; font-size: 11px !important;
-    padding: 7px 10px !important;
-  }
-  /* Header compact */
-  header { padding: 16px 14px 0 !important; }
-  .header-top { flex-wrap: wrap !important; gap: 8px !important; }
-  .subtitle { display: none !important; }
-  /* Prevent horizontal overflow */
-  body { overflow-x: hidden !important; }
-  pre, code { overflow-x: auto !important; font-size: 11px !important;
-    -webkit-overflow-scrolling: touch !important; }
-  table { display: block !important; overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important; font-size: 12px !important; }
-  .cards { grid-template-columns: 1fr !important; }
-  .tbl { overflow-x: auto !important; }
-  h1 { font-size: clamp(1.4rem, 7vw, 1.9rem) !important; }
-  h2 { font-size: clamp(1rem, 5vw, 1.3rem) !important; }
-
-
-/* ── Sticky bottom bar ──────────────────────────────────── */
-#shub-bar {
-  position: fixed; bottom: 0; left: 0; right: 0;
-  z-index: 8000;
-  background: var(--surface, #111827);
-  border-top: 1px solid var(--border, #1e2d45);
-  display: flex; align-items: center;
-  padding: 8px 10px; gap: 7px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,.5);
-}
-#shub-pills {
-  display: flex; gap: 5px; overflow-x: auto; flex: 1;
-  scrollbar-width: none; -webkit-overflow-scrolling: touch;
-}
-#shub-pills::-webkit-scrollbar { display: none; }
-.shub-pill {
-  flex-shrink: 0; padding: 6px 12px; border-radius: 20px;
-  border: 1px solid var(--border, #1e2d45);
-  background: transparent; color: var(--text-dim, #7a8ba8);
-  font-family: var(--font, system-ui); font-size: 11px;
-  font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-  cursor: pointer; white-space: nowrap;
-  -webkit-tap-highlight-color: transparent;
-}
-.shub-pill-active {
-  background: rgba(0,201,255,.12) !important;
-  border-color: var(--accent, #00c9ff) !important;
-  color: var(--accent, #00c9ff) !important;
-}
-#shub-tbtn {
-  flex-shrink: 0; background: var(--accent, #00c9ff);
-  color: #0a0e1a; border: none; border-radius: 8px;
-  padding: 9px 14px; font-size: 12px; font-weight: 700;
-  cursor: pointer; white-space: nowrap; display: flex;
-  align-items: center; gap: 5px;
-  -webkit-tap-highlight-color: transparent;
-}
-
-/* ── Overlay + drawer ───────────────────────────────────── */
-#shub-ov {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,.75); z-index: 8100;
-}
-#shub-ov.on { display: block; }
-#shub-dr {
-  position: fixed; top: 0; left: 0; bottom: 0;
-  width: min(290px, 86vw);
-  background: var(--surface, #111827);
-  border-right: 1px solid var(--border, #1e2d45);
-  z-index: 8200; display: flex; flex-direction: column;
-  transform: translateX(-100%);
-  transition: transform .26s cubic-bezier(.4,0,.2,1);
-}
-#shub-dr.on { transform: translateX(0); }
-#shub-dhead {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 15px; border-bottom: 1px solid var(--border, #1e2d45);
-  background: var(--surface2, #1a2236); flex-shrink: 0;
-}
-#shub-dtitle {
-  font-size: 11px; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--text-dim, #7a8ba8);
-  font-family: var(--font, system-ui);
-}
-#shub-dclose {
-  background: rgba(255,255,255,.07); border: 1px solid var(--border,#1e2d45);
-  border-radius: 7px; color: var(--text-dim,#7a8ba8); width: 30px; height: 30px;
-  font-size: 15px; cursor: pointer; display: flex; align-items: center;
-  justify-content: center; -webkit-tap-highlight-color: transparent;
-}
-#shub-back {
-  display: flex; align-items: center; gap: 8px; padding: 11px 15px;
-  color: #e3b341; text-decoration: none; font-size: 12.5px; font-weight: 600;
-  border-bottom: 1px solid var(--border,#1e2d45);
-  background: rgba(227,179,65,.05); flex-shrink: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-#shub-list {
-  overflow-y: auto; flex: 1;
-  -webkit-overflow-scrolling: touch; padding: 4px 0 70px;
-}
-#shub-list::-webkit-scrollbar { width: 3px; }
-#shub-list::-webkit-scrollbar-thumb { background: var(--border,#1e2d45); }
-.shub-sec {
-  padding: 11px 15px 2px; font-size: 9px; font-weight: 700;
-  letter-spacing: .14em; text-transform: uppercase;
-  color: var(--text-muted, #3d5068); font-family: var(--font, system-ui);
-}
-.shub-it {
-  display: flex; align-items: center; gap: 8px; width: 100%;
-  padding: 10px 15px; border: none;
-  border-left: 3px solid transparent;
-  background: transparent; text-align: left;
-  color: var(--text-dim, #7a8ba8);
-  font-family: var(--font, system-ui); font-size: 13px;
-  cursor: pointer; line-height: 1.35; box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-.shub-it:active { background: var(--surface2, #1a2236); }
-.shub-it.shub-cur {
-  background: var(--surface2, #1a2236);
-  color: var(--text, #e2e8f0);
-  border-left-color: var(--accent, #00c9ff);
-}
-.shub-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  background: currentColor; opacity: .4; flex-shrink: 0;
-}
-.shub-it.shub-cur .shub-dot { opacity: 1; }
-
-/* ── Desktop: hide mobile chrome ────────────────────────── */
-@media (min-width: 769px) {
-  #shub-bar, #shub-ov, #shub-dr { display: none !important; }
-}
-
-}
-</style>
 <div id="shub-ov"></div>
 <nav id="shub-dr">
   <div id="shub-dhead">
     <span id="shub-dtitle">Topics</span>
     <button id="shub-dclose">&#10005;</button>
   </div>
-  <a id="shub-back" href="index.html">&#8592; Study Hub</a>
+  
   <div id="shub-list"></div>
 </nav>
 <div id="shub-bar">
@@ -3276,93 +2574,6 @@ showTopic(topics[0].id);
   <button id="shub-tbtn">&#9776; Topics</button>
 </div>
 
-<script id="shub-master-js">
-(function(){
-  if(window.innerWidth > 768) return;
-  var ov=document.getElementById('shub-ov'),
-      dr=document.getElementById('shub-dr'),
-      dc=document.getElementById('shub-dclose'),
-      tb=document.getElementById('shub-tbtn'),
-      ls=document.getElementById('shub-list'),
-      pl=document.getElementById('shub-pills');
-  if(!dr||!tb) return;
 
-  function open(){dr.classList.add('on');ov.classList.add('on');
-    document.body.style.overflow='hidden';tb.innerHTML='&#10005; Close';}
-  function close(){dr.classList.remove('on');ov.classList.remove('on');
-    document.body.style.overflow='';tb.innerHTML='&#9776; Topics';}
-  tb.addEventListener('click',function(){dr.classList.contains('on')?close():open();});
-  dc.addEventListener('click',close);
-  ov.addEventListener('click',close);
-  document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
-
-  var built=false;
-  function build(){
-    if(built)return;
-    var items=document.querySelectorAll('.topic-btn');
-    if(!items.length)return;
-    built=true; ls.innerHTML='';
-    items.forEach(function(orig){
-      var b=document.createElement('button');
-      b.className='shub-it';
-      var d=document.createElement('span');d.className='shub-dot';
-      b.appendChild(d);
-      b.appendChild(document.createTextNode(orig.textContent.trim()));
-      b.addEventListener('click',function(){orig.click();setTimeout(close,180);});
-      ls.appendChild(b);
-    });
-    sync();
-  }
-
-  function sync(){
-    var active=document.querySelector('.topic-btn.active');
-    var at=active?active.textContent.trim():'';
-    ls.querySelectorAll('.shub-it').forEach(function(it){
-      it.classList.toggle('shub-cur',it.textContent.trim()===at);
-    });
-  }
-
-  function buildPills(){
-    var tabs=document.querySelectorAll('.cat-btn');
-    if(!tabs.length||pl.children.length)return;
-    tabs.forEach(function(tab){
-      var p=document.createElement('button');
-      p.className='shub-pill';
-      p.textContent=tab.textContent.trim();
-      if(tab.classList.contains('active'))p.classList.add('shub-pill-active');
-      p.addEventListener('click',function(){
-        tab.click();
-        setTimeout(function(){built=false;build();syncPills();},80);
-      });
-      pl.appendChild(p);
-    });
-  }
-
-  function syncPills(){
-    var tabs=document.querySelectorAll('.cat-btn');
-    pl.querySelectorAll('.shub-pill').forEach(function(pill,i){
-      pill.classList.toggle('shub-pill-active',
-        !!(tabs[i]&&tabs[i].classList.contains('active')));
-    });
-  }
-
-  new MutationObserver(function(){sync();syncPills();})
-    .observe(document.body,{childList:true,subtree:true,
-      attributes:true,attributeFilter:['class']});
-
-  function init(){
-    build();buildPills();
-    if(!built){
-      var n=0,t=setInterval(function(){
-        build();buildPills();
-        if(built||++n>40)clearInterval(t);
-      },100);
-    }
-  }
-  document.readyState==='loading'
-    ?document.addEventListener('DOMContentLoaded',function(){setTimeout(init,200);})
-    :setTimeout(init,200);
-})();
-</script>
 </body>
 </html>

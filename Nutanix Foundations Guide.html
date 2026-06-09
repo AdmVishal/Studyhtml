@@ -1,18 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  
-  
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Nutanix Foundations — Complete Technical Guide</title>
 
-  
-  
-  
-  
-  
+<title>Nutanix Foundations — Complete Technical Guide</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -43,94 +36,71 @@
 <button id="shub-topics-fab">&#9776; Topics</button>
 <script id="shub-chrome-js">
 (function(){
+  /* Progress + back-to-top */
   var prog=document.getElementById('shub-prog'),btt=document.getElementById('shub-btt');
   window.addEventListener('scroll',function(){
-    var h=document.documentElement,st=h.scrollTop||document.body.scrollTop;
-    var sh=(h.scrollHeight||document.body.scrollHeight)-h.clientHeight;
+    var h=document.documentElement,st=h.scrollTop||document.body.scrollTop,sh=(h.scrollHeight||document.body.scrollHeight)-h.clientHeight;
     if(prog)prog.style.width=(sh>0?Math.min(st/sh*100,100):0)+'%';
     if(btt)btt.classList.toggle('vis',st>280);
   },{passive:true});
   if(btt)btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+
+  /* Mobile drawer */
   if(window.innerWidth>767)return;
   var ov=document.getElementById('shub-drawer-ov'),dr=document.getElementById('shub-drawer');
   var dc=document.getElementById('shub-drawer-close'),fab=document.getElementById('shub-topics-fab');
-  var list=document.getElementById('shub-drawer-list');
+  var lst=document.getElementById('shub-drawer-list');
   if(!dr||!fab)return;
   function open(){dr.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden';fab.innerHTML='&#10005; Close';}
   function close(){dr.classList.remove('on');ov.classList.remove('on');document.body.style.overflow='';fab.innerHTML='&#9776; Topics';}
   fab.addEventListener('click',function(){dr.classList.contains('on')?close():open();});
-  dc.addEventListener('click',close);
-  ov.addEventListener('click',close);
+  dc.addEventListener('click',close);ov.addEventListener('click',close);
   document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
   var built=false;
   function build(){
     if(built)return;
-    var sels=['.sidebar .nav-btn','.sidebar .nav-item','.sidebar .sidebar-item','.sidebar .topic-btn','#sidebar button','.nav-panel button'];
+    var sels=['.sidebar .nav-btn','.sidebar .nav-item','.sidebar .sidebar-item',
+              '.sidebar .topic-btn','#sidebar .nav-btn','#sidebar button:not(#shub-drawer-close)',
+              '.nav-panel button'];
     var items=[];
     for(var s=0;s<sels.length;s++){items=Array.from(document.querySelectorAll(sels[s]));if(items.length)break;}
     if(!items.length)return;
-    built=true;list.innerHTML='';
-    var sidebar=document.querySelector('.sidebar,#sidebar,.nav-panel');
-    if(sidebar){
-      Array.from(sidebar.children).forEach(function(child){
-        var cls=child.className||'';
-        if(cls.includes('section')||cls.includes('group-label')||cls.includes('sidebar-section')){
-          var t=child.textContent.trim();
-          if(t.length>1){var s=document.createElement('div');s.className='shub-dl-sec';s.textContent=t;list.appendChild(s);}
-          return;
-        }
-        if(child.tagName==='BUTTON'||cls.includes('nav-btn')||cls.includes('nav-item')||cls.includes('sidebar-item')||cls.includes('topic-btn')){mkItem(child);return;}
-        child.querySelectorAll('button,[class*="nav-btn"],[class*="nav-item"]').forEach(function(n){mkItem(n);});
+    built=true;lst.innerHTML='';
+    var sb=document.querySelector('.sidebar,#sidebar');
+    if(sb){
+      Array.from(sb.children).forEach(function(ch){
+        var cl=ch.className||'';
+        if(cl.includes('section')||cl.includes('group-label')||cl.includes('sidebar-section')){
+          var tx=ch.textContent.trim();
+          if(tx.length>1){var s=document.createElement('div');s.className='shub-dl-sec';s.textContent=tx;lst.appendChild(s);}
+        }else if(ch.tagName==='BUTTON'||cl.includes('nav-btn')||cl.includes('nav-item')||cl.includes('topic-btn')){
+          mkIt(ch);
+        }else{ch.querySelectorAll('button,[class*="nav-btn"],[class*="nav-item"]').forEach(function(n){mkIt(n);});}
       });
-    }else{items.forEach(function(o){mkItem(o);});}
+    }else{items.forEach(function(o){mkIt(o);});}
     sync();
   }
-  function mkItem(orig){
-    var btn=document.createElement('button');btn.className='shub-dl-item';
-    var numEl=orig.querySelector('.num,.sidebar-count,[class*="num"]');
-    var numTxt=numEl?numEl.textContent.trim():'';
-    var label=orig.textContent.replace(numTxt,'').trim();
-    if(!label||label.length<2)return;
-    if(numTxt){var ns=document.createElement('span');ns.className='shub-dl-num';ns.textContent=numTxt;btn.appendChild(ns);}
-    btn.appendChild(document.createTextNode(label));
-    btn.addEventListener('click',function(){orig.click();setTimeout(close,180);});
-    list.appendChild(btn);
+  function mkIt(o){
+    var b=document.createElement('button');b.className='shub-dl-item';
+    var ne=o.querySelector('.num,.sidebar-count');var nt=ne?ne.textContent.trim():'';
+    var lb=o.textContent.replace(nt,'').trim();if(!lb||lb.length<2)return;
+    if(nt){var ns=document.createElement('span');ns.className='shub-dl-num';ns.textContent=nt;b.appendChild(ns);}
+    b.appendChild(document.createTextNode(lb));
+    b.addEventListener('click',function(){o.click();setTimeout(close,180);});
+    lst.appendChild(b);
   }
   function sync(){
-    var active=document.querySelector('.sidebar .nav-btn.active,.sidebar .nav-item.active,.sidebar .sidebar-item.active,#sidebar button.active');
-    var at=active?active.textContent.trim():'';
-    list.querySelectorAll('.shub-dl-item').forEach(function(it){it.classList.toggle('cur',at.length>0&&at.includes(it.textContent.trim()));});
+    var ac=document.querySelector('.sidebar .nav-btn.active,.sidebar .nav-item.active,#sidebar .active');
+    var at=ac?ac.textContent.trim():'';
+    lst.querySelectorAll('.shub-dl-item').forEach(function(it){it.classList.toggle('cur',at.length>0&&it.textContent.trim()&&at.includes(it.textContent.trim()));});
   }
-  var sb=document.querySelector('.sidebar,#sidebar');
-  if(sb)new MutationObserver(function(){sync();}).observe(sb,{attributes:true,subtree:true,attributeFilter:['class']});
+  var sb2=document.querySelector('.sidebar,#sidebar');
+  if(sb2)new MutationObserver(sync).observe(sb2,{attributes:true,subtree:true,attributeFilter:['class']});
   function init(){build();if(!built){var n=0,t=setInterval(function(){build();if(built||++n>40)clearInterval(t);},100);}}
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',function(){setTimeout(init,200);}):setTimeout(init,200);
 })();
 </script>
 
-
-
-  <span class="shub-title">Nutanix Foundations Guide</span>
-  <div class="shub-spacer"></div>
-  <a class="shub-home" href="index.html">
-    <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
-      <path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/>
-    </svg>
-    <span>All Guides</span>
-  </a>
-</div>
-
-  <span class="shub-page-title">Nutanix Foundations Guide</span>
-  <div class="shub-spacer"></div>
-  <a class="shub-home" href="index.html">
-    <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
-      <path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/>
-    </svg>
-    <span>All Guides</span>
-  </a>
-</div>
-
-<!-- TOP BAR -->
 <header class="topbar">
   <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Menu">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
