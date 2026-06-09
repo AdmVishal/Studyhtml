@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&amp;family=Syne:wght@400;600;700;800&amp;family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  
+  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Nutanix Foundations — Complete Technical Guide</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+
 <style>
 :root {
   --navy:    #0B1E3D;
@@ -607,84 +610,236 @@ p.body-text {
 }
 </style>
 
-<style id='shm-v4'>
-@media (max-width: 768px) {
-  /* Nutanix guide: sidebar already toggleable — just fix layout */
-  .main {
-    margin-left: 0 !important;
-    max-width: 100vw !important;
-    padding: 1rem 14px 3rem !important;
-  }
-  .progress-bar { left: 0 !important; }
-  .topbar-search { display: none !important; }
-  .cover { padding: 20px 14px !important; }
-  .cover h1 { font-size: clamp(1.8rem, 8vw, 2.8rem) !important; }
-  .cheatsheet-grid { grid-template-columns: 1fr !important; }
-  .card-grid { grid-template-columns: 1fr !important; }
 
-
-  /* ITIL app-grid: stack nav + content vertically */
-  .app-grid, [class*="app-grid"] {
-    display: block !important;
-    grid-template-columns: 1fr !important;
-  }
-  .left-nav, .nav-panel, [class*="left-nav"] {
-    display: none !important;
-  }
-  .main-content, .content-area, [class*="main-content"] {
-    width: 100% !important;
-    padding: 16px 14px !important;
-    box-sizing: border-box !important;
-  }
-  .process-grid, [class*="process-grid"],
-  .cmd-grid, [class*="cmd-grid"] {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-  }
-
-
-  /* Universal: tables */
-  table {
-    display: block !important;
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    font-size: 12px !important;
-  }
-  th { white-space: nowrap; font-size: 11px !important; }
-  td { font-size: 12px !important; }
-
-  /* Universal: code */
-  pre, code, [class*="code-block"], [class*="cmd-block"] {
-    overflow-x: auto !important;
-    -webkit-overflow-scrolling: touch !important;
-    font-size: 11px !important;
-    max-width: 100% !important;
-    white-space: pre !important;
-  }
-
-  /* Universal: headings */
-  h1 { font-size: clamp(1.5rem, 7vw, 2rem) !important; line-height: 1.2 !important; }
-  h2 { font-size: clamp(1rem, 5vw, 1.35rem) !important; }
-  h3 { font-size: clamp(0.9rem, 4vw, 1.05rem) !important; }
-
-  /* Universal: search input */
-  .search-wrap { max-width: 100% !important; }
-  .search-wrap input { font-size: 14px !important; }
-
-  /* Universal: body overflow */
-  body { overflow-x: hidden !important; }
-}
-@media (min-width: 769px) {
-  #mob-topics-btn { display: none !important; }
-  #mob-sidebar-close { display: none !important; }
-  #mob-overlay { display: none !important; }
-}
-</style>
-  <!-- STUDYHUB-MOBILE-v4 -->
+  
 </head>
 <body>
+<!-- SHUB-THEME-v2 -->
+<style id="shub-theme-v2">
+/* ════════════════════════════════════════════════════════════════
+   StudyHub Unified Theme v2 — typography + chrome unification
+   Colour scheme of each page is PRESERVED (not overridden)
+════════════════════════════════════════════════════════════════ */
+
+/* ── Shared tokens (non-colour) ──────────────────────────────── */
+:root {
+  --shub-navy:   #0B1E3D;
+  --shub-blue:   #1B4F8A;
+  --shub-mid:    #2E6CC7;
+  --shub-sky:    #4A9FD5;
+  --shub-accent: #F0A500;
+  --font-head:   'Syne', sans-serif;
+  --font-body:   'DM Sans', sans-serif;
+  --font-mono:   'JetBrains Mono', monospace;
+}
+
+/* ── Topbar ──────────────────────────────────────────────────── */
+#shub-topbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 9999;
+  height: 58px;
+  background: var(--shub-navy);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 12px;
+  border-bottom: 2px solid var(--shub-blue);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.5);
+}
+.shub-logo {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #fff;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.shub-logo-dot { color: var(--shub-accent); }
+.shub-page-title {
+  font-family: var(--font-body);
+  font-size: 0.73rem;
+  color: #6B8AB0;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+.shub-spacer { flex: 1; }
+.shub-home {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 7px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.13);
+  color: #8AAED6;
+  font-size: 0.74rem;
+  font-family: var(--font-body);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.shub-home:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+/* ── Progress bar ────────────────────────────────────────────── */
+#shub-prog {
+  position: fixed;
+  top: 58px; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--shub-accent), var(--shub-sky));
+  z-index: 9998;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ── Back-to-top ─────────────────────────────────────────────── */
+#shub-btt {
+  position: fixed;
+  bottom: 24px; right: 20px;
+  width: 42px; height: 42px;
+  background: var(--shub-blue);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  z-index: 9997;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(27,79,138,0.45);
+  transition: opacity 0.2s, transform 0.2s, background 0.15s;
+}
+#shub-btt.vis { opacity: 1; pointer-events: auto; }
+#shub-btt:hover { background: var(--shub-mid); transform: translateY(-2px); }
+
+/* ── Push all pages' content below our topbar ───────────────── */
+/* We target the page's own top-level containers */
+body > header:not(#shub-topbar),
+body > .header:not(#shub-topbar),
+body > .topbar:not(#shub-topbar),
+body > .toc,
+body > .nav-bar,
+body > .app-header {
+  margin-top: 58px !important;
+}
+/* For pages where the sticky/fixed header is not <body>'s child */
+.header, .toc, .nav-bar {
+  top: 58px !important;
+}
+/* Nutanix-style topbar (.topbar class used by Nutanix page itself) */
+.topbar:not(#shub-topbar) {
+  top: 58px !important;
+}
+/* Main content areas */
+.main, .main-content, .content-area, .app-content {
+  margin-top: 58px !important;
+}
+
+/* ── Font unification ────────────────────────────────────────── */
+/* Apply DM Sans to body — safe on all bg colours */
+body { font-family: var(--font-body) !important; }
+
+/* Headings — use Syne everywhere */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-head) !important;
+}
+
+/* Monospace — unify to JetBrains Mono */
+code, pre, kbd, samp,
+.cmd-block, [class*="code-block"],
+[class*="cmd-block"], [class*="mono"] {
+  font-family: var(--font-mono) !important;
+}
+
+/* ── Scrollbar style ─────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.28); }
+
+/* ── Selection ───────────────────────────────────────────────── */
+::selection { background: var(--shub-blue); color: #fff; }
+
+/* ── Mobile ──────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  #shub-topbar { padding: 0 12px; gap: 8px; height: 50px; }
+  #shub-prog   { top: 50px; }
+  .shub-page-title { display: none; }
+  .shub-home span  { display: none; }
+  .shub-home  { padding: 6px 8px; }
+  #shub-btt   { bottom: 80px; right: 12px; width: 36px; height: 36px; font-size: 1rem; }
+
+  body > .header, body > header { margin-top: 50px !important; }
+  .header, .toc, .nav-bar { top: 50px !important; }
+  .topbar:not(#shub-topbar) { top: 50px !important; }
+  .main, .main-content, .content-area { margin-top: 50px !important; }
+}
+@media (min-width: 769px) { }
+</style>
+<div id="shub-topbar">
+  <a class="shub-logo" href="index.html">Study<span class="shub-logo-dot">Hub</span></a>
+  <span class="shub-page-title">Nutanix Foundations Guide</span>
+  <div class="shub-spacer"></div>
+  <a class="shub-home" href="index.html">
+    <svg width="11" height="11" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
+      <path d="M3 9l7-7 7 7M4 8v9a1 1 0 001 1h4v-5h2v5h4a1 1 0 001-1V8"/>
+    </svg>
+    <span>All Guides</span>
+  </a>
+</div>
+<div id="shub-prog"></div>
+<button id="shub-btt" title="Back to top">↑</button>
+<script id="shub-chrome-js">
+(function(){
+  var prog=document.getElementById('shub-prog');
+  var btt=document.getElementById('shub-btt');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement,b=document.body;
+    var st=h.scrollTop||b.scrollTop;
+    var sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+    if(prog) prog.style.width=(sh>0?Math.min(st/sh*100,100):0)+'%';
+    if(btt) btt.classList.toggle('vis',st>280);
+  },{passive:true});
+  if(btt) btt.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
+
+<style id="shub-light-extras">
+/* Light page refinements — matches Nutanix Foundations guide quality */
+body {
+  background: #F0F4FA !important;
+  color: #1A2840 !important;
+  font-size: 15px !important;
+  line-height: 1.7 !important;
+}
+p { color: #2D3F5C; line-height: 1.75; }
+li { color: #2D3F5C; }
+li::marker { color: #4A9FD5; }
+a { color: #2E6CC7; }
+a:hover { color: #4A9FD5; }
+
+h1 { color: #0B1E3D !important; font-weight: 800 !important; line-height: 1.2 !important; }
+h2 { color: #1B4F8A !important; font-weight: 700 !important; padding-bottom: 0.3rem; border-bottom: 2px solid #CBD9EE; }
+h3 { color: #00929F !important; font-weight: 700 !important; }
+h4 { color: #5A6E8A !important; text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.75rem !important; }
+
+thead th { background: #1B4F8A !important; color: #fff !important; font-weight: 600; font-size: 0.78rem; padding: 0.7rem 0.9rem; }
+tbody tr:nth-child(odd)  { background: #fff !important; }
+tbody tr:nth-child(even) { background: #F5F8FD !important; }
+tbody td { color: #2D3F5C; padding: 0.6rem 0.9rem; border-top: 1px solid #CBD9EE; vertical-align: top; }
+tbody td:first-child { font-family: var(--font-head); font-weight: 600; color: #1B4F8A; }
+
+pre, code { background: #0F1E35 !important; color: #79C0FF !important; border-radius: 8px; }
+:not(pre) > code { background: #E8EFF8 !important; color: #1B4F8A !important; padding: 0.1em 0.4em; border-radius: 4px; }
+</style>
 
 <!-- TOP BAR -->
 <header class="topbar">
@@ -2093,5 +2248,50 @@ navLinks.forEach(link => {
   });
 });
 </script>
+
+<!-- STUDYHUB-MASTER-v1 -->
+<style id="shub-d-css">
+@media (max-width: 768px) {
+  /* Nutanix has its own toggle — just fix overflow issues */
+  .main {
+    margin-left: 0 !important; max-width: 100vw !important;
+    padding: 1rem 14px 3rem !important;
+  }
+  .progress-bar { left: 0 !important; }
+  .topbar-search { display: none !important; }
+  .cover { padding: 20px 14px !important; }
+  .cover h1 { font-size: clamp(1.8rem,8vw,2.8rem) !important; }
+  .cheatsheet-grid { grid-template-columns: 1fr !important; }
+  .card-grid { grid-template-columns: 1fr !important; }
+  .card-featured { flex-direction: column !important; }
+  /* Def-table: stack term above definition */
+  .def-table tr { display: flex !important; flex-direction: column !important; }
+  .def-table td { display: block !important; width: 100% !important;
+    box-sizing: border-box !important; }
+  .term-cell {
+    width: 100% !important; border-right: none !important;
+    border-bottom: 1px solid rgba(100,150,220,.2) !important;
+    font-size: .79rem !important; padding: 7px 10px 4px !important;
+  }
+  .def-cell {
+    width: 100% !important; border-top: none !important;
+    font-size: .79rem !important; padding: 4px 10px 10px !important;
+  }
+  /* Data tables: scroll */
+  .data-table { display: block !important; overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important; }
+  table { max-width: 100% !important; }
+  pre, .code-group, .code-block {
+    overflow-x: auto !important; font-size: .7rem !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .code-line { font-size: .68rem !important; }
+  .section-divider { flex-wrap: wrap !important; padding: 10px 12px !important; }
+  .section-divider h2 { font-size: .82rem !important; }
+  .quickjump { flex-wrap: wrap !important; gap: 6px !important; }
+  .step-text { font-size: .86rem !important; }
+  li { font-size: .87rem !important; }
+}
+</style>
 </body>
 </html>
